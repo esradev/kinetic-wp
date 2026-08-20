@@ -16,7 +16,187 @@
 
   <!-- Alpine.js (Include if not enqueued in functions.php) -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <!-- Header State Engine (Alpine.js) -->
+  <script>
+    function romonetHeader() {
+      return {
+        isMobileMenuOpen: false,
+        isSearchOpen: false,
+        isCartDrawerOpen: false,
+        isScrolled: false,
+        theme: 'dark',
+        currency: 'IRT',
+        searchQuery: '',
+        promoInput: '',
+        couponCode: null,
+        couponError: null,
 
+        // Sample product dataset for instant live search
+        allProducts: [{
+            id: 1,
+            name: 'قالب فروشگاهی آذرخش (Gutenberg UI)',
+            type: 'theme',
+            tagline: 'سازگار کامل با ووکامرس، سرعت رندرینگ زیر ۵۰۰ میلی‌ثانیه',
+            price: 1890000,
+            url: '<?php echo esc_url(home_url('/shop')); ?>'
+          },
+          {
+            id: 2,
+            name: 'افزونه درگاه هوشمند OTP پیامک رومونت',
+            type: 'plugin',
+            tagline: 'اتصال سریع به خطوط خدماتی بدون بلک‌لیست',
+            price: 850000,
+            url: '<?php echo esc_url(home_url('/shop')); ?>'
+          },
+          {
+            id: 3,
+            name: 'قالب اختصاصی آژانسی و شرکتی نئون',
+            type: 'theme',
+            tagline: 'بهینه‌شده با Tailwind CSS و پنل تنظیمات پیشرفته',
+            price: 2150000,
+            url: '<?php echo esc_url(home_url('/shop')); ?>'
+          }
+        ],
+
+        // Sample services dataset
+        allServices: [{
+            title: 'تعرفه‌های طراحی اختصاصی سایت و فروشگاه',
+            url: '<?php echo esc_url(home_url('/site-design-pricing')); ?>',
+            desc: 'قالب‌های سفارشی گوتنبرگ و معماری پرسرعت ووکامرس در wpstorm'
+          },
+          {
+            title: 'پلن‌های پشتیبانی و نگهداری وردپرس (SLA)',
+            url: '<?php echo esc_url(home_url('/maintenance-pricing')); ?>',
+            desc: 'آپدیت‌های بدون قطعی، پاسخگویی ۱۵ دقیقه‌ای اضطراری و بک‌آپ ساعتی'
+          },
+          {
+            title: 'سامانه پیامک هوشمند و OTP رومونت',
+            url: '<?php echo esc_url(home_url('/sms-pricing')); ?>',
+            desc: 'خطوط خدماتی بلک‌لیست، ارسال کدهای تایید زیر ۳ ثانیه و وب‌هوک ووکامرس'
+          }
+        ],
+
+        // Sample Cart Items
+        cart: [{
+          id: 'item-1',
+          itemType: 'product',
+          title: 'قالب فروشگاهی آذرخش (Gutenberg)',
+          subtitle: 'لایسنس تک‌دامین تجاری',
+          price: 1890000,
+          quantity: 1,
+          licenseLabel: 'تک دامین'
+        }],
+
+        initHeader() {
+          const savedTheme = localStorage.getItem('romonet_theme') || 'dark';
+          this.setTheme(savedTheme);
+          this.onScroll();
+          window.addEventListener('scroll', () => this.onScroll(), {
+            passive: true
+          });
+          this.$watch('isSearchOpen', value => {
+            if (value) setTimeout(() => this.$refs.searchInput && this.$refs.searchInput.focus(), 100);
+          });
+        },
+
+        onScroll() {
+          this.isScrolled = window.scrollY > 48;
+        },
+
+        toggleTheme() {
+          this.setTheme(this.theme === 'dark' ? 'light' : 'dark');
+        },
+
+        setTheme(mode) {
+          this.theme = mode;
+          localStorage.setItem('romonet_theme', mode);
+          if (mode === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        },
+
+        totalItemsCount() {
+          return this.cart.reduce((sum, item) => sum + item.quantity, 0);
+        },
+
+        updateQuantity(id, delta) {
+          const item = this.cart.find(i => i.id === id);
+          if (item) {
+            item.quantity += delta;
+            if (item.quantity <= 0) {
+              this.removeFromCart(id);
+            }
+          }
+        },
+
+        removeFromCart(id) {
+          this.cart = this.cart.filter(i => i.id !== id);
+        },
+
+        applyCoupon() {
+          if (!this.promoInput.trim()) return;
+          if (this.promoInput.trim().toUpperCase() === 'ROMONET20') {
+            this.couponCode = 'ROMONET20';
+            this.couponError = null;
+          } else {
+            this.couponError = 'کد وارد شده معتبر نمی‌باشد.';
+          }
+          this.promoInput = '';
+        },
+
+        getSubtotal() {
+          return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        },
+
+        getDiscount() {
+          return this.couponCode === 'ROMONET20' ? this.getSubtotal() * 0.20 : 0;
+        },
+
+        getTax() {
+          return (this.getSubtotal() - this.getDiscount()) * 0.05;
+        },
+
+        getTotal() {
+          return (this.getSubtotal() - this.getDiscount()) + this.getTax();
+        },
+
+        formatCurrency(amount) {
+          if (this.currency === 'IRT') {
+            return new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
+          } else if (this.currency === 'USD') {
+            return '$' + (amount / 60000).toFixed(2);
+          } else {
+            return '€' + (amount / 65000).toFixed(2);
+          }
+        },
+
+        getItemTypeLabel(type) {
+          const labels = {
+            'product': 'قالب / افزونه wpstorm',
+            'sms_plan': 'اشتراک سامانه پیامک',
+            'sms_credits': 'بسته شارژ پیامک',
+            'maintenance_plan': 'پلن پشتیبانی وردپرس',
+            'design_package': 'پکیج طراحی اختصاصی'
+          };
+          return labels[type] || 'سفارش';
+        },
+
+        filteredServices() {
+          const q = this.searchQuery.toLowerCase();
+          if (!q) return this.allServices;
+          return this.allServices.filter(s => s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q));
+        },
+
+        filteredProducts() {
+          const q = this.searchQuery.toLowerCase();
+          if (!q) return this.allProducts;
+          return this.allProducts.filter(p => p.name.toLowerCase().includes(q) || p.tagline.toLowerCase().includes(q));
+        }
+      };
+    }
+  </script>
   <?php wp_head(); ?>
 </head>
 
@@ -62,14 +242,16 @@
   </div>
 
   <!-- Main Glass Header -->
-  <header class="sticky top-0 z-40 w-full backdrop-blur-xl bg-[#08090d]/85 border-b border-white/10 transition-colors duration-300">
+  <header class="relative z-30 w-full backdrop-blur-xl bg-[#08090d]/85 border-b border-white/10 transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20">
+      <div class="relative flex items-center justify-between h-18">
 
         <!-- Brand Logo & wpstorm Badge -->
         <div class="flex items-center gap-4">
           <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-3 group text-right focus:outline-none">
-            <div class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-0.5 shadow-[0_0_20px_rgba(245,158,11,0.25)] group-hover:shadow-[0_0_30px_rgba(245,158,11,0.45)] transition-all duration-300">
+            <div
+              class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-0.5 shadow-[0_0_20px_rgba(245,158,11,0.25)] group-hover:shadow-[0_0_30px_rgba(245,158,11,0.45)] transition-all duration-500"
+              :class="isScrolled ? 'opacity-0 translate-y-8 scale-95' : 'opacity-100 translate-y-0 scale-100'">
               <div class="w-full h-full bg-[#090a0f] rounded-[10px] flex items-center justify-center transition-colors group-hover:bg-transparent">
                 <span class="font-mono font-black text-xl text-amber-400 group-hover:text-black transition-colors">
                   R
@@ -94,75 +276,33 @@
           </a>
         </div>
 
-        <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
-          <a href="<?php echo esc_url(home_url('/site-design-pricing')); ?>" class="relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 text-neutral-300 hover:text-white hover:bg-white/5">
-            <span>طراحی سایت اختصاصی</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اسپرینت</span>
-          </a>
-          <a href="<?php echo esc_url(home_url('/maintenance-pricing')); ?>" class="relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 text-neutral-300 hover:text-white hover:bg-white/5">
-            <span>پشتیبانی وردپرس (wpstorm)</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">SLA</span>
-          </a>
-          <a href="<?php echo esc_url(home_url('/sms-pricing')); ?>" class="relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 text-neutral-300 hover:text-white hover:bg-white/5">
-            <span>سامانه پیامک رومونت</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">خط خدماتی</span>
-          </a>
-          <a href="<?php echo esc_url(home_url('/shop')); ?>" class="relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 text-neutral-300 hover:text-white hover:bg-white/5">
-            <span>مارکت‌پلیس قالب و افزونه</span>
-            <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اورجینال</span>
-          </a>
-          <a href="<?php echo esc_url(home_url('/blog')); ?>" class="relative px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200 flex items-center gap-1.5 text-neutral-300 hover:text-white hover:bg-white/5">
-            <span>وبلاگ و آموزش‌ها</span>
-          </a>
-        </nav>
+        <!-- Centered Search Trigger -->
+        <div class="hidden md:flex absolute left-1/2 -translate-x-1/2">
+          <button
+            @click="isSearchOpen = true"
+            class="p-2.5 w-md rounded-lg bg-white/5 border border-white/10 hover:border-amber-400/40 hover:bg-white/10 text-neutral-300 hover:text-white transition-all flex items-center gap-2 group"
+            title="جستجوی سریع در محصولات، پلن‌ها و مقالات (Ctrl+K)">
+            <!-- Search Icon -->
+            <svg class="w-4 h-4 text-neutral-400 group-hover:text-amber-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            <span class="hidden xl:inline text-xs text-neutral-400 group-hover:text-neutral-200">
+              جستجو...
+            </span>
+            <kbd class="hidden xl:inline-block text-[10px] font-mono bg-black/40 border border-white/10 text-neutral-400 px-1.5 py-0.5 rounded">
+              ⌘K
+            </kbd>
+          </button>
+        </div>
 
         <!-- Right Action Icons & Controls -->
         <div class="flex items-center gap-2 sm:gap-3">
 
-          <!-- Theme Toggle Desktop (Pill) -->
+          <!-- Theme Toggle (Compact) -->
           <button
             @click="toggleTheme()"
-            class="group hidden md:flex items-center gap-2 px-3 py-1.5 rounded-xl border transition-all duration-300"
-            :class="theme === 'dark' ? 'bg-white/5 hover:bg-white/10 border-white/10 text-neutral-300 hover:border-amber-500/30' : 'bg-white/90 hover:bg-white border-slate-200 text-slate-800 shadow-sm hover:border-amber-500/40'"
-            :title="theme === 'dark' ? 'تغییر به حالت پلاتینیوم روز' : 'تغییر به حالت دارک ابسیدین'">
-            <div class="relative flex items-center justify-center">
-              <template x-if="theme === 'dark'">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.8)] animate-pulse"></span>
-                  <!-- Moon Icon -->
-                  <svg class="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                  </svg>
-                </div>
-              </template>
-              <template x-if="theme === 'light'">
-                <div class="flex items-center gap-1.5">
-                  <span class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></span>
-                  <!-- Sun Icon -->
-                  <svg class="w-3.5 h-3.5 text-amber-600 group-hover:rotate-45 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="4" />
-                    <path d="M12 2v2" />
-                    <path d="M12 20v2" />
-                    <path d="m4.93 4.93 1.41 1.41" />
-                    <path d="m17.66 17.66 1.41 1.41" />
-                    <path d="M2 12h2" />
-                    <path d="M20 12h2" />
-                    <path d="m6.34 17.66-1.41 1.41" />
-                    <path d="m19.07 4.93-1.41 1.41" />
-                  </svg>
-                </div>
-              </template>
-            </div>
-            <div class="text-[11px] font-sans font-medium hidden sm:flex items-center gap-1">
-              <span x-text="theme === 'dark' ? 'تم شب' : 'تم روز'"></span>
-            </div>
-          </button>
-
-          <!-- Theme Toggle Mobile (Compact) -->
-          <button
-            @click="toggleTheme()"
-            class="flex md:hidden p-2.5 rounded-lg transition-all duration-300 relative group overflow-hidden border"
+            class="flex p-2.5 rounded-lg transition-all duration-300 relative group overflow-hidden border"
             :class="theme === 'dark' ? 'bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-amber-300 border-white/10' : 'bg-white/80 hover:bg-white text-slate-800 hover:text-amber-600 border-slate-200 shadow-sm'">
             <div class="relative w-4 h-4 flex items-center justify-center">
               <template x-if="theme === 'dark'">
@@ -184,46 +324,6 @@
                 </svg>
               </template>
             </div>
-          </button>
-
-          <!-- Currency Selector -->
-          <div class="hidden sm:flex items-center bg-white/5 rounded-lg border border-white/10 p-0.5">
-            <button
-              @click="currency = 'IRT'"
-              :class="currency === 'IRT' ? 'bg-amber-500 text-black font-bold shadow-sm' : 'text-neutral-400 hover:text-white'"
-              class="px-2 py-1 text-xs font-mono rounded transition-all">
-              تومان
-            </button>
-            <button
-              @click="currency = 'USD'"
-              :class="currency === 'USD' ? 'bg-amber-500 text-black font-bold shadow-sm' : 'text-neutral-400 hover:text-white'"
-              class="px-2 py-1 text-xs font-mono rounded transition-all">
-              $ USD
-            </button>
-            <button
-              @click="currency = 'EUR'"
-              :class="currency === 'EUR' ? 'bg-amber-500 text-black font-bold shadow-sm' : 'text-neutral-400 hover:text-white'"
-              class="px-2 py-1 text-xs font-mono rounded transition-all">
-              € EUR
-            </button>
-          </div>
-
-          <!-- Quick Search Trigger -->
-          <button
-            @click="isSearchOpen = true"
-            class="p-2.5 rounded-lg bg-white/5 border border-white/10 hover:border-amber-400/40 hover:bg-white/10 text-neutral-300 hover:text-white transition-all flex items-center gap-2 group"
-            title="جستجوی سریع در محصولات، پلن‌ها و مقالات (Ctrl+K)">
-            <!-- Search Icon -->
-            <svg class="w-4 h-4 text-neutral-400 group-hover:text-amber-400 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
-            <span class="hidden xl:inline text-xs text-neutral-400 group-hover:text-neutral-200">
-              جستجو...
-            </span>
-            <kbd class="hidden xl:inline-block text-[10px] font-mono bg-black/40 border border-white/10 text-neutral-400 px-1.5 py-0.5 rounded">
-              ⌘K
-            </kbd>
           </button>
 
           <!-- Shopping Cart Drawer Trigger -->
@@ -260,7 +360,8 @@
           <!-- Mobile Hamburger Toggle -->
           <button
             @click="isMobileMenuOpen = !isMobileMenuOpen"
-            class="lg:hidden p-2.5 rounded-lg bg-white/5 border border-white/10 text-neutral-300 hover:text-white transition-colors"
+            class="lg:hidden p-2.5 rounded-xl border shadow-[0_8px_24px_rgba(0,0,0,0.25)] transition-all duration-300"
+            :class="isMobileMenuOpen ? 'bg-amber-500/15 border-amber-400/40 text-amber-300' : 'bg-white/5 border-white/10 text-neutral-300 hover:text-white hover:bg-white/10 hover:border-amber-400/40'"
             aria-label="باز کردن منو">
             <template x-if="!isMobileMenuOpen">
               <!-- Menu Icon -->
@@ -281,6 +382,8 @@
         </div>
       </div>
     </div>
+
+
 
     <!-- Mobile Navigation Drawer -->
     <div
@@ -352,16 +455,6 @@
         </a>
       </div>
 
-      <!-- Mobile Currency & Theme Controls -->
-      <div class="border-t border-white/10 pt-3 flex items-center justify-between">
-        <span class="text-xs text-neutral-400">واحد پولی:</span>
-        <div class="flex items-center bg-white/5 rounded-lg border border-white/10 p-0.5">
-          <button @click="currency = 'IRT'" :class="currency === 'IRT' ? 'bg-amber-500 text-black font-bold' : 'text-neutral-400'" class="px-2.5 py-1 text-xs font-mono rounded transition-all">تومان</button>
-          <button @click="currency = 'USD'" :class="currency === 'USD' ? 'bg-amber-500 text-black font-bold' : 'text-neutral-400'" class="px-2.5 py-1 text-xs font-mono rounded transition-all">USD</button>
-          <button @click="currency = 'EUR'" :class="currency === 'EUR' ? 'bg-amber-500 text-black font-bold' : 'text-neutral-400'" class="px-2.5 py-1 text-xs font-mono rounded transition-all">EUR</button>
-        </div>
-      </div>
-
       <div class="border-t border-white/5 pt-3 pb-1 flex items-center justify-between px-3">
         <span class="text-xs text-neutral-400">پوسته ظاهری:</span>
         <!-- Segmented Theme Toggle -->
@@ -412,6 +505,62 @@
       </div>
     </div>
   </header>
+
+  <!-- Third Navigation Bar (Full Text Visibility) -->
+  <div
+
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 -translate-y-2"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 -translate-y-2"
+    class="block sticky top-0 z-40 border-t border-white/10 bg-[#0b0d14]/90 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex items-center  gap-2 py-2 overflow-x-auto whitespace-nowrap [scrollbar-width:thin]">
+        <a
+          x-show="isScrolled"
+          x-transition:enter="transition ease-out duration-300"
+          x-transition:enter-start="opacity-0 -translate-y-6 scale-95"
+          x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+          x-transition:leave="transition ease-in duration-200"
+          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+          x-transition:leave-end="opacity-0 -translate-y-6 scale-95"
+          href="<?php echo esc_url(home_url('/')); ?>"
+          class="group relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-0.5 shadow-[0_0_20px_rgba(245,158,11,0.25)] hover:shadow-[0_0_30px_rgba(245,158,11,0.45)] transition-all duration-300 shrink-0"
+          title="بازگشت به صفحه اصلی"
+          style="display: none;">
+          <div class="w-full h-full bg-[#090a0f] rounded-[10px] flex items-center justify-center transition-colors group-hover:bg-transparent">
+            <span class="font-mono font-black text-xl text-amber-400 group-hover:text-black transition-colors">
+              R
+            </span>
+          </div>
+        </a>
+
+        <a href="<?php echo esc_url(home_url('/site-design-pricing')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+          <span>طراحی سایت اختصاصی</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اسپرینت</span>
+        </a>
+        <a href="<?php echo esc_url(home_url('/maintenance-pricing')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+          <span>پشتیبانی وردپرس (wpstorm)</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">SLA</span>
+        </a>
+        <a href="<?php echo esc_url(home_url('/sms-pricing')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+          <span>سامانه پیامک رومونت</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">خط خدماتی</span>
+        </a>
+        <a href="<?php echo esc_url(home_url('/shop')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+          <span>مارکت‌پلیس قالب و افزونه</span>
+          <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اورجینال</span>
+        </a>
+        <a href="<?php echo esc_url(home_url('/blog')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+          <span>وبلاگ و آموزش‌ها</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+
 
   <!-- Search Modal -->
   <div
@@ -780,176 +929,3 @@
       </div>
     </div>
   </div>
-
-  <!-- Header State Engine (Alpine.js) -->
-  <script>
-    function romonetHeader() {
-      return {
-        isMobileMenuOpen: false,
-        isSearchOpen: false,
-        isCartDrawerOpen: false,
-        theme: 'dark',
-        currency: 'IRT',
-        searchQuery: '',
-        promoInput: '',
-        couponCode: null,
-        couponError: null,
-
-        // Sample product dataset for instant live search
-        allProducts: [{
-            id: 1,
-            name: 'قالب فروشگاهی آذرخش (Gutenberg UI)',
-            type: 'theme',
-            tagline: 'سازگار کامل با ووکامرس، سرعت رندرینگ زیر ۵۰۰ میلی‌ثانیه',
-            price: 1890000,
-            url: '<?php echo esc_url(home_url('/shop')); ?>'
-          },
-          {
-            id: 2,
-            name: 'افزونه درگاه هوشمند OTP پیامک رومونت',
-            type: 'plugin',
-            tagline: 'اتصال سریع به خطوط خدماتی بدون بلک‌لیست',
-            price: 850000,
-            url: '<?php echo esc_url(home_url('/shop')); ?>'
-          },
-          {
-            id: 3,
-            name: 'قالب اختصاصی آژانسی و شرکتی نئون',
-            type: 'theme',
-            tagline: 'بهینه‌شده با Tailwind CSS و پنل تنظیمات پیشرفته',
-            price: 2150000,
-            url: '<?php echo esc_url(home_url('/shop')); ?>'
-          }
-        ],
-
-        // Sample services dataset
-        allServices: [{
-            title: 'تعرفه‌های طراحی اختصاصی سایت و فروشگاه',
-            url: '<?php echo esc_url(home_url('/site-design-pricing')); ?>',
-            desc: 'قالب‌های سفارشی گوتنبرگ و معماری پرسرعت ووکامرس در wpstorm'
-          },
-          {
-            title: 'پلن‌های پشتیبانی و نگهداری وردپرس (SLA)',
-            url: '<?php echo esc_url(home_url('/maintenance-pricing')); ?>',
-            desc: 'آپدیت‌های بدون قطعی، پاسخگویی ۱۵ دقیقه‌ای اضطراری و بک‌آپ ساعتی'
-          },
-          {
-            title: 'سامانه پیامک هوشمند و OTP رومونت',
-            url: '<?php echo esc_url(home_url('/sms-pricing')); ?>',
-            desc: 'خطوط خدماتی بلک‌لیست، ارسال کدهای تایید زیر ۳ ثانیه و وب‌هوک ووکامرس'
-          }
-        ],
-
-        // Sample Cart Items
-        cart: [{
-          id: 'item-1',
-          itemType: 'product',
-          title: 'قالب فروشگاهی آذرخش (Gutenberg)',
-          subtitle: 'لایسنس تک‌دامین تجاری',
-          price: 1890000,
-          quantity: 1,
-          licenseLabel: 'تک دامین'
-        }],
-
-        initHeader() {
-          const savedTheme = localStorage.getItem('romonet_theme') || 'dark';
-          this.setTheme(savedTheme);
-          this.$watch('isSearchOpen', value => {
-            if (value) setTimeout(() => this.$refs.searchInput && this.$refs.searchInput.focus(), 100);
-          });
-        },
-
-        toggleTheme() {
-          this.setTheme(this.theme === 'dark' ? 'light' : 'dark');
-        },
-
-        setTheme(mode) {
-          this.theme = mode;
-          localStorage.setItem('romonet_theme', mode);
-          if (mode === 'dark') {
-            document.documentElement.classList.add('dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-          }
-        },
-
-        totalItemsCount() {
-          return this.cart.reduce((sum, item) => sum + item.quantity, 0);
-        },
-
-        updateQuantity(id, delta) {
-          const item = this.cart.find(i => i.id === id);
-          if (item) {
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-              this.removeFromCart(id);
-            }
-          }
-        },
-
-        removeFromCart(id) {
-          this.cart = this.cart.filter(i => i.id !== id);
-        },
-
-        applyCoupon() {
-          if (!this.promoInput.trim()) return;
-          if (this.promoInput.trim().toUpperCase() === 'ROMONET20') {
-            this.couponCode = 'ROMONET20';
-            this.couponError = null;
-          } else {
-            this.couponError = 'کد وارد شده معتبر نمی‌باشد.';
-          }
-          this.promoInput = '';
-        },
-
-        getSubtotal() {
-          return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        },
-
-        getDiscount() {
-          return this.couponCode === 'ROMONET20' ? this.getSubtotal() * 0.20 : 0;
-        },
-
-        getTax() {
-          return (this.getSubtotal() - this.getDiscount()) * 0.05;
-        },
-
-        getTotal() {
-          return (this.getSubtotal() - this.getDiscount()) + this.getTax();
-        },
-
-        formatCurrency(amount) {
-          if (this.currency === 'IRT') {
-            return new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
-          } else if (this.currency === 'USD') {
-            return '$' + (amount / 60000).toFixed(2);
-          } else {
-            return '€' + (amount / 65000).toFixed(2);
-          }
-        },
-
-        getItemTypeLabel(type) {
-          const labels = {
-            'product': 'قالب / افزونه wpstorm',
-            'sms_plan': 'اشتراک سامانه پیامک',
-            'sms_credits': 'بسته شارژ پیامک',
-            'maintenance_plan': 'پلن پشتیبانی وردپرس',
-            'design_package': 'پکیج طراحی اختصاصی'
-          };
-          return labels[type] || 'سفارش';
-        },
-
-        filteredServices() {
-          const q = this.searchQuery.toLowerCase();
-          if (!q) return this.allServices;
-          return this.allServices.filter(s => s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q));
-        },
-
-        filteredProducts() {
-          const q = this.searchQuery.toLowerCase();
-          if (!q) return this.allProducts;
-          return this.allProducts.filter(p => p.name.toLowerCase().includes(q) || p.tagline.toLowerCase().includes(q));
-        }
-      };
-    }
-  </script>
