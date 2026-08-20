@@ -5,6 +5,30 @@
  *
  * @package Romonet_WPStorm
  */
+
+// دریافت اطلاعات واقعی سبد خرید ووکامرس
+$wc_cart_items = array();
+if (function_exists('WC') && ! is_null(WC()->cart)) {
+  foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
+    $_product = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
+
+    if ($_product && $_product->exists() && $cart_item['quantity'] > 0) {
+      // در صورتی که محصول از نوع متغیر باشد یا ویژگی‌های اضافه‌ای داشته باشد
+      $variation_data = wc_get_formatted_cart_item_data($cart_item, true);
+
+      $wc_cart_items[] = array(
+        'id'         => $cart_item_key, // استفاده از کلید سبد خرید برای حذف/بروزرسانی
+        'product_id' => $cart_item['product_id'],
+        'itemType'   => 'product',
+        'title'      => $_product->get_name(),
+        'subtitle'   => $variation_data ? wp_strip_all_tags($variation_data) : '',
+        'price'      => (float) $_product->get_price(), // برای محاسبات جاوا اسکریپت
+        'quantity'   => $cart_item['quantity']
+      );
+    }
+  }
+}
+$cart_json = wp_json_encode($wc_cart_items);
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> dir="rtl" class="dark">
@@ -14,7 +38,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="profile" href="https://gmpg.org/xfn/11">
 
-  <!-- Alpine.js (Include if not enqueued in functions.php) -->
+  <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <!-- Header State Engine (Alpine.js) -->
   <script>
@@ -23,6 +47,7 @@
         isMobileMenuOpen: false,
         isSearchOpen: false,
         isCartDrawerOpen: false,
+        isCartUpdating: false, // متغیر جدید برای نمایش لودینگ سبد خرید
         isScrolled: false,
         theme: 'dark',
         currency: 'IRT',
@@ -31,61 +56,25 @@
         couponCode: null,
         couponError: null,
 
-        // Sample product dataset for instant live search
+        // Sample product dataset for instant live search (تست)
         allProducts: [{
-            id: 1,
-            name: 'قالب فروشگاهی آذرخش (Gutenberg UI)',
-            type: 'theme',
-            tagline: 'سازگار کامل با ووکامرس، سرعت رندرینگ زیر ۵۰۰ میلی‌ثانیه',
-            price: 1890000,
-            url: '<?php echo esc_url(home_url('/shop')); ?>'
-          },
-          {
-            id: 2,
-            name: 'افزونه درگاه هوشمند OTP پیامک رومونت',
-            type: 'plugin',
-            tagline: 'اتصال سریع به خطوط خدماتی بدون بلک‌لیست',
-            price: 850000,
-            url: '<?php echo esc_url(home_url('/shop')); ?>'
-          },
-          {
-            id: 3,
-            name: 'قالب اختصاصی آژانسی و شرکتی نئون',
-            type: 'theme',
-            tagline: 'بهینه‌شده با Tailwind CSS و پنل تنظیمات پیشرفته',
-            price: 2150000,
-            url: '<?php echo esc_url(home_url('/shop')); ?>'
-          }
-        ],
-
-        // Sample services dataset
-        allServices: [{
-            title: 'تعرفه‌های طراحی اختصاصی سایت و فروشگاه',
-            url: '<?php echo esc_url(home_url('/site-design-pricing')); ?>',
-            desc: 'قالب‌های سفارشی گوتنبرگ و معماری پرسرعت ووکامرس در wpstorm'
-          },
-          {
-            title: 'پلن‌های پشتیبانی و نگهداری وردپرس (SLA)',
-            url: '<?php echo esc_url(home_url('/maintenance-pricing')); ?>',
-            desc: 'آپدیت‌های بدون قطعی، پاسخگویی ۱۵ دقیقه‌ای اضطراری و بک‌آپ ساعتی'
-          },
-          {
-            title: 'سامانه پیامک هوشمند و OTP رومونت',
-            url: '<?php echo esc_url(home_url('/sms-pricing')); ?>',
-            desc: 'خطوط خدماتی بلک‌لیست، ارسال کدهای تایید زیر ۳ ثانیه و وب‌هوک ووکامرس'
-          }
-        ],
-
-        // Sample Cart Items
-        cart: [{
-          id: 'item-1',
-          itemType: 'product',
-          title: 'قالب فروشگاهی آذرخش (Gutenberg)',
-          subtitle: 'لایسنس تک‌دامین تجاری',
+          id: 1,
+          name: 'قالب فروشگاهی آذرخش (Gutenberg UI)',
+          type: 'theme',
+          tagline: 'سازگار کامل با ووکامرس، سرعت رندرینگ زیر ۵۰۰ میلی‌ثانیه',
           price: 1890000,
-          quantity: 1,
-          licenseLabel: 'تک دامین'
+          url: '<?php echo esc_url(home_url('/shop')); ?>'
         }],
+
+        // Sample services dataset (تست)
+        allServices: [{
+          title: 'تعرفه‌های طراحی اختصاصی سایت و فروشگاه',
+          url: '<?php echo esc_url(home_url('/site-design-pricing')); ?>',
+          desc: 'قالب‌های سفارشی گوتنبرگ و معماری پرسرعت ووکامرس در wpstorm'
+        }],
+
+        // سبد خرید واقعی خوانده شده از ووکامرس توسط PHP
+        cart: <?php echo empty($cart_json) ? '[]' : $cart_json; ?>,
 
         initHeader() {
           const savedTheme = localStorage.getItem('romonet_theme') || 'dark';
@@ -121,29 +110,96 @@
           return this.cart.reduce((sum, item) => sum + item.quantity, 0);
         },
 
-        updateQuantity(id, delta) {
+        async updateQuantity(id, delta) {
           const item = this.cart.find(i => i.id === id);
-          if (item) {
-            item.quantity += delta;
-            if (item.quantity <= 0) {
-              this.removeFromCart(id);
+          if (!item) return;
+
+          const newQty = item.quantity + delta;
+          if (newQty <= 0) {
+            return this.removeFromCart(id);
+          }
+
+          this.isCartUpdating = true; // نمایش لودینگ
+
+          try {
+            if (delta > 0) {
+              // افزایش تعداد: استفاده از add_to_cart ووکامرس
+              const formData = new URLSearchParams();
+              formData.append('product_id', item.product_id);
+              formData.append('quantity', delta);
+              await fetch('/?wc-ajax=add_to_cart', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData
+              });
+
+              item.quantity = newQty;
+              this.isCartUpdating = false;
+            } else {
+              // کاهش تعداد: حذف آیتم فعلی و افزودن مجدد با تعداد جدید، سپس رفرش صفحه برای محاسبات دقیق
+              let fdRemove = new URLSearchParams();
+              fdRemove.append('cart_item_key', id);
+              await fetch('/?wc-ajax=remove_from_cart', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: fdRemove
+              });
+
+              let fdAdd = new URLSearchParams();
+              fdAdd.append('product_id', item.product_id);
+              fdAdd.append('quantity', newQty);
+              await fetch('/?wc-ajax=add_to_cart', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: fdAdd
+              });
+
+              // رفرش کردن برای همگام‌سازی کامل هش ووکامرس در سبد
+              window.location.reload();
             }
+          } catch (error) {
+            console.error('Error updating cart:', error);
+            this.isCartUpdating = false;
           }
         },
 
-        removeFromCart(id) {
-          this.cart = this.cart.filter(i => i.id !== id);
+        async removeFromCart(id) {
+          this.isCartUpdating = true; // نمایش لودینگ
+          try {
+            const formData = new URLSearchParams();
+            formData.append('cart_item_key', id);
+
+            // ارسال درخواست به ایجکس ووکامرس برای حذف از سشن سرور
+            await fetch('/?wc-ajax=remove_from_cart', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              body: formData
+            });
+
+            // حذف موفقیت آمیز، حالا از سبد گرافیکی هم پاکش می‌کنیم
+            this.cart = this.cart.filter(i => i.id !== id);
+            window.dispatchEvent(new CustomEvent('show-toast', {
+              detail: 'آیتم با موفقیت از سبد خرید حذف شد.'
+            }));
+          } catch (error) {
+            console.error('Error removing item:', error);
+          } finally {
+            this.isCartUpdating = false;
+          }
         },
 
         applyCoupon() {
+          // چون کدهای تخفیف در ووکامرس پردازش می‌شوند، کاربر را به صفحه تسویه‌حساب/سبد خرید هدایت می‌کنیم
           if (!this.promoInput.trim()) return;
-          if (this.promoInput.trim().toUpperCase() === 'ROMONET20') {
-            this.couponCode = 'ROMONET20';
-            this.couponError = null;
-          } else {
-            this.couponError = 'کد وارد شده معتبر نمی‌باشد.';
-          }
-          this.promoInput = '';
+          this.couponError = 'لطفاً کد تخفیف را در صفحه تسویه‌حساب وارد کنید.';
         },
 
         getSubtotal() {
@@ -155,7 +211,7 @@
         },
 
         getTax() {
-          return (this.getSubtotal() - this.getDiscount()) * 0.05;
+          return 0; // مالیات به صورت استاندارد در ووکامرس محاسبه می‌شود
         },
 
         getTotal() {
@@ -174,13 +230,13 @@
 
         getItemTypeLabel(type) {
           const labels = {
-            'product': 'قالب / افزونه wpstorm',
+            'product': 'محصول فروشگاه',
             'sms_plan': 'اشتراک سامانه پیامک',
             'sms_credits': 'بسته شارژ پیامک',
             'maintenance_plan': 'پلن پشتیبانی وردپرس',
             'design_package': 'پکیج طراحی اختصاصی'
           };
-          return labels[type] || 'سفارش';
+          return labels[type] || 'محصول فروشگاه';
         },
 
         filteredServices() {
@@ -236,7 +292,6 @@
           </svg>
           مشاوره تلفنی مستقیم: ۰۲۱-۹۱۰۱۵۶۴۲
         </span>
-        <span>تحویل فوق‌سریع کمتر از ۳ ثانیه در سامانه پیامک</span>
       </div>
     </div>
   </div>
@@ -717,7 +772,16 @@
         x-transition:leave="transform transition ease-in-out duration-200"
         x-transition:leave-start="translate-x-0"
         x-transition:leave-end="-translate-x-full"
-        class="w-screen max-w-md bg-[#0d0f17] border-r border-white/10 shadow-2xl flex flex-col">
+        class="w-screen max-w-md bg-[#0d0f17] border-r border-white/10 shadow-2xl flex flex-col relative overflow-hidden">
+
+        <!-- Loading Overlay (When interacting with WooCommerce server) -->
+        <div x-show="isCartUpdating" class="absolute inset-0 z-[100] bg-[#0d0f17]/70 backdrop-blur-sm flex flex-col items-center justify-center transition-all" style="display: none;">
+          <svg class="w-10 h-10 text-amber-500 animate-spin mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+          </svg>
+          <span class="text-sm font-bold text-white">در حال همگام‌سازی...</span>
+        </div>
+
         <!-- Cart Header -->
         <div class="p-5 border-b border-white/10 flex items-center justify-between bg-[#111420]">
           <div class="flex items-center gap-2.5">
@@ -762,8 +826,8 @@
                 </p>
               </div>
               <div class="pt-2 flex flex-col w-full gap-2">
-                <a href="<?php echo esc_url(home_url('/shop')); ?>" class="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition text-center">
-                  مشاهده مارکت قالب‌ها و افزونه‌ها
+                <a href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>" class="w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs transition text-center">
+                  مشاهده فروشگاه
                 </a>
                 <a href="<?php echo esc_url(home_url('/maintenance-pricing')); ?>" class="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-medium text-xs transition text-center">
                   بررسی پلن‌های پشتیبانی وردپرس (SLA)
@@ -776,14 +840,7 @@
             <div>
               <div class="flex items-center justify-between pb-3">
                 <span class="text-xs text-neutral-400">اقلام انتخاب‌شده</span>
-                <button @click="cart = []" class="text-xs text-rose-400 hover:text-rose-300 font-medium flex items-center gap-1 transition">
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 6h18" />
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                  </svg>
-                  <span>حذف همه اقلام</span>
-                </button>
+                <!-- Since full clear needs multiple AJAX calls, we link it to cart page OR just say view cart -->
               </div>
 
               <div class="space-y-3">
@@ -793,13 +850,10 @@
                       <div class="flex-1">
                         <div class="flex items-center gap-1.5 flex-wrap">
                           <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20" x-text="getItemTypeLabel(item.itemType)"></span>
-                          <template x-if="item.licenseLabel">
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10" x-text="item.licenseLabel"></span>
-                          </template>
                         </div>
                         <h4 class="text-sm font-bold text-white mt-1.5 line-clamp-1" x-text="item.title"></h4>
                         <template x-if="item.subtitle">
-                          <p class="text-xs text-neutral-400 mt-0.5 line-clamp-1" x-text="item.subtitle"></p>
+                          <p class="text-xs text-neutral-400 mt-0.5" x-text="item.subtitle"></p>
                         </template>
                       </div>
 
@@ -838,32 +892,15 @@
 
               <!-- Promo Code Box -->
               <div class="pt-4">
-                <template x-if="couponCode">
-                  <div class="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs">
-                    <div class="flex items-center gap-2">
-                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
-                        <path d="M7 7h.01" />
-                      </svg>
-                      <div>
-                        کد تخفیف <span class="font-mono font-bold" x-text="couponCode"></span> اعمال گردید!
-                      </div>
-                    </div>
-                    <button @click="couponCode = null" class="text-emerald-400 hover:text-emerald-200 underline text-xs">
-                      حذف کد
-                    </button>
-                  </div>
-                </template>
-
                 <template x-if="!couponCode">
                   <form @submit.prevent="applyCoupon()" class="flex gap-2">
                     <input
                       type="text"
                       x-model="promoInput"
-                      placeholder="کد تخفیف (مثلاً ROMONET20)"
+                      placeholder="کد تخفیف"
                       class="flex-1 bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400 uppercase" />
                     <button type="submit" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-xs transition">
-                      اعمال کد
+                      اعمال
                     </button>
                   </form>
                 </template>
@@ -880,21 +917,12 @@
           <div class="p-5 border-t border-white/10 bg-[#111420] space-y-3">
             <div class="space-y-1.5 text-xs">
               <div class="flex justify-between text-neutral-400">
-                <span>جمع اقلام:</span>
+                <span>مجموع اولیه:</span>
                 <span class="font-semibold text-white" x-text="formatCurrency(getSubtotal())"></span>
               </div>
-              <template x-if="couponCode">
-                <div class="flex justify-between text-emerald-400">
-                  <span>تخفیف (<span x-text="couponCode"></span>):</span>
-                  <span class="font-semibold">-<span x-text="formatCurrency(getDiscount())"></span></span>
-                </div>
-              </template>
-              <div class="flex justify-between text-neutral-400">
-                <span>مالیات بر ارزش افزوده (۵٪):</span>
-                <span class="font-semibold text-white" x-text="formatCurrency(getTax())"></span>
-              </div>
+
               <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-white/10">
-                <span>مبلغ نهایی قابل پرداخت:</span>
+                <span>مبلغ نهایی تقریبی:</span>
                 <span class="text-amber-400 font-bold text-base" x-text="formatCurrency(getTotal())"></span>
               </div>
             </div>
@@ -913,7 +941,7 @@
               <a
                 href="<?php echo esc_url(function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart')); ?>"
                 class="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-medium text-xs transition text-center block">
-                مشاهده سبد کامل و جزییات لایسنس‌ها
+                مشاهده سبد کامل خرید
               </a>
             </div>
 
@@ -922,7 +950,7 @@
                 <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
                 <path d="m9 12 2 2 4-4" />
               </svg>
-              <span>گارانتی ۳۰ روزه بازگشت وجه + تحویل آنی کلید لایسنس</span>
+              <span>پرداخت کاملاً امن و تضمین شده</span>
             </div>
           </div>
         </template>

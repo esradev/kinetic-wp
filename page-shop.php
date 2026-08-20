@@ -7,6 +7,138 @@
  * @package Romonet_WPStorm
  */
 
+// دریافت محصولات ووکامرس
+$args = array(
+    'post_type'      => 'product',
+    'post_status'    => 'publish',
+    'posts_per_page' => -1, // دریافت تمام محصولات (می‌توانید محدود کنید)
+);
+$products_query = new WP_Query($args);
+
+$js_products = array();
+$all_tags_set = array();
+
+if ($products_query->have_posts()) {
+    while ($products_query->have_posts()) {
+        $products_query->the_post();
+
+        // اطمینان از نصب بودن ووکامرس و دریافت آبجکت محصول
+        if (! function_exists('wc_get_product')) continue;
+
+        $product = wc_get_product(get_the_ID());
+        if (! $product) continue;
+
+        $id   = $product->get_id();
+        $name = $product->get_name();
+        $slug = $product->get_slug();
+
+        // --- تشخیص دسته‌بندی و نوع محصول (قالب یا افزونه) ---
+        $terms = get_the_terms($id, 'product_cat');
+        $category_name = 'دسته‌بندی نشده';
+        $type = 'plugin'; // پیش‌فرض روی افزونه
+        if (! empty($terms) && ! is_wp_error($terms)) {
+            $category_name = $terms[0]->name;
+            foreach ($terms as $term) {
+                // اگر کلمه "قالب" یا "theme" در نام/اسلاگ دسته بود، نوع آن را theme می‌گذاریم
+                if (strpos($term->name, 'قالب') !== false || strpos(strtolower($term->slug), 'theme') !== false) {
+                    $type = 'theme';
+                }
+            }
+        }
+
+        // --- استخراج تگ‌ها ---
+        $tags = array();
+        $tag_terms = get_the_terms($id, 'product_tag');
+        if (! empty($tag_terms) && ! is_wp_error($tag_terms)) {
+            foreach ($tag_terms as $tag_term) {
+                $tags[] = $tag_term->name;
+                $all_tags_set[$tag_term->name] = true; // افزودن به لیست تمام تگ‌ها برای فیلتر هدر
+            }
+        }
+
+        // --- استخراج اطلاعات عمومی محصول ---
+        // استفاده از توضیحات کوتاه محصول برای Tagline
+        $tagline = wp_strip_all_tags($product->get_short_description());
+
+        $rating       = $product->get_average_rating();
+        $reviewsCount = $product->get_review_count();
+        $downloads    = (int) get_post_meta($id, 'total_sales', true);
+
+        // لاجیک برای بج (Badge) اتوماتیک
+        $badge = '';
+        if ($product->is_featured()) {
+            $badge = 'ویژه';
+        } elseif ($downloads > 50) {
+            $badge = 'پرفروش';
+        }
+
+        // ویژگی‌های کاستوم (می‌توانید به عنوان زمینه دلخواه یا متا اضافه کنید)
+        $version   = get_post_meta($id, '_product_version', true) ?: '1.0.0';
+        $wpVersion = get_post_meta($id, '_wp_version_req', true) ?: '6.0+';
+
+        // تصویر شاخص محصول
+        $bannerImage = wp_get_attachment_image_url($product->get_image_id(), 'large');
+        if (! $bannerImage) {
+            $bannerImage = function_exists('wc_placeholder_img_src') ? wc_placeholder_img_src() : '';
+        }
+
+        // قیمت
+        $price = $product->get_price();
+
+        // --- استخراج KeyFeatures ---
+        $keyFeatures = array();
+        // خواندن فیچرها از توضیحات کوتاه (گرفتن ۲ خط اول) 
+        // یا اگر متا دیتای خاصی دارید، آن را از $product->get_meta('features') فراخوانی کنید
+        $lines = explode("\n", $product->get_short_description());
+        foreach (array_slice($lines, 0, 2) as $line) {
+            $clean_line = trim(wp_strip_all_tags($line));
+            if (! empty($clean_line)) {
+                $keyFeatures[] = array('title' => $clean_line);
+            }
+        }
+        // اگر خالی بود، مقادیر پیش‌فرض بگذار
+        if (empty($keyFeatures)) {
+            $keyFeatures = array(
+                array('title' => 'پشتیبانی فنی اختصاصی'),
+                array('title' => 'بروزرسانی‌های منظم')
+            );
+        }
+
+        // ثبت دیتای این محصول برای پاس دادن به جاوا اسکریپت
+        $js_products[] = array(
+            'id'           => $id,
+            'slug'         => $slug,
+            'name'         => $name,
+            'type'         => $type,
+            'category'     => $category_name,
+            'tagline'      => $tagline,
+            'rating'       => (float) $rating > 0 ? number_format((float) $rating, 1) : '۰.۰',
+            'reviewsCount' => $reviewsCount,
+            'downloads'    => $downloads,
+            'badge'        => $badge,
+            'version'      => $version,
+            'wpVersion'    => $wpVersion,
+            'tags'         => $tags,
+            'bannerImage'  => $bannerImage,
+            'url'          => get_permalink($id),
+            'licenses'     => array(
+                array(
+                    'name'  => 'لایسنس استاندارد',
+                    'price' => (float) $price,
+                )
+            ),
+            'keyFeatures'  => $keyFeatures,
+        );
+    }
+    wp_reset_postdata();
+}
+
+// ساخت لیست تگ‌های داینامیک برای منوی فیلتر تگ‌ها
+$dynamic_tags = array('همه');
+foreach (array_keys($all_tags_set) as $t) {
+    $dynamic_tags[] = $t;
+}
+
 get_header();
 ?>
 
@@ -181,7 +313,7 @@ get_header();
                     <div class="p-6 pt-0">
                         <div class="pt-4 border-t border-white/5 flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-neutral-500 block">لایسنس استاندارد</span>
+                                <span class="text-[10px] text-neutral-500 block">شروع قیمت از</span>
                                 <span class="text-lg font-black text-white" x-text="formatCurrency(product.licenses[0].price)"></span>
                             </div>
 
@@ -189,13 +321,13 @@ get_header();
                                 <a
                                     :href="product.url"
                                     class="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 text-xs transition">
-                                    جزییات و دمو
+                                    جزییات کالا
                                 </a>
 
                                 <button
                                     type="button"
-                                    @click="buyProduct(product)"
-                                    class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition active:scale-95 shadow-lg shadow-amber-500/25 flex items-center gap-1.5">
+                                    @click="buyProduct(product, $event)"
+                                    class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition active:scale-95 shadow-lg shadow-amber-500/25 flex items-center justify-center gap-1.5 min-w-[70px]">
                                     <span>خرید</span>
                                     <!-- ArrowLeft Icon -->
                                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -233,177 +365,11 @@ get_header();
             searchQuery: '',
             sortBy: 'popular',
 
-            tags: ['همه', 'گوتنبرگ', 'ووکامرس', 'سرعت', 'امنیت', 'پیامک', 'فوق سریع', 'شرکتی', 'پورتفولیو'],
+            // دریافت اتوماتیک تگ‌ها از PHP
+            tags: <?php echo wp_json_encode($dynamic_tags); ?>,
 
-            products: [{
-                    id: 'apex-studio-pro',
-                    slug: 'apex-studio-pro',
-                    name: 'قالب اختصاصی آژانسی و شرکتی Apex Studio',
-                    type: 'theme',
-                    category: 'قالب اختصاصی وردپرس',
-                    tagline: 'سرعت لود فوق‌العاده با بلوک‌های بومی گوتنبرگ و Tailwind CSS',
-                    rating: '۴.۹',
-                    reviewsCount: '۲۸',
-                    downloads: 480,
-                    badge: 'پرفروش‌ترین',
-                    version: '2.4.0',
-                    wpVersion: '6.7+',
-                    tags: ['گوتنبرگ', 'شرکتی', 'پورتفولیو', 'Gutenberg'],
-                    bannerImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80',
-                    url: '<?php echo esc_url(home_url('/shop/apex-studio-pro')); ?>',
-                    licenses: [{
-                        name: 'لایسنس تک دامنه',
-                        price: 2450000
-                    }],
-                    keyFeatures: [{
-                            title: 'سازگاری کامل با بلوک‌های گوتنبرگ و Tailwind'
-                        },
-                        {
-                            title: 'سرعت لود زیر ۳۰۰ میلی‌ثانیه'
-                        }
-                    ]
-                },
-                {
-                    id: 'aerocommerce-max',
-                    slug: 'aerocommerce-max',
-                    name: 'قالب فروشگاهی ایروکامرس مکس (AeroCommerce)',
-                    type: 'theme',
-                    category: 'ووکامرس فوق سریع',
-                    tagline: 'معماری مدرن سبد خرید ایجکس و بهینه‌سازی شده برای نرخ تبدیل موبایل',
-                    rating: '۵.۰',
-                    reviewsCount: '۴۲',
-                    downloads: 620,
-                    badge: 'جدید',
-                    version: '3.1.2',
-                    wpVersion: '6.7+',
-                    tags: ['ووکامرس', 'فوق سریع', 'سرعت', 'WooCommerce'],
-                    bannerImage: 'https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&q=80',
-                    url: '<?php echo esc_url(home_url('/shop/aerocommerce-max')); ?>',
-                    licenses: [{
-                        name: 'لایسنس تک دامنه',
-                        price: 2890000
-                    }],
-                    keyFeatures: [{
-                            title: 'سبد خرید کشویی ایجکس و فیلترهای آنی بدون رفرش'
-                        },
-                        {
-                            title: 'تسویه‌حساب تک‌مرحله‌ای بهینه‌شده'
-                        }
-                    ]
-                },
-                {
-                    id: 'telepulse-sms-engine',
-                    slug: 'telepulse-sms-engine',
-                    name: 'افزونه درگاه هوشمند پیامک رومونت (TelePulse)',
-                    type: 'plugin',
-                    category: 'افزونه پیامکی وردپرس',
-                    tagline: 'ارسال پیامک با خطوط خدماتی بدون بلک‌لیست و کدهای OTP زیر ۳ ثانیه',
-                    rating: '۴.۸',
-                    reviewsCount: '۱۹',
-                    downloads: 350,
-                    badge: 'ضروری',
-                    version: '1.8.0',
-                    wpVersion: '6.7+',
-                    tags: ['پیامک', 'ووکامرس', 'SMS', 'OTP'],
-                    bannerImage: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80',
-                    url: '<?php echo esc_url(home_url('/shop/telepulse-sms-engine')); ?>',
-                    licenses: [{
-                        name: 'لایسنس تک دامنه',
-                        price: 890000
-                    }],
-                    keyFeatures: [{
-                            title: 'ارسال با خطوط خدماتی بدون مسدودی و بلک‌لیست'
-                        },
-                        {
-                            title: 'کدهای ورود OTP زیر ۳ ثانیه'
-                        }
-                    ]
-                },
-                {
-                    id: 'pulsespeed-turbo-cache',
-                    slug: 'pulsespeed-turbo-cache',
-                    name: 'افزونه بهینه‌ساز کش و دیتابیس PulseSpeed Turbo',
-                    type: 'plugin',
-                    category: 'سرعت و عملکرد',
-                    tagline: 'تضمین نمره بالای ۹۵ در تست PageSpeed گوگل بدون باگ رندرینگ',
-                    rating: '۴.۹',
-                    reviewsCount: '۳۴',
-                    downloads: 510,
-                    badge: 'ویژه',
-                    version: '2.0.4',
-                    wpVersion: '6.7+',
-                    tags: ['سرعت', 'فوق سریع', 'Speed', 'Cache'],
-                    bannerImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80',
-                    url: '<?php echo esc_url(home_url('/shop/pulsespeed-turbo-cache')); ?>',
-                    licenses: [{
-                        name: 'لایسنس تک دامنه',
-                        price: 1150000
-                    }],
-                    keyFeatures: [{
-                            title: 'بهینه‌سازی خودکار دیتابیس و کش Redis'
-                        },
-                        {
-                            title: 'رساندن امتیاز Core Web Vitals به ۱۰۰'
-                        }
-                    ]
-                },
-                {
-                    id: 'fortress-shield-secops',
-                    slug: 'fortress-shield-secops',
-                    name: 'افزونه امنیتی و فایروال Fortress Shield',
-                    type: 'plugin',
-                    category: 'امنیت و پایش',
-                    tagline: 'فایروال WAF پیشرفته، مسدودسازی حملات Brute Force و پایش روز صفر',
-                    rating: '۴.۹',
-                    reviewsCount: '۲۲',
-                    downloads: 290,
-                    badge: 'امنیت',
-                    version: '1.5.0',
-                    wpVersion: '6.7+',
-                    tags: ['امنیت', 'Security', 'WAF'],
-                    bannerImage: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?auto=format&fit=crop&w=800&q=80',
-                    url: '<?php echo esc_url(home_url('/shop/fortress-shield-secops')); ?>',
-                    licenses: [{
-                        name: 'لایسنس تک دامنه',
-                        price: 1350000
-                    }],
-                    keyFeatures: [{
-                            title: 'فایروال WAF اختصاصی و مسدودسازی هوشمند IP های مخرب'
-                        },
-                        {
-                            title: 'اسکن پیوسته تروجان و بدافزار'
-                        }
-                    ]
-                },
-                {
-                    id: 'nova-headless-bridge',
-                    slug: 'nova-headless-bridge',
-                    name: 'پل ارتباطی هدلس وردپرس Nova Headless Bridge',
-                    type: 'plugin',
-                    category: 'توسعه و زیرساخت',
-                    tagline: 'اتصال فوق سریع به Next.js 15 و React 19 با وب‌هوک و کش آنی Edge',
-                    rating: '۴.۷',
-                    reviewsCount: '۱۵',
-                    downloads: 180,
-                    badge: 'انترپرایز',
-                    version: '1.2.0',
-                    wpVersion: '6.7+',
-                    tags: ['گوتنبرگ', 'فوق سریع', 'Next.js', 'GraphQL'],
-                    bannerImage: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
-                    url: '<?php echo esc_url(home_url('/shop/nova-headless-bridge')); ?>',
-                    licenses: [{
-                        name: 'لایسنس تک دامنه',
-                        price: 1750000
-                    }],
-                    keyFeatures: [{
-                            title: 'پشتیبانی کامل از Next.js 15 App Router'
-                        },
-                        {
-                            title: 'کش آنی و بازتولید ایستا (ISR)'
-                        }
-                    ]
-                }
-            ],
+            // دریافت اتوماتیک محصولات از PHP
+            products: <?php echo wp_json_encode($js_products); ?>,
 
             filteredProducts() {
                 let list = this.products.filter((p) => {
@@ -431,32 +397,75 @@ get_header();
                 return list;
             },
 
-            buyProduct(product) {
-                if (typeof this.cart !== 'undefined') {
-                    const existing = this.cart.find(i => i.id === product.id);
-                    if (existing) {
-                        existing.quantity += 1;
-                    } else {
-                        this.cart.push({
-                            id: product.id,
-                            itemType: 'product',
-                            title: product.name,
-                            subtitle: product.licenses[0].name,
-                            price: product.licenses[0].price,
-                            quantity: 1,
-                            licenseTier: 'single',
-                            licenseLabel: 'لایسنس تک دامنه'
-                        });
-                    }
-                    this.isCartDrawerOpen = true;
-                }
+            async buyProduct(product, event) {
+                // تغییر وضعیت دکمه به حالت لودینگ
+                const btn = event.currentTarget;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.8';
 
-                window.dispatchEvent(new CustomEvent('show-toast', {
-                    detail: `محصول «${product.name}» با موفقیت به سبد سفارشات افزوده شد.`
-                }));
+                try {
+                    // ارسال درخواست به سرور ووکامرس (AJAX)
+                    const formData = new URLSearchParams();
+                    formData.append('product_id', product.id);
+                    formData.append('quantity', 1);
+
+                    const response = await fetch('/?wc-ajax=add_to_cart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.error) {
+                        alert('خطا: ' + (data.error_message || 'محصول به سبد خرید اضافه نشد.'));
+                        return;
+                    }
+
+                    // اضافه کردن به سبد خرید فرانت‌اند (برای نمایش سریع در هدر)
+                    if (typeof this.cart !== 'undefined') {
+                        // بررسی موجود بودن محصول بر اساس id در سبد (میتواند cart item key باشد پس مقایسه دقیق انجام نمیشود)
+                        const existing = this.cart.find(i => i.productId == product.id || i.id == product.id);
+                        if (existing) {
+                            existing.quantity += 1;
+                        } else {
+                            this.cart.push({
+                                id: product.id, // آیدی موقت تا رفرش بعدی
+                                productId: product.id,
+                                itemType: 'product',
+                                title: product.name,
+                                subtitle: '', // مقادیر فیک لایسنس حذف شد
+                                price: product.licenses[0].price,
+                                quantity: 1
+                            });
+                        }
+                        this.isCartDrawerOpen = true;
+                    } else {
+                        // در صورت عدم دسترسی به متغیر هدر، صفحه رفرش شود
+                        window.location.reload();
+                    }
+
+                    window.dispatchEvent(new CustomEvent('show-toast', {
+                        detail: `محصول «${product.name}» با موفقیت به سبد سفارشات افزوده شد.`
+                    }));
+
+                } catch (error) {
+                    console.error('Error adding to cart:', error);
+                    alert('خطا در برقراری ارتباط با سرور.');
+                } finally {
+                    // بازگردانی دکمه به حالت عادی
+                    btn.innerHTML = originalText;
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.opacity = '1';
+                }
             },
 
             formatCurrency(amount) {
+                if (!amount) return 'رایگان';
                 return new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
             }
         };
@@ -465,3 +474,4 @@ get_header();
 
 <?php
 get_footer();
+?>
