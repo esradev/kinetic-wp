@@ -1,9 +1,7 @@
 import Alpine from "alpinejs";
 import { romonetHeader } from "./header-component.js";
 import { romonetFooter, romonetToast } from "./footer-component.js";
-
-// تخصیص آلپاین به دامنه Window در صورت نیاز افزونه‌های دیگر
-// window.Alpine = Alpine;
+import { romonetFrontPage } from "./front-page-component.js";
 
 Alpine.prefix("xyz-");
 
@@ -11,6 +9,7 @@ Alpine.prefix("xyz-");
 Alpine.data("romonetHeader", romonetHeader);
 Alpine.data("romonetFooter", romonetFooter);
 Alpine.data("romonetToast", romonetToast);
+Alpine.data("romonetFrontPage", romonetFrontPage);
 
 // استارت آلپاین
 Alpine.start();
