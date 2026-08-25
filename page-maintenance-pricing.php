@@ -49,7 +49,7 @@ get_header();
                         :class="billingCycle === 'annual' ? 'bg-emerald-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
                         class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
                         <span>پرداخت سالانه</span>
-                        <span class="text-[10px] bg-black/40 text-emerald-300 px-1.5 py-0.5 rounded font-mono">
+                        <span class="text-[10px] bg-black/40 text-emerald-300 px-1.5 py-0.5 rounded ">
                             ۲۰٪ تخفیف
                         </span>
                     </button>
@@ -185,7 +185,7 @@ get_header();
                     <div class="space-y-2">
                         <div class="flex justify-between text-xs">
                             <span class="text-neutral-400">تعداد وب‌سایت‌های وردپرسی تحت پوشش:</span>
-                            <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 font-mono">
+                            <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
                                 <span x-text="siteCount"></span> <span x-text="siteCount === 1 ? 'سایت' : 'سایت (ناوگان)'"></span>
                             </span>
                         </div>
@@ -234,7 +234,7 @@ get_header();
                     <div class="space-y-2">
                         <div class="flex justify-between text-xs">
                             <span class="text-neutral-400">ساعت ماهانه اختصاصی برای توسعه و تغییرات قالب:</span>
-                            <span class="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 font-mono">
+                            <span class="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
                                 <span x-text="extraDevHours"></span> ساعت در ماه
                             </span>
                         </div>
@@ -258,7 +258,7 @@ get_header();
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between text-neutral-300">
                             <span>تعداد سایت‌ها:</span>
-                            <span class="text-white font-mono"><span x-text="siteCount"></span> دامنه فعال</span>
+                            <span class="text-white "><span x-text="siteCount"></span> دامنه فعال</span>
                         </div>
                         <div class="flex justify-between text-neutral-300">
                             <span>نوع معماری:</span>
@@ -270,7 +270,7 @@ get_header();
                         </div>
                         <div class="flex justify-between text-neutral-300">
                             <span>ساعات توسعه و تغییرات:</span>
-                            <span class="text-amber-400 font-mono"><span x-text="extraDevHours"></span> ساعت در ماه</span>
+                            <span class="text-amber-400 "><span x-text="extraDevHours"></span> ساعت در ماه</span>
                         </div>
                         <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
                             <span>سرمایه‌گذاری ماهانه:</span>

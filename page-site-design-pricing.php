@@ -93,7 +93,7 @@ get_header();
                             <div class="text-[11px] text-neutral-400 font-semibold mb-2">استک فنی مدرن:</div>
                             <div class="flex flex-wrap gap-1.5">
                                 <template x-for="(tech, idx) in pkg.techStack" :key="idx">
-                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-amber-300 border border-white/10 font-mono" x-text="tech"></span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-amber-300 border border-white/10 " x-text="tech"></span>
                                 </template>
                             </div>
                         </div>
@@ -198,7 +198,7 @@ get_header();
                     <div class="space-y-2">
                         <div class="flex justify-between text-xs">
                             <span class="text-neutral-400">تعداد صفحات و تمپلیت‌های اختصاصی:</span>
-                            <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 font-mono">
+                            <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
                                 <span x-text="pageCount"></span> قالب صفحه
                             </span>
                         </div>
@@ -277,7 +277,7 @@ get_header();
 
                         <div class="flex justify-between text-neutral-300">
                             <span>تعداد قالب‌های اختصاصی:</span>
-                            <span class="font-mono text-white"><span x-text="pageCount"></span> تمپلیت</span>
+                            <span class=" text-white"><span x-text="pageCount"></span> تمپلیت</span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
@@ -321,31 +321,31 @@ get_header();
 
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-2 relative bg-white/5 backdrop-blur-md">
-                <span class="text-2xl font-black font-mono text-amber-500/30">۰۱</span>
+                <span class="text-2xl font-black  text-amber-500/30">۰۱</span>
                 <h3 class="text-sm font-bold text-white">شناخت و معماری داده</h3>
                 <p class="text-xs text-neutral-400 leading-relaxed">تعریف انواع پست‌های سفارشی، پلن ایندکس دیتابیس و ساختار اطلاعاتی.</p>
             </div>
 
             <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-2 relative bg-white/5 backdrop-blur-md">
-                <span class="text-2xl font-black font-mono text-amber-500/30">۰۲</span>
+                <span class="text-2xl font-black  text-amber-500/30">۰۲</span>
                 <h3 class="text-sm font-bold text-white">کیت دیزاین فیگما</h3>
                 <p class="text-xs text-neutral-400 leading-relaxed">طراحی اجزای واکنش‌گرا، تایپوگرافی اختصاصی و حالت‌های مختلف موبایل.</p>
             </div>
 
             <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-2 relative bg-white/5 backdrop-blur-md">
-                <span class="text-2xl font-black font-mono text-amber-500/30">۰۳</span>
+                <span class="text-2xl font-black  text-amber-500/30">۰۳</span>
                 <h3 class="text-sm font-bold text-white">کدنویسی بلوک‌ها</h3>
                 <p class="text-xs text-neutral-400 leading-relaxed">توسعه بلوک‌های بومی گوتنبرگ با ری‌اکت و افکت‌های مینیمال پرسرعت.</p>
             </div>
 
             <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-2 relative bg-white/5 backdrop-blur-md">
-                <span class="text-2xl font-black font-mono text-amber-500/30">۰۴</span>
+                <span class="text-2xl font-black  text-amber-500/30">۰۴</span>
                 <h3 class="text-sm font-bold text-white">تست سرعت و امنیت</h3>
                 <p class="text-xs text-neutral-400 leading-relaxed">رساندن امتیاز Core Web Vitals به ۱۰۰ و اسکن نفوذپذیری روز صفر.</p>
             </div>
 
             <div class="glass-card p-5 rounded-2xl border border-white/10 space-y-2 relative bg-white/5 backdrop-blur-md">
-                <span class="text-2xl font-black font-mono text-amber-500/30">۰۵</span>
+                <span class="text-2xl font-black  text-amber-500/30">۰۵</span>
                 <h3 class="text-sm font-bold text-white">راه‌اندازی بدون قطعی</h3>
                 <p class="text-xs text-neutral-400 leading-relaxed">تنظیم شبکه توزیع محتوا، بهینه‌سازی کش سرور و ۶۰ روز گارانتی بی‌قیدوشرط.</p>
             </div>

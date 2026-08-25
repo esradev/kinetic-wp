@@ -78,14 +78,14 @@
       <!-- Col 1: Brand & Bio -->
       <div class="lg:col-span-2 space-y-4">
         <div class="flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black font-mono text-lg shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-black  text-lg shadow-[0_0_15px_rgba(245,158,11,0.3)]">
             R
           </div>
           <div>
             <span class="font-sans font-black text-xl text-white tracking-tight">
               رومونت
             </span>
-            <span class="text-amber-400 font-mono text-xs font-bold mr-1">.ir</span>
+            <span class="text-amber-400  text-xs font-bold mr-1">.ir</span>
           </div>
         </div>
 
@@ -98,14 +98,14 @@
             <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
-            <span class="font-mono">۰۲۱-۹۱۰۱۵۶۴۲ (پشتیبانی ۲۴ ساعته)</span>
+            <span class="">۰۲۱-۹۱۰۱۵۶۴۲ (پشتیبانی ۲۴ ساعته)</span>
           </div>
           <div class="flex items-center gap-2 text-neutral-300">
             <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect width="20" height="16" x="2" y="4" rx="2"></rect>
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
             </svg>
-            <span class="font-mono">info@romonet.ir / wpstormdev@gmail.com</span>
+            <span class="">info@romonet.ir / wpstormdev@gmail.com</span>
           </div>
           <div class="flex items-center gap-2 text-neutral-300">
             <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -279,7 +279,7 @@
         <a href="<?php echo esc_url(home_url('/terms')); ?>" class="hover:text-neutral-300 transition">قوانین و مقررات</a>
         <a href="<?php echo esc_url(home_url('/privacy')); ?>" class="hover:text-neutral-300 transition">حریم خصوصی</a>
         <a href="<?php echo esc_url(home_url('/sla')); ?>" class="hover:text-neutral-300 transition">قرارداد SLA</a>
-        <span class="text-neutral-500 font-mono">v4.8.2-prod</span>
+        <span class="text-neutral-500 ">v4.8.2-prod</span>
       </div>
     </div>
   </div>

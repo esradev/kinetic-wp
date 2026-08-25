@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+  font-family: Vazirmatn;
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src: url("/assets/fonts/Vazirmatn-VariableFont_wght.ttf") format("ttf");
+}
+
+@theme {
+  --font-display: "Vazirmatn", sans-serif;
+  --font-display--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  --font-display--font-variation-settings: "opsz" 32;
+}
+
 @layer base {
   :root {
     --bg-main: #08090d;
@@ -62,7 +76,7 @@
   kbd,
   samp,
   pre,
-  .font-mono {
+  . {
     font-family: "JetBrains Mono", "Vazirmatn", monospace !important;
     direction: ltr;
     display: inline-block;

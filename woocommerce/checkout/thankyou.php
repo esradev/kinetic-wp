@@ -121,7 +121,7 @@ if ($order && is_a($order, 'WC_Order')) {
                     </h1>
 
                     <p class="text-sm sm:text-base text-neutral-300 max-w-lg mx-auto leading-relaxed">
-                        پرداخت با موفقیت انجام شد. رسید پرداخت و مشخصات نرم‌افزار به آدرس ایمیل <strong class="text-amber-400 font-mono" dir="ltr" x-text="order.customer.email"></strong> ارسال گردید.
+                        پرداخت با موفقیت انجام شد. رسید پرداخت و مشخصات نرم‌افزار به آدرس ایمیل <strong class="text-amber-400 " dir="ltr" x-text="order.customer.email"></strong> ارسال گردید.
                     </p>
                 </div>
 
@@ -129,11 +129,11 @@ if ($order && is_a($order, 'WC_Order')) {
                 <div class="glass-panel p-4 sm:p-6 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs bg-white/5 backdrop-blur-xl">
                     <div>
                         <span class="text-neutral-400 block text-[11px]">شماره پیگیری فاکتور</span>
-                        <span class="text-amber-400 font-bold text-sm font-mono" x-text="order.orderId"></span>
+                        <span class="text-amber-400 font-bold text-sm " x-text="order.orderId"></span>
                     </div>
                     <div>
                         <span class="text-neutral-400 block text-[11px]">تاریخ ثبت سفارش</span>
-                        <span class="text-white font-mono" x-text="order.date"></span>
+                        <span class="text-white " x-text="order.date"></span>
                     </div>
                     <div>
                         <span class="text-neutral-400 block text-[11px]">شیوه پرداخت</span>
@@ -141,7 +141,7 @@ if ($order && is_a($order, 'WC_Order')) {
                     </div>
                     <div>
                         <span class="text-neutral-400 block text-[11px]">مبلغ کل تسویه‌شده</span>
-                        <span class="text-white font-bold text-sm font-mono" x-text="formatCurrency(order.total)"></span>
+                        <span class="text-white font-bold text-sm " x-text="formatCurrency(order.total)"></span>
                     </div>
                     <button
                         type="button"
@@ -168,7 +168,7 @@ if ($order && is_a($order, 'WC_Order')) {
                             </svg>
                             <span>جزئیات سفارش و فایل‌های دانلود</span>
                         </h2>
-                        <span class="text-xs text-neutral-400 font-mono">
+                        <span class="text-xs text-neutral-400 ">
                             <span x-text="order.items.length"></span> محصول
                         </span>
                     </div>
@@ -210,8 +210,8 @@ if ($order && is_a($order, 'WC_Order')) {
                                 <template x-if="item.licenseKey">
                                     <div class="p-3.5 rounded-xl bg-black/60 border border-white/15 flex items-center justify-between gap-3" dir="ltr">
                                         <div class="space-y-0.5 truncate text-left">
-                                            <span class="text-[10px] text-neutral-500 uppercase block font-mono">License Authorization Key</span>
-                                            <span class="text-sm font-bold text-emerald-400 tracking-wider select-all truncate block font-mono" x-text="item.licenseKey"></span>
+                                            <span class="text-[10px] text-neutral-500 uppercase block ">License Authorization Key</span>
+                                            <span class="text-sm font-bold text-emerald-400 tracking-wider select-all truncate block " x-text="item.licenseKey"></span>
                                         </div>
 
                                         <button

@@ -276,7 +276,7 @@ get_header();
                         <div class="p-6 space-y-3">
                             <div class="flex items-center justify-between text-xs">
                                 <span class="text-neutral-400" x-text="product.category"></span>
-                                <div class="flex items-center gap-1 text-amber-400 font-mono">
+                                <div class="flex items-center gap-1 text-amber-400 ">
                                     <!-- Star Icon -->
                                     <svg class="w-3.5 h-3.5 fill-current text-amber-400" viewBox="0 0 24 24">
                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />

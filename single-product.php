@@ -132,7 +132,7 @@ $gallery_json = wp_json_encode($gallery_images);
                         </span>
 
                         <?php if ($product_reviews_count > 0) : ?>
-                            <div class="flex items-center gap-1 text-amber-400 font-mono">
+                            <div class="flex items-center gap-1 text-amber-400 ">
                                 <!-- Star Icon -->
                                 <svg class="w-4 h-4 fill-current text-amber-400" viewBox="0 0 24 24">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -230,7 +230,7 @@ $gallery_json = wp_json_encode($gallery_images);
                         <h3 class="text-xl font-bold text-white">نظرات و دیدگاه‌ها</h3>
 
                         <?php if ($product_reviews_count > 0) : ?>
-                            <div class="flex items-center gap-1.5 text-amber-400 font-mono text-sm">
+                            <div class="flex items-center gap-1.5 text-amber-400  text-sm">
                                 <svg class="w-4 h-4 fill-current text-amber-400" viewBox="0 0 24 24">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                                 </svg>

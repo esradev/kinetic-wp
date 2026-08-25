@@ -74,7 +74,7 @@ get_header();
                         <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1 text-xs">
                             <div class="flex justify-between text-neutral-300">
                                 <span>اعتبار پیامک اولیه:</span>
-                                <span class="text-cyan-400 font-bold font-mono"><span x-text="plan.includedCredits.toLocaleString('fa-IR')"></span> عدد</span>
+                                <span class="text-cyan-400 font-bold "><span x-text="plan.includedCredits.toLocaleString('fa-IR')"></span> عدد</span>
                             </div>
                             <div class="flex justify-between text-neutral-400 text-[11px]">
                                 <span>تعرفه هر پیامک اضافه:</span>
@@ -180,7 +180,7 @@ get_header();
                                     <span class="text-base" x-text="item.flag"></span>
                                     <div class="truncate">
                                         <div class="text-xs truncate" x-text="item.name"></div>
-                                        <div class="text-[10px] text-cyan-400 font-mono"><span x-text="item.tomanPrice"></span> تومان/پیامک</div>
+                                        <div class="text-[10px] text-cyan-400 "><span x-text="item.tomanPrice"></span> تومان/پیامک</div>
                                     </div>
                                 </button>
                             </template>
@@ -191,7 +191,7 @@ get_header();
                     <div class="space-y-3 pt-2">
                         <div class="flex justify-between items-center text-xs">
                             <span class="text-neutral-400">تعداد پیامک‌های تخمینی ماهانه:</span>
-                            <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 font-mono">
+                            <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
                                 <span x-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک / ماه
                             </span>
                         </div>
@@ -202,7 +202,7 @@ get_header();
                             step="1000"
                             x-model.number="smsVolume"
                             class="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-cyan-400" />
-                        <div class="flex justify-between text-[10px] font-mono text-neutral-500">
+                        <div class="flex justify-between text-[10px]  text-neutral-500">
                             <span>۱,۰۰۰</span>
                             <span>۲۵,۰۰۰</span>
                             <span>۵۰,۰۰۰</span>
@@ -235,22 +235,22 @@ get_header();
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between text-neutral-300">
                             <span>حجم ارسال ماهانه:</span>
-                            <span class="font-bold text-white font-mono"><span x-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک</span>
+                            <span class="font-bold text-white "><span x-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک</span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
                             <span>مسیر تحویل (<span x-text="currentCountry().name"></span>):</span>
-                            <span class="text-cyan-400 font-mono"><span x-text="currentCountry().tomanPrice"></span> تومان / پیامک</span>
+                            <span class="text-cyan-400 "><span x-text="currentCountry().tomanPrice"></span> تومان / پیامک</span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
                             <span>میانگین نرخ بازگشایی پیامک:</span>
-                            <span class="text-emerald-400 font-bold font-mono">۹۸.۲٪</span>
+                            <span class="text-emerald-400 font-bold ">۹۸.۲٪</span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
                             <span>سفارشات نجات‌یافته سبد رهاشده:</span>
-                            <span class="text-amber-400 font-bold font-mono">~<span x-text="estimatedRecoveredOrders().toLocaleString('fa-IR')"></span> سفارش</span>
+                            <span class="text-amber-400 font-bold ">~<span x-text="estimatedRecoveredOrders().toLocaleString('fa-IR')"></span> سفارش</span>
                         </div>
 
                         <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
@@ -260,7 +260,7 @@ get_header();
 
                         <div class="flex justify-between text-xs text-emerald-400 pt-1">
                             <span>فروش تخمینی ایجادشده با پیامک:</span>
-                            <span class="font-bold font-mono">+<span x-text="estimatedRecoveredRevenue().toLocaleString('fa-IR')"></span> تومان</span>
+                            <span class="font-bold ">+<span x-text="estimatedRecoveredRevenue().toLocaleString('fa-IR')"></span> تومان</span>
                         </div>
                     </div>
 
@@ -297,7 +297,7 @@ get_header();
                     :class="bundle.popular ? 'border-amber-500/50 bg-[#14121a]' : 'border-white/10'">
                     <div>
                         <div class="flex items-center justify-between">
-                            <span class="text-2xl font-black text-white font-mono" x-text="bundle.credits.toLocaleString('fa-IR')"></span>
+                            <span class="text-2xl font-black text-white " x-text="bundle.credits.toLocaleString('fa-IR')"></span>
                             <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold" x-text="bundle.bonus"></span>
                         </div>
                         <div class="text-xs text-neutral-400 mt-1">پیامک ارسالی</div>

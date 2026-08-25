@@ -155,7 +155,7 @@ $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() :
                                                 <path d="M5 12h14" />
                                             </svg>
                                         </button>
-                                        <span class="px-3 text-xs font-bold text-white font-mono" x-text="item.quantity"></span>
+                                        <span class="px-3 text-xs font-bold text-white " x-text="item.quantity"></span>
                                         <button
                                             type="button"
                                             @click="updateQuantity(item.id, 1)"
@@ -168,9 +168,9 @@ $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() :
                                     </div>
 
                                     <div class="text-left min-w-[120px]" dir="ltr">
-                                        <div class="text-lg font-extrabold text-amber-400 font-mono" x-text="formatCurrency(item.price * item.quantity)"></div>
+                                        <div class="text-lg font-extrabold text-amber-400 " x-text="formatCurrency(item.price * item.quantity)"></div>
                                         <template x-if="item.quantity > 1">
-                                            <div class="text-[10px] text-neutral-500 font-mono">
+                                            <div class="text-[10px] text-neutral-500 ">
                                                 هر عدد <span x-text="formatCurrency(item.price)"></span>
                                             </div>
                                         </template>
@@ -224,7 +224,7 @@ $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() :
                                                 <path d="M7 7h.01" />
                                             </svg>
                                             <div>
-                                                کد تخفیف <span class="font-mono font-bold" x-text="couponCode"></span> با موفقیت اعمال شد!
+                                                کد تخفیف <span class=" font-bold" x-text="couponCode"></span> با موفقیت اعمال شد!
                                             </div>
                                         </div>
                                         <button type="button" @click="couponCode = null; couponError = null;" class="underline hover:text-emerald-200">
@@ -240,7 +240,7 @@ $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() :
                                                 type="text"
                                                 x-model="promoInput"
                                                 placeholder="کد تخفیف یا معرف"
-                                                class="flex-1 bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400 uppercase font-mono" />
+                                                class="flex-1 bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400 uppercase " />
                                             <button
                                                 type="submit"
                                                 class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition">
@@ -250,7 +250,7 @@ $checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() :
                                         <template x-if="couponError">
                                             <p class="text-[11px] text-rose-400" x-text="couponError"></p>
                                         </template>
-                                        <p class="text-[10px] text-neutral-500 font-mono">کدهای تست: ROMONET20 یا WPSTORM50</p>
+                                        <p class="text-[10px] text-neutral-500 ">کدهای تست: ROMONET20 یا WPSTORM50</p>
                                     </form>
                                 </template>
                             </div>

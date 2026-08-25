@@ -29,9 +29,9 @@ get_header();
                 </div>
 
                 <!-- Headline -->
-                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white font-sans leading-[1.2]">
-                    ما وردپرس را برای برندهایی می‌سازیم که حاضر نیستند{' '}
-                    <span class="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent font-serif">کُند</span> باشند.
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.2]">
+                    ما وردپرس را برای برندهایی می‌سازیم که حاضر نیستند 
+                    <span class="bg-linear-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">کُند</span> باشند.
                 </h1>
 
                 <!-- Subheading -->
@@ -66,19 +66,19 @@ get_header();
                 <!-- Live Metrics Trust Bar -->
                 <div class="pt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
                     <div class="glass-card p-4 rounded-xl text-center border border-white/10 bg-white/5 backdrop-blur-md">
-                        <div class="text-2xl sm:text-3xl font-black font-mono text-amber-400">۹۹.۸٪</div>
+                        <div class="text-2xl sm:text-3xl font-black  text-amber-400">۹۹.۸٪</div>
                         <div class="text-xs text-neutral-400 mt-1">قبولی در تست Core Web Vitals</div>
                     </div>
                     <div class="glass-card p-4 rounded-xl text-center border border-white/10 bg-white/5 backdrop-blur-md">
-                        <div class="text-2xl sm:text-3xl font-black font-mono text-cyan-400">&lt; ۰.۳s</div>
+                        <div class="text-2xl sm:text-3xl font-black  text-cyan-400">&lt; ۰.۳s</div>
                         <div class="text-xs text-neutral-400 mt-1">زمان پاسخگویی سرور (TTFB)</div>
                     </div>
                     <div class="glass-card p-4 rounded-xl text-center border border-white/10 bg-white/5 backdrop-blur-md">
-                        <div class="text-2xl sm:text-3xl font-black font-mono text-emerald-400">۱۵ دقیقه</div>
+                        <div class="text-2xl sm:text-3xl font-black  text-emerald-400">۱۵ دقیقه</div>
                         <div class="text-xs text-neutral-400 mt-1">پاسخگویی اضطراری SLA</div>
                     </div>
                     <div class="glass-card p-4 rounded-xl text-center border border-white/10 bg-white/5 backdrop-blur-md">
-                        <div class="text-2xl sm:text-3xl font-black font-mono text-purple-400">۱۵۰۰+</div>
+                        <div class="text-2xl sm:text-3xl font-black  text-purple-400">۱۵۰۰+</div>
                         <div class="text-xs text-neutral-400 mt-1">وب‌سایت و فروشگاه فعال</div>
                     </div>
                 </div>
@@ -384,7 +384,7 @@ get_header();
                         <div class="p-5 space-y-3">
                             <div class="flex items-center justify-between text-xs">
                                 <span class="text-neutral-400" x-text="product.category"></span>
-                                <div class="flex items-center gap-1 text-amber-400 font-mono">
+                                <div class="flex items-center gap-1 text-amber-400 ">
                                     <svg class="w-3.5 h-3.5 fill-current text-amber-400" viewBox="0 0 24 24">
                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                                     </svg>
@@ -466,11 +466,11 @@ get_header();
 
                     <div class="grid grid-cols-2 gap-4 pt-2">
                         <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 text-center sm:text-right">
-                            <div class="text-xl font-bold font-mono text-cyan-400">۹۹.۹۸٪</div>
+                            <div class="text-xl font-bold text-cyan-400">۹۹.۹۸٪</div>
                             <div class="text-xs text-neutral-400 mt-1">نرخ تحویل موفق پیامک</div>
                         </div>
                         <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 text-center sm:text-right">
-                            <div class="text-xl font-bold font-mono text-cyan-400">&lt; ۲.۱ ثانیه</div>
+                            <div class="text-xl font-bold text-cyan-400">&lt; ۲.۱ ثانیه</div>
                             <div class="text-xs text-neutral-400 mt-1">میانگین ارسال کدهای تایید OTP</div>
                         </div>
                     </div>
@@ -497,7 +497,7 @@ get_header();
                         <!-- Virtual Phone Screen -->
                         <div class="bg-[#121624] rounded-[24px] p-4 text-white min-h-[380px] flex flex-col justify-between border border-white/10">
                             <!-- Status Bar -->
-                            <div class="flex items-center justify-between text-[11px] font-mono text-neutral-400 pb-3 border-b border-white/10">
+                            <div class="flex items-center justify-between text-[11px] text-neutral-400 pb-3 border-b border-white/10">
                                 <span>۰۹:۴۱</span>
                                 <span class="text-cyan-400 font-bold">5G • ROMONET-SMS</span>
                                 <span>۱۰۰٪</span>
@@ -518,14 +518,14 @@ get_header();
                                     <!-- Order SMS View -->
                                     <template x-if="smsType === 'order'">
                                         <p class="text-xs text-neutral-200 leading-relaxed">
-                                            📦 <strong>سفارش #۴۸۹۲۱ شما ارسال گردید!</strong> مرسوله شما تحویل پست پیشتاز شد. کد رهگیری ۲۴ رقمی: <span class="text-amber-400 font-mono">۴۵۹۸۲۱۳۶۷۲۹۰</span>. پیگیری زنده: <span class="text-cyan-400 underline">romonet.ir/track</span>
+                                            📦 <strong>سفارش #۴۸۹۲۱ شما ارسال گردید!</strong> مرسوله شما تحویل پست پیشتاز شد. کد رهگیری ۲۴ رقمی: <span class="text-amber-400">۴۵۹۸۲۱۳۶۷۲۹۰</span>. پیگیری زنده: <span class="text-cyan-400 underline">romonet.ir/track</span>
                                         </p>
                                     </template>
 
                                     <!-- OTP SMS View -->
                                     <template x-if="smsType === 'otp'">
                                         <p class="text-xs text-neutral-200 leading-relaxed">
-                                            🔒 کد ورود و تایید هویت شما در سایت: <strong class="text-amber-400 font-mono tracking-widest text-sm">۸۴۹۲۱۰</strong>. معتبر به مدت ۲ دقیقه. این کد را در اختیار دیگران قرار ندهید.
+                                            🔒 کد ورود و تایید هویت شما در سایت: <strong class="text-amber-400 tracking-widest text-sm">۸۴۹۲۱۰</strong>. معتبر به مدت ۲ دقیقه. این کد را در اختیار دیگران قرار ندهید.
                                         </p>
                                     </template>
 
@@ -605,18 +605,18 @@ get_header();
                 <div class="grid grid-cols-3 gap-3 bg-black/40 p-4 rounded-xl border border-white/5">
                     <div class="text-center space-y-1">
                         <div class="text-[10px] text-neutral-500">امتیاز موبایل گوگل</div>
-                        <div class="text-xs text-rose-400 line-through font-mono">31/100</div>
-                        <div class="text-sm font-extrabold text-emerald-400 font-mono">99/100</div>
+                        <div class="text-xs text-rose-400 line-through ">31/100</div>
+                        <div class="text-sm font-extrabold text-emerald-400 ">99/100</div>
                     </div>
                     <div class="text-center space-y-1">
                         <div class="text-[10px] text-neutral-500">زمان لود صفحه (LCP)</div>
-                        <div class="text-xs text-rose-400 line-through font-mono">4.8s</div>
-                        <div class="text-sm font-extrabold text-emerald-400 font-mono">0.6s</div>
+                        <div class="text-xs text-rose-400 line-through ">4.8s</div>
+                        <div class="text-sm font-extrabold text-emerald-400 ">0.6s</div>
                     </div>
                     <div class="text-center space-y-1">
                         <div class="text-[10px] text-neutral-500">نرخ تبدیل نهایی</div>
-                        <div class="text-xs text-rose-400 line-through font-mono">1.2%</div>
-                        <div class="text-sm font-extrabold text-emerald-400 font-mono">+240%</div>
+                        <div class="text-xs text-rose-400 line-through ">1.2%</div>
+                        <div class="text-sm font-extrabold text-emerald-400 ">+240%</div>
                     </div>
                 </div>
 
@@ -656,18 +656,18 @@ get_header();
                 <div class="grid grid-cols-3 gap-3 bg-black/40 p-4 rounded-xl border border-white/5">
                     <div class="text-center space-y-1">
                         <div class="text-[10px] text-neutral-500">پاسخگویی سرور (TTFB)</div>
-                        <div class="text-xs text-rose-400 line-through font-mono">1.9s</div>
-                        <div class="text-sm font-extrabold text-emerald-400 font-mono">0.18s</div>
+                        <div class="text-xs text-rose-400 line-through">1.9s</div>
+                        <div class="text-sm font-extrabold text-emerald-400">0.18s</div>
                     </div>
                     <div class="text-center space-y-1">
                         <div class="text-[10px] text-neutral-500">کاربران همزمان فعال</div>
-                        <div class="text-xs text-rose-400 line-through font-mono">400 کاربر</div>
-                        <div class="text-sm font-extrabold text-emerald-400 font-mono">8,500+</div>
+                        <div class="text-xs text-rose-400 line-through">400 کاربر</div>
+                        <div class="text-sm font-extrabold text-emerald-400">8,500+</div>
                     </div>
                     <div class="text-center space-y-1">
                         <div class="text-[10px] text-neutral-500">تحویل OTP ورود</div>
-                        <div class="text-xs text-rose-400 line-through font-mono">45s (خطوط عادی)</div>
-                        <div class="text-sm font-extrabold text-emerald-400 font-mono">1.8s (رومونت)</div>
+                        <div class="text-xs text-rose-400 line-through">45s (خطوط عادی)</div>
+                        <div class="text-sm font-extrabold text-emerald-400">1.8s (رومونت)</div>
                     </div>
                 </div>
 

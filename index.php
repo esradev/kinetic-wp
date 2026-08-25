@@ -126,7 +126,7 @@ if ($blog_query->have_posts()) {
               <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs border border-amber-500/30 font-semibold">
                 ⭐ مقاله ویژه تحریریه
               </span>
-              <span class="text-xs text-neutral-400 font-mono" x-text="featuredPost.readTime"></span>
+              <span class="text-xs text-neutral-400 " x-text="featuredPost.readTime"></span>
             </div>
 
             <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white group-hover:text-amber-300 transition leading-tight" x-text="featuredPost.title"></h2>

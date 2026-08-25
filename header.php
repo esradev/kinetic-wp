@@ -265,7 +265,7 @@ $cart_json = wp_json_encode($wc_cart_items);
   <?php wp_body_open(); ?>
 
   <!-- Top Notification Announcement Bar -->
-  <div class="bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 text-black text-xs py-1.5 px-4 font-medium relative z-50">
+  <div class="bg-linear-to-r from-amber-500 via-amber-600 to-amber-700 text-black text-xs py-1.5 px-4 font-medium relative z-50">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2 mx-auto sm:mx-0">
         <span class="bg-black text-amber-300 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -279,7 +279,7 @@ $cart_json = wp_json_encode($wc_cart_items);
           دپارتمان تخصصی وردپرس wpstorm در هلدینگ رومونت (Romonet.ir): ۲۰٪ تخفیف روی تمام قالب‌ها و خدمات با کد:
         </span>
         <span class="sm:hidden">۲۰٪ تخفیف با کد:</span>
-        <span class="font-mono bg-black/20 px-2 py-0.5 rounded text-[11px] font-bold border border-black/20">
+        <span class=" bg-black/20 px-2 py-0.5 rounded text-[11px] font-bold border border-black/20">
           ROMONET20
         </span>
       </div>
@@ -305,10 +305,10 @@ $cart_json = wp_json_encode($wc_cart_items);
         <div class="flex items-center gap-4">
           <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-3 group text-right focus:outline-none">
             <div
-              class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-0.5 shadow-[0_0_20px_rgba(245,158,11,0.25)] group-hover:shadow-[0_0_30px_rgba(245,158,11,0.45)] transition-all duration-500"
+              class="relative flex items-center justify-center w-11 h-11 rounded-xl bg-linear-to-br from-amber-400 via-amber-500 to-amber-600 p-0.5 shadow-[0_0_20px_rgba(245,158,11,0.25)] group-hover:shadow-[0_0_30px_rgba(245,158,11,0.45)] transition-all duration-500"
               :class="isScrolled ? 'opacity-0 translate-y-8 scale-95' : 'opacity-100 translate-y-0 scale-100'">
               <div class="w-full h-full bg-[#090a0f] rounded-[10px] flex items-center justify-center transition-colors group-hover:bg-transparent">
-                <span class="font-mono font-black text-xl text-amber-400 group-hover:text-black transition-colors">
+                <span class=" font-black text-xl text-amber-400 group-hover:text-black transition-colors">
                   R
                 </span>
               </div>
@@ -316,15 +316,15 @@ $cart_json = wp_json_encode($wc_cart_items);
 
             <div>
               <div class="flex items-center gap-2">
-                <span class="font-sans font-black text-xl tracking-tight text-white group-hover:text-amber-400 transition-colors">
+                <span class="font-bold text-xl tracking-tight text-white group-hover:text-amber-400 transition-colors">
                   رومونت
                 </span>
-                <span class="text-xs font-mono font-bold text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20">
+                <span class="text-xs  font-bold text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/20">
                   .ir
                 </span>
               </div>
               <div class="flex items-center gap-1.5 text-[10px] text-neutral-400">
-                <span class="text-amber-500 font-bold font-mono">wpstorm</span>
+                <span class="text-amber-500 font-bold ">wpstorm</span>
                 <span>/ دپارتمان تخصصی وردپرس</span>
               </div>
             </div>
@@ -345,7 +345,7 @@ $cart_json = wp_json_encode($wc_cart_items);
             <span class="hidden xl:inline text-xs text-neutral-400 group-hover:text-neutral-200">
               جستجو...
             </span>
-            <kbd class="hidden xl:inline-block text-[10px] font-mono bg-black/40 border border-white/10 text-neutral-400 px-1.5 py-0.5 rounded">
+            <kbd class="hidden xl:inline-block text-[10px]  bg-black/40 border border-white/10 text-neutral-400 px-1.5 py-0.5 rounded">
               ⌘K
             </kbd>
           </button>
@@ -396,7 +396,7 @@ $cart_json = wp_json_encode($wc_cart_items);
             <template x-if="totalItemsCount() > 0">
               <span
                 x-text="totalItemsCount()"
-                class="absolute -top-1.5 -right-1.5 bg-gradient-to-r from-amber-500 to-amber-600 text-black text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/30 animate-pulse font-mono">
+                class="absolute -top-1.5 -right-1.5 bg-linear-to-r from-amber-500 to-amber-600 text-black text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg shadow-amber-500/30 animate-pulse ">
               </span>
             </template>
           </button>
@@ -404,7 +404,7 @@ $cart_json = wp_json_encode($wc_cart_items);
           <!-- Consultation / Quote CTA -->
           <a
             href="<?php echo esc_url(home_url('/site-design-pricing')); ?>"
-            class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-semibold text-xs hover:brightness-110 active:scale-95 transition-all shadow-[0_0_15px_rgba(245,158,11,0.25)]">
+            class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-semibold text-xs hover:brightness-110 active:scale-95 transition-all shadow-[0_0_15px_rgba(245,158,11,0.25)]">
             <!-- Sparkles Icon -->
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
@@ -516,7 +516,7 @@ $cart_json = wp_json_encode($wc_cart_items);
         <div class="inline-flex items-center p-1 rounded-xl bg-black/40 border border-white/10 backdrop-blur-md">
           <button
             @click="setTheme('dark')"
-            :class="theme === 'dark' ? 'bg-gradient-to-r from-amber-500/20 to-amber-600/20 text-amber-300 border border-amber-500/30 shadow-sm' : 'text-neutral-400 hover:text-white'"
+            :class="theme === 'dark' ? 'bg-linear-to-r from-amber-500/20 to-amber-600/20 text-amber-300 border border-amber-500/30 shadow-sm' : 'text-neutral-400 hover:text-white'"
             class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-sans rounded-lg transition-all"
             title="حالت دارک ابسیدین">
             <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -549,7 +549,7 @@ $cart_json = wp_json_encode($wc_cart_items);
       <div class="pt-2">
         <a
           href="<?php echo esc_url(home_url('/site-design-pricing')); ?>"
-          class="w-full py-3 rounded-lg bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
+          class="w-full py-3 rounded-lg bg-linear-to-r from-amber-400 via-amber-500 to-amber-600 text-black font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
           <span>مشاوره و استعلام پروژه اختصاصی</span>
           <!-- ArrowRight (Mirrored) -->
           <svg class="w-4 h-4 rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -572,7 +572,7 @@ $cart_json = wp_json_encode($wc_cart_items);
     x-transition:leave-end="opacity-0 -translate-y-2"
     class="block sticky top-0 z-40 border-t border-white/10 bg-[#0b0d14]/90 backdrop-blur-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="flex items-center  gap-2 py-2 overflow-x-auto whitespace-nowrap [scrollbar-width:thin]">
+      <nav class="flex items-center  gap-2 py-2 overflow-x-auto whitespace-nowrap scrollbar-thin">
         <a
           x-show="isScrolled"
           x-transition:enter="transition ease-out duration-300"
@@ -582,11 +582,11 @@ $cart_json = wp_json_encode($wc_cart_items);
           x-transition:leave-start="opacity-100 translate-y-0 scale-100"
           x-transition:leave-end="opacity-0 -translate-y-6 scale-95"
           href="<?php echo esc_url(home_url('/')); ?>"
-          class="group relative flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 p-0.5 shadow-[0_0_20px_rgba(245,158,11,0.25)] hover:shadow-[0_0_30px_rgba(245,158,11,0.45)] transition-all duration-300 shrink-0"
+          class="group relative flex items-center justify-center w-9 h-9 rounded-xl bg-linear-to-br from-amber-400 via-amber-500 to-amber-600 p-0.5 shadow-[0_0_20px_rgba(245,158,11,0.25)] hover:shadow-[0_0_30px_rgba(245,158,11,0.45)] transition-all duration-300 shrink-0"
           title="بازگشت به صفحه اصلی"
           style="display: none;">
           <div class="w-full h-full bg-[#090a0f] rounded-[10px] flex items-center justify-center transition-colors group-hover:bg-transparent">
-            <span class="font-mono font-black text-xl text-amber-400 group-hover:text-black transition-colors">
+            <span class=" font-black text-xl text-amber-400 group-hover:text-black transition-colors">
               R
             </span>
           </div>
@@ -662,7 +662,7 @@ $cart_json = wp_json_encode($wc_cart_items);
             <path d="m6 6 12 12" />
           </svg>
         </button>
-        <kbd class="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono text-neutral-400 bg-white/5 border border-white/10 rounded">
+        <kbd class="hidden sm:inline-block px-2 py-0.5 text-[10px]  text-neutral-400 bg-white/5 border border-white/10 rounded">
           ESC
         </kbd>
       </div>
@@ -672,7 +672,7 @@ $cart_json = wp_json_encode($wc_cart_items);
         <!-- Services -->
         <template x-if="filteredServices().length > 0">
           <div>
-            <div class="text-[11px] font-mono uppercase text-neutral-400 font-semibold px-2 mb-2">
+            <div class="text-[11px] uppercase text-neutral-400 font-semibold px-2 mb-2">
               خدمات تخصصی مهندسی و تعرفه‌ها
             </div>
             <div class="space-y-1">
@@ -704,7 +704,7 @@ $cart_json = wp_json_encode($wc_cart_items);
         <!-- Products -->
         <template x-if="filteredProducts().length > 0">
           <div>
-            <div class="text-[11px] font-mono uppercase text-neutral-400 font-semibold px-2 mb-2">
+            <div class="text-[11px] uppercase text-neutral-400 font-semibold px-2 mb-2">
               قالب‌ها و افزونه‌های wpstorm (<span x-text="filteredProducts().length"></span>)
             </div>
             <div class="space-y-1">
@@ -775,7 +775,7 @@ $cart_json = wp_json_encode($wc_cart_items);
         class="w-screen max-w-md bg-[#0d0f17] border-r border-white/10 shadow-2xl flex flex-col relative overflow-hidden">
 
         <!-- Loading Overlay (When interacting with WooCommerce server) -->
-        <div x-show="isCartUpdating" class="absolute inset-0 z-[100] bg-[#0d0f17]/70 backdrop-blur-sm flex flex-col items-center justify-center transition-all" style="display: none;">
+        <div x-show="isCartUpdating" class="absolute inset-0 z-100 bg-[#0d0f17]/70 backdrop-blur-sm flex flex-col items-center justify-center transition-all" style="display: none;">
           <svg class="w-10 h-10 text-amber-500 animate-spin mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 12a9 9 0 1 1-6.219-8.56" />
           </svg>
@@ -873,7 +873,7 @@ $cart_json = wp_json_encode($wc_cart_items);
                             <path d="M5 12h14" />
                           </svg>
                         </button>
-                        <span class="px-2 text-xs font-mono text-white" x-text="item.quantity"></span>
+                        <span class="px-2 text-xs  text-white" x-text="item.quantity"></span>
                         <button @click="updateQuantity(item.id, 1)" class="p-1 rounded text-neutral-400 hover:text-white hover:bg-white/10 transition" title="افزایش">
                           <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14" />
@@ -930,7 +930,7 @@ $cart_json = wp_json_encode($wc_cart_items);
             <div class="pt-2 space-y-2">
               <a
                 href="<?php echo esc_url(function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/checkout')); ?>"
-                class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-extrabold text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
+                class="w-full py-3 px-4 rounded-xl bg-linear-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-extrabold text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
                 <span>ادامه و تسویه‌حساب سریع</span>
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="m12 19-7-7 7-7" />
