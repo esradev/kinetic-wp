@@ -142,7 +142,7 @@ foreach (array_keys($all_tags_set) as $t) {
 get_header();
 ?>
 
-<main class="min-h-screen pb-24 pt-8 space-y-12" dir="rtl" x-data="romonetShop()">
+<main class="min-h-screen pb-24 pt-8 space-y-12" dir="rtl" xyz-data="romonetShop()">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
         <!-- ==================== SHOP HEADER ==================== -->
@@ -172,24 +172,24 @@ get_header();
                 <div class="flex items-center bg-white/5 p-1 rounded-xl border border-white/10 w-full sm:w-auto">
                     <button
                         type="button"
-                        @click="filterType = 'all'"
-                        :class="filterType === 'all' ? 'bg-amber-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
+                        xyz-on:click="filterType = 'all'"
+                        xyz-bind:class="filterType === 'all' ? 'bg-amber-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
                         class="flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-bold transition">
-                        همه محصولات (<span x-text="products.length"></span>)
+                        همه محصولات (<span xyz-text="products.length"></span>)
                     </button>
 
                     <button
                         type="button"
-                        @click="filterType = 'theme'"
-                        :class="filterType === 'theme' ? 'bg-amber-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
+                        xyz-on:click="filterType = 'theme'"
+                        xyz-bind:class="filterType === 'theme' ? 'bg-amber-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
                         class="flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-bold transition">
                         فقط قالب‌ها
                     </button>
 
                     <button
                         type="button"
-                        @click="filterType = 'plugin'"
-                        :class="filterType === 'plugin' ? 'bg-amber-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
+                        xyz-on:click="filterType = 'plugin'"
+                        xyz-bind:class="filterType === 'plugin' ? 'bg-amber-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
                         class="flex-1 sm:flex-none px-4 py-2 rounded-lg text-xs font-bold transition">
                         فقط افزونه‌ها
                     </button>
@@ -205,13 +205,13 @@ get_header();
                         </svg>
                         <input
                             type="text"
-                            x-model="searchQuery"
+                            xyz-model="searchQuery"
                             placeholder="جستجو در محصولات..."
                             class="w-full bg-black/50 border border-white/10 focus:border-amber-400 rounded-xl pr-10 pl-4 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none transition font-sans" />
                     </div>
 
                     <select
-                        x-model="sortBy"
+                        xyz-model="sortBy"
                         class="bg-black/50 border border-white/10 text-xs text-neutral-300 rounded-xl px-3 py-2 focus:outline-none">
                         <option value="popular">محبوب‌ترین‌ها</option>
                         <option value="rating">بالاترین امتیاز</option>
@@ -224,15 +224,15 @@ get_header();
             <!-- Tags scroll -->
             <div class="flex items-center gap-1.5 overflow-x-auto pt-2 border-t border-white/5 pb-1">
                 <span class="text-[11px] text-neutral-400 ml-2 shrink-0">فیلتر بر اساس تگ:</span>
-                <template x-for="tag in tags" :key="tag">
+                <template xyz-for="tag in tags" xyz-bind:key="tag">
                     <button
                         type="button"
-                        @click="selectedTag = tag"
-                        :class="selectedTag === tag 
+                        xyz-on:click="selectedTag = tag"
+                        xyz-bind:class="selectedTag === tag 
               ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold' 
               : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'"
                         class="px-3 py-1 rounded-lg text-xs whitespace-nowrap transition"
-                        x-text="tag">
+                        xyz-text="tag">
                     </button>
                 </template>
             </div>
@@ -240,34 +240,34 @@ get_header();
 
         <!-- ==================== PRODUCTS GRID ==================== -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <template x-for="product in filteredProducts()" :key="product.id">
+            <template xyz-for="product in filteredProducts()" xyz-bind:key="product.id">
                 <div
                     class="glass-card rounded-2xl border border-white/10 overflow-hidden flex flex-col justify-between group hover:border-amber-500/50 transition-all shadow-xl hover:shadow-2xl bg-white/5 backdrop-blur-md">
                     <div>
                         <!-- Banner & Badges -->
                         <a
-                            :href="product.url"
+                            xyz-bind:href="product.url"
                             class="relative h-56 overflow-hidden bg-black/60 block">
                             <img
-                                :src="product.bannerImage"
-                                :alt="product.name"
+                                xyz-bind:src="product.bannerImage"
+                                xyz-bind:alt="product.name"
                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0d0f17] via-black/20 to-transparent"></div>
 
-                            <template x-if="product.badge">
-                                <span class="absolute top-3 right-3 px-3 py-1 rounded-md bg-amber-500 text-black text-[11px] font-bold shadow-md" x-text="product.badge"></span>
+                            <template xyz-if="product.badge">
+                                <span class="absolute top-3 right-3 px-3 py-1 rounded-md bg-amber-500 text-black text-[11px] font-bold shadow-md" xyz-text="product.badge"></span>
                             </template>
 
                             <span
                                 class="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 backdrop-blur text-neutral-300 text-[10px] border border-white/15"
-                                x-text="product.type === 'theme' ? 'قالب وردپرس' : 'افزونه وردپرس'"></span>
+                                xyz-text="product.type === 'theme' ? 'قالب وردپرس' : 'افزونه وردپرس'"></span>
 
                             <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-neutral-300">
                                 <span class="bg-black/70 px-2 py-0.5 rounded border border-white/10">
-                                    نسخه <span x-text="product.version"></span>
+                                    نسخه <span xyz-text="product.version"></span>
                                 </span>
                                 <span class="bg-black/70 px-2 py-0.5 rounded border border-white/10 text-emerald-400">
-                                    وردپرس <span x-text="product.wpVersion"></span>
+                                    وردپرس <span xyz-text="product.wpVersion"></span>
                                 </span>
                             </div>
                         </a>
@@ -275,34 +275,34 @@ get_header();
                         <!-- Body Content -->
                         <div class="p-6 space-y-3">
                             <div class="flex items-center justify-between text-xs">
-                                <span class="text-neutral-400" x-text="product.category"></span>
+                                <span class="text-neutral-400" xyz-text="product.category"></span>
                                 <div class="flex items-center gap-1 text-amber-400 ">
                                     <!-- Star Icon -->
                                     <svg class="w-3.5 h-3.5 fill-current text-amber-400" viewBox="0 0 24 24">
                                         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
                                     </svg>
-                                    <span class="font-bold" x-text="product.rating"></span>
-                                    <span class="text-neutral-500">(<span x-text="product.reviewsCount"></span> نظر)</span>
+                                    <span class="font-bold" xyz-text="product.rating"></span>
+                                    <span class="text-neutral-500">(<span xyz-text="product.reviewsCount"></span> نظر)</span>
                                 </div>
                             </div>
 
-                            <a :href="product.url" class="block">
+                            <a xyz-bind:href="product.url" class="block">
                                 <h2
                                     class="text-lg font-bold text-white group-hover:text-amber-400 transition cursor-pointer line-clamp-1"
-                                    x-text="product.name"></h2>
+                                    xyz-text="product.name"></h2>
                             </a>
 
-                            <p class="text-xs text-neutral-400 line-clamp-2 leading-relaxed" x-text="product.tagline"></p>
+                            <p class="text-xs text-neutral-400 line-clamp-2 leading-relaxed" xyz-text="product.tagline"></p>
 
                             <!-- Feature Bullets -->
                             <div class="space-y-1.5 pt-2">
-                                <template x-for="(kf, idx) in product.keyFeatures.slice(0, 2)" :key="idx">
+                                <template xyz-for="(kf, idx) in product.keyFeatures.slice(0, 2)" xyz-bind:key="idx">
                                     <div class="flex items-center gap-2 text-xs text-neutral-300">
                                         <!-- Check Icon -->
                                         <svg class="w-3.5 h-3.5 text-amber-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                             <polyline points="20 6 9 17 4 12" />
                                         </svg>
-                                        <span class="truncate" x-text="kf.title"></span>
+                                        <span class="truncate" xyz-text="kf.title"></span>
                                     </div>
                                 </template>
                             </div>
@@ -314,19 +314,19 @@ get_header();
                         <div class="pt-4 border-t border-white/5 flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-neutral-500 block">شروع قیمت از</span>
-                                <span class="text-lg font-black text-white" x-text="formatCurrency(product.licenses[0].price)"></span>
+                                <span class="text-lg font-black text-white" xyz-text="formatCurrency(product.licenses[0].price)"></span>
                             </div>
 
                             <div class="flex items-center gap-2">
                                 <a
-                                    :href="product.url"
+                                    xyz-bind:href="product.url"
                                     class="px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 text-xs transition">
                                     جزییات کالا
                                 </a>
 
                                 <button
                                     type="button"
-                                    @click="buyProduct(product, $event)"
+                                    xyz-on:click="buyProduct(product, $event)"
                                     class="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition active:scale-95 shadow-lg shadow-amber-500/25 flex items-center justify-center gap-1.5 min-w-[70px]">
                                     <span>خرید</span>
                                     <!-- ArrowLeft Icon -->
@@ -343,11 +343,11 @@ get_header();
         </div>
 
         <!-- No Products Found -->
-        <template x-if="filteredProducts().length === 0">
+        <template xyz-if="filteredProducts().length === 0">
             <div class="glass-panel p-12 text-center rounded-2xl border border-white/10 space-y-3 bg-white/5 backdrop-blur-md">
                 <p class="text-neutral-400 text-sm">هیچ محصولی با مشخصات و فیلترهای انتخابی یافت نشد.</p>
                 <button
-                    @click="filterType = 'all'; selectedTag = 'همه'; searchQuery = '';"
+                    xyz-on:click="filterType = 'all'; selectedTag = 'همه'; searchQuery = '';"
                     class="text-xs text-amber-400 underline">
                     پاک کردن تمام فیلترها
                 </button>

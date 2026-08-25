@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<main class="min-h-screen pb-24 pt-8 space-y-20" dir="rtl" x-data="romonetSmsPricing()">
+<main class="min-h-screen pb-24 pt-8 space-y-20" dir="rtl" xyz-data="romonetSmsPricing()">
 
     <!-- ==================== HEADER HERO ==================== -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,14 +47,14 @@ get_header();
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <template x-for="plan in smsPlans" :key="plan.id">
+            <template xyz-for="plan in smsPlans" xyz-bind:key="plan.id">
                 <div
                     class="glass-panel rounded-3xl p-8 border flex flex-col justify-between transition-all relative backdrop-blur-xl"
-                    :class="plan.popular 
+                    xyz-bind:class="plan.popular 
             ? 'border-cyan-500/50 shadow-2xl shadow-cyan-500/10 bg-gradient-to-b from-[#101524] to-[#0c0f1a]' 
             : 'border-white/10 hover:border-white/20 bg-white/5'">
                     <!-- Popular Badge -->
-                    <template x-if="plan.popular">
+                    <template xyz-if="plan.popular">
                         <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-cyan-500 text-black text-[11px] font-bold shadow-lg whitespace-nowrap">
                             محبوب‌ترین پلن فروشگاه‌ها
                         </span>
@@ -62,40 +62,40 @@ get_header();
 
                     <div class="space-y-6">
                         <div>
-                            <h3 class="text-xl font-bold text-white" x-text="plan.name"></h3>
-                            <p class="text-xs text-neutral-400 mt-1" x-text="plan.tagline"></p>
+                            <h3 class="text-xl font-bold text-white" xyz-text="plan.name"></h3>
+                            <p class="text-xs text-neutral-400 mt-1" xyz-text="plan.tagline"></p>
                         </div>
 
                         <div class="pt-2 flex items-baseline gap-2">
-                            <span class="text-3xl sm:text-4xl font-extrabold text-white" x-text="formatCurrency(plan.monthlyPrice)"></span>
+                            <span class="text-3xl sm:text-4xl font-extrabold text-white" xyz-text="formatCurrency(plan.monthlyPrice)"></span>
                             <span class="text-xs text-neutral-400">/ ماهانه</span>
                         </div>
 
                         <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1 text-xs">
                             <div class="flex justify-between text-neutral-300">
                                 <span>اعتبار پیامک اولیه:</span>
-                                <span class="text-cyan-400 font-bold "><span x-text="plan.includedCredits.toLocaleString('fa-IR')"></span> عدد</span>
+                                <span class="text-cyan-400 font-bold "><span xyz-text="plan.includedCredits.toLocaleString('fa-IR')"></span> عدد</span>
                             </div>
                             <div class="flex justify-between text-neutral-400 text-[11px]">
                                 <span>تعرفه هر پیامک اضافه:</span>
-                                <span x-text="plan.extraRatePerSms"></span>
+                                <span xyz-text="plan.extraRatePerSms"></span>
                             </div>
                             <div class="flex justify-between text-neutral-400 text-[11px]">
                                 <span>سرعت تحویل مخابراتی:</span>
-                                <span class="text-emerald-400 font-bold" x-text="plan.webhookSpeed"></span>
+                                <span class="text-emerald-400 font-bold" xyz-text="plan.webhookSpeed"></span>
                             </div>
                         </div>
 
                         <!-- Features List -->
                         <div class="space-y-2.5 pt-2">
-                            <template x-for="(f, idx) in plan.features" :key="idx">
+                            <template xyz-for="(f, idx) in plan.features" xyz-bind:key="idx">
                                 <div class="flex items-start gap-2.5 text-xs text-neutral-300">
                                     <!-- CheckCircle2 Icon -->
                                     <svg class="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10" />
                                         <path d="m9 12 2 2 4-4" />
                                     </svg>
-                                    <span x-text="f"></span>
+                                    <span xyz-text="f"></span>
                                 </div>
                             </template>
                         </div>
@@ -105,12 +105,12 @@ get_header();
                     <div class="pt-8 mt-6 border-t border-white/10">
                         <button
                             type="button"
-                            @click="subscribeSmsPlan(plan)"
+                            xyz-on:click="subscribeSmsPlan(plan)"
                             class="w-full py-3.5 rounded-xl text-xs font-extrabold transition active:scale-95 flex items-center justify-center gap-2"
-                            :class="plan.popular 
+                            xyz-bind:class="plan.popular 
                 ? 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-lg shadow-cyan-500/25' 
                 : 'bg-white/10 hover:bg-white/20 text-white'">
-                            <span>فعال‌سازی <span x-text="plan.name"></span></span>
+                            <span>فعال‌سازی <span xyz-text="plan.name"></span></span>
                             <!-- ArrowLeft Icon -->
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="m12 19-7-7 7-7" />
@@ -169,18 +169,18 @@ get_header();
                             انتخاب مسیر مخابراتی و کشور مقصد
                         </label>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                            <template x-for="(item, code) in countryRates" :key="code">
+                            <template xyz-for="(item, code) in countryRates" xyz-bind:key="code">
                                 <button
                                     type="button"
-                                    @click="selectedCountry = code"
+                                    xyz-on:click="selectedCountry = code"
                                     class="p-2.5 rounded-xl border text-right flex items-center gap-2 transition"
-                                    :class="selectedCountry === code 
+                                    xyz-bind:class="selectedCountry === code 
                     ? 'bg-cyan-500/15 border-cyan-400 text-white font-bold' 
                     : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white hover:bg-white/5'">
-                                    <span class="text-base" x-text="item.flag"></span>
+                                    <span class="text-base" xyz-text="item.flag"></span>
                                     <div class="truncate">
-                                        <div class="text-xs truncate" x-text="item.name"></div>
-                                        <div class="text-[10px] text-cyan-400 "><span x-text="item.tomanPrice"></span> تومان/پیامک</div>
+                                        <div class="text-xs truncate" xyz-text="item.name"></div>
+                                        <div class="text-[10px] text-cyan-400 "><span xyz-text="item.tomanPrice"></span> تومان/پیامک</div>
                                     </div>
                                 </button>
                             </template>
@@ -192,7 +192,7 @@ get_header();
                         <div class="flex justify-between items-center text-xs">
                             <span class="text-neutral-400">تعداد پیامک‌های تخمینی ماهانه:</span>
                             <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
-                                <span x-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک / ماه
+                                <span xyz-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک / ماه
                             </span>
                         </div>
                         <input
@@ -200,7 +200,7 @@ get_header();
                             min="1000"
                             max="100000"
                             step="1000"
-                            x-model.number="smsVolume"
+                            xyz-model.number="smsVolume"
                             class="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-cyan-400" />
                         <div class="flex justify-between text-[10px]  text-neutral-500">
                             <span>۱,۰۰۰</span>
@@ -221,7 +221,7 @@ get_header();
                         </svg>
                         <div>
                             <span class="text-neutral-300 font-semibold">زیرساخت فعال: </span>
-                            <span><span x-text="currentCountry().carrier"></span> مجهز به سوئیچ خودکار در صورت قطعی اپراتور.</span>
+                            <span><span xyz-text="currentCountry().carrier"></span> مجهز به سوئیچ خودکار در صورت قطعی اپراتور.</span>
                         </div>
                     </div>
                 </div>
@@ -235,12 +235,12 @@ get_header();
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between text-neutral-300">
                             <span>حجم ارسال ماهانه:</span>
-                            <span class="font-bold text-white "><span x-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک</span>
+                            <span class="font-bold text-white "><span xyz-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک</span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
-                            <span>مسیر تحویل (<span x-text="currentCountry().name"></span>):</span>
-                            <span class="text-cyan-400 "><span x-text="currentCountry().tomanPrice"></span> تومان / پیامک</span>
+                            <span>مسیر تحویل (<span xyz-text="currentCountry().name"></span>):</span>
+                            <span class="text-cyan-400 "><span xyz-text="currentCountry().tomanPrice"></span> تومان / پیامک</span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
@@ -250,25 +250,25 @@ get_header();
 
                         <div class="flex justify-between text-neutral-300">
                             <span>سفارشات نجات‌یافته سبد رهاشده:</span>
-                            <span class="text-amber-400 font-bold ">~<span x-text="estimatedRecoveredOrders().toLocaleString('fa-IR')"></span> سفارش</span>
+                            <span class="text-amber-400 font-bold ">~<span xyz-text="estimatedRecoveredOrders().toLocaleString('fa-IR')"></span> سفارش</span>
                         </div>
 
                         <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
                             <span>هزینه کل شارژ پیامک:</span>
-                            <span class="text-cyan-400 font-bold text-xl" x-text="formatCurrency(calculatedCostToman())"></span>
+                            <span class="text-cyan-400 font-bold text-xl" xyz-text="formatCurrency(calculatedCostToman())"></span>
                         </div>
 
                         <div class="flex justify-between text-xs text-emerald-400 pt-1">
                             <span>فروش تخمینی ایجادشده با پیامک:</span>
-                            <span class="font-bold ">+<span x-text="estimatedRecoveredRevenue().toLocaleString('fa-IR')"></span> تومان</span>
+                            <span class="font-bold ">+<span xyz-text="estimatedRecoveredRevenue().toLocaleString('fa-IR')"></span> تومان</span>
                         </div>
                     </div>
 
                     <button
                         type="button"
-                        @click="orderCalculatedCredits()"
+                        xyz-on:click="orderCalculatedCredits()"
                         class="w-full py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold text-xs transition active:scale-95 shadow-lg shadow-cyan-500/25 text-center">
-                        افزودن بسته <span x-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک به سبد خرید
+                        افزودن بسته <span xyz-text="smsVolume.toLocaleString('fa-IR')"></span> پیامک به سبد خرید
                     </button>
                 </div>
 
@@ -291,26 +291,26 @@ get_header();
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <template x-for="bundle in smsCreditBundles" :key="bundle.id">
+            <template xyz-for="bundle in smsCreditBundles" xyz-bind:key="bundle.id">
                 <div
                     class="glass-card p-6 rounded-2xl border flex flex-col justify-between space-y-6 transition bg-white/5 backdrop-blur-md"
-                    :class="bundle.popular ? 'border-amber-500/50 bg-[#14121a]' : 'border-white/10'">
+                    xyz-bind:class="bundle.popular ? 'border-amber-500/50 bg-[#14121a]' : 'border-white/10'">
                     <div>
                         <div class="flex items-center justify-between">
-                            <span class="text-2xl font-black text-white " x-text="bundle.credits.toLocaleString('fa-IR')"></span>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold" x-text="bundle.bonus"></span>
+                            <span class="text-2xl font-black text-white " xyz-text="bundle.credits.toLocaleString('fa-IR')"></span>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold" xyz-text="bundle.bonus"></span>
                         </div>
                         <div class="text-xs text-neutral-400 mt-1">پیامک ارسالی</div>
 
                         <div class="pt-6">
-                            <span class="text-2xl font-extrabold text-amber-400" x-text="formatCurrency(bundle.price)"></span>
-                            <div class="text-[11px] text-neutral-500 mt-0.5" x-text="bundle.pricePerSms + ' (بدون انقضا)'"></div>
+                            <span class="text-2xl font-extrabold text-amber-400" xyz-text="formatCurrency(bundle.price)"></span>
+                            <div class="text-[11px] text-neutral-500 mt-0.5" xyz-text="bundle.pricePerSms + ' (بدون انقضا)'"></div>
                         </div>
                     </div>
 
                     <button
                         type="button"
-                        @click="orderCreditBundle(bundle)"
+                        xyz-on:click="orderCreditBundle(bundle)"
                         class="w-full py-2.5 rounded-xl bg-white/10 hover:bg-amber-500 hover:text-black text-white font-bold text-xs transition active:scale-95 text-center">
                         خرید آنلاین بسته
                     </button>

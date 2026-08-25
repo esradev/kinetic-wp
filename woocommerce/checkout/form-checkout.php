@@ -54,7 +54,7 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
 <div
     class="min-h-screen pb-24 pt-8"
     dir="rtl"
-    x-data="romonetCheckout({
+    xyz-data="romonetCheckout({
     initialCart: <?php echo esc_attr(json_encode($wc_cart_items)); ?>,
     defaultName: '<?php echo esc_js($default_name); ?>',
     defaultEmail: '<?php echo esc_js($default_email); ?>',
@@ -110,7 +110,7 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                             <input
                                 type="text"
                                 required
-                                x-model="fullName"
+                                xyz-model="fullName"
                                 placeholder="مثال: سارا محمدی"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition" />
                         </div>
@@ -120,7 +120,7 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                             <input
                                 type="email"
                                 required
-                                x-model="email"
+                                xyz-model="email"
                                 placeholder="name@company.com"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition text-left"
                                 dir="ltr" />
@@ -130,7 +130,7 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                             <label class="text-xs text-neutral-400">نام شرکت / سازمان (اختیاری)</label>
                             <input
                                 type="text"
-                                x-model="company"
+                                xyz-model="company"
                                 placeholder="آژانس دیجیتال روناک"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition" />
                         </div>
@@ -138,7 +138,7 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         <div class="space-y-1.5">
                             <label class="text-xs text-neutral-400">کشور / منطقه *</label>
                             <select
-                                x-model="country"
+                                xyz-model="country"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition">
                                 <option value="ایران">ایران (پرداخت ریالی شتاب)</option>
                                 <option value="امارات متحده عربی">امارات متحده عربی (AED)</option>
@@ -174,9 +174,9 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         <!-- Zarinpal -->
                         <button
                             type="button"
-                            @click="paymentMethod = 'zarinpal'"
+                            xyz-on:click="paymentMethod = 'zarinpal'"
                             class="p-3 rounded-xl border text-center transition flex flex-col items-center gap-1.5"
-                            :class="paymentMethod === 'zarinpal' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
+                            xyz-bind:class="paymentMethod === 'zarinpal' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
                             <!-- CreditCard Icon -->
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <rect width="20" height="14" x="2" y="5" rx="2" />
@@ -188,9 +188,9 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         <!-- Card to Card -->
                         <button
                             type="button"
-                            @click="paymentMethod = 'card'"
+                            xyz-on:click="paymentMethod = 'card'"
                             class="p-3 rounded-xl border text-center transition flex flex-col items-center gap-1.5"
-                            :class="paymentMethod === 'card' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
+                            xyz-bind:class="paymentMethod === 'card' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
                                 <path d="m9 12 2 2 4-4" />
@@ -201,9 +201,9 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         <!-- Crypto -->
                         <button
                             type="button"
-                            @click="paymentMethod = 'crypto'"
+                            xyz-on:click="paymentMethod = 'crypto'"
                             class="p-3 rounded-xl border text-center transition flex flex-col items-center gap-1.5"
-                            :class="paymentMethod === 'crypto' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
+                            xyz-bind:class="paymentMethod === 'crypto' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
                             <!-- Sparkles Icon -->
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
@@ -214,9 +214,9 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         <!-- Wire / Paya -->
                         <button
                             type="button"
-                            @click="paymentMethod = 'wire'"
+                            xyz-on:click="paymentMethod = 'wire'"
                             class="p-3 rounded-xl border text-center transition flex flex-col items-center gap-1.5"
-                            :class="paymentMethod === 'wire' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
+                            xyz-bind:class="paymentMethod === 'wire' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
                             <!-- Building2 Icon -->
                             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
@@ -231,28 +231,28 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         </button>
                     </div>
 
-                    <template x-if="paymentMethod === 'zarinpal'">
+                    <template xyz-if="paymentMethod === 'zarinpal'">
                         <div class="p-5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-center space-y-2">
                             <div class="text-xs font-bold text-amber-300">درگاه پرداخت اینترنتی آنلاین بانکی</div>
                             <p class="text-xs text-neutral-400">با کلیه کارت‌های عضو شبکه شتاب می‌توانید سفارش خود را آنی پرداخت و فعال‌سازی نمایید.</p>
                         </div>
                     </template>
 
-                    <template x-if="paymentMethod === 'card'">
+                    <template xyz-if="paymentMethod === 'card'">
                         <div class="p-5 rounded-2xl bg-blue-500/10 border border-blue-500/30 text-center space-y-2">
                             <div class="text-xs font-bold text-blue-300">کارت به کارت مستقیم شتاب</div>
                             <p class="text-xs text-neutral-400">شماره کارت مقصد پس از ثبت سفارش نمایش داده خواهد شد و فیش واریزی فوراً تایید می‌گردد.</p>
                         </div>
                     </template>
 
-                    <template x-if="paymentMethod === 'crypto'">
+                    <template xyz-if="paymentMethod === 'crypto'">
                         <div class="p-5 rounded-2xl bg-purple-500/10 border border-purple-500/30 text-center space-y-2">
                             <div class="text-xs font-bold text-purple-300">تسویه با تتر (USDT / TRC-20 یا BEP-20)</div>
                             <p class="text-xs text-neutral-400">مناسب مشتریان بین‌المللی با تایید خودکار هش بلاک‌چین در چند ثانیه.</p>
                         </div>
                     </template>
 
-                    <template x-if="paymentMethod === 'wire'">
+                    <template xyz-if="paymentMethod === 'wire'">
                         <div class="p-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-center space-y-2">
                             <div class="text-xs font-bold text-emerald-300">حواله رسمی شرکتی با فاکتور رسمی رومونت</div>
                             <p class="text-xs text-neutral-400">شماره شبا و فاکتور رسمی ممهور شرکتی برای ثبت در سامانه مودیان صادر می‌شود.</p>
@@ -271,15 +271,15 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
 
                     <!-- Items List -->
                     <div class="space-y-3 max-h-60 overflow-y-auto pl-1">
-                        <template x-for="item in cart" :key="item.id">
+                        <template xyz-for="item in cart" xyz-bind:key="item.id">
                             <div class="flex items-center justify-between text-xs py-1 border-b border-white/5">
                                 <div>
-                                    <div class="font-bold text-white line-clamp-1" x-text="item.title"></div>
+                                    <div class="font-bold text-white line-clamp-1" xyz-text="item.title"></div>
                                     <div class="text-[11px] text-neutral-400">
-                                        <span x-text="item.quantity"></span> عدد • <span x-text="item.licenseLabel || 'استاندارد'"></span>
+                                        <span xyz-text="item.quantity"></span> عدد • <span xyz-text="item.licenseLabel || 'استاندارد'"></span>
                                     </div>
                                 </div>
-                                <div class="text-amber-400 font-bold mr-2" x-text="formatCurrency(item.price * item.quantity)"></div>
+                                <div class="text-amber-400 font-bold mr-2" xyz-text="formatCurrency(item.price * item.quantity)"></div>
                             </div>
                         </template>
                     </div>
@@ -288,24 +288,24 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                     <div class="space-y-2.5 text-xs border-t border-white/10 pt-4">
                         <div class="flex justify-between text-neutral-300">
                             <span>جمع کل</span>
-                            <span class="font-bold text-white" x-text="formatCurrency(getSubtotal())"></span>
+                            <span class="font-bold text-white" xyz-text="formatCurrency(getSubtotal())"></span>
                         </div>
 
-                        <template x-if="getDiscount() > 0">
+                        <template xyz-if="getDiscount() > 0">
                             <div class="flex justify-between text-emerald-400">
-                                <span>تخفیف (<span x-text="couponCode"></span>)</span>
-                                <span>-<span x-text="formatCurrency(getDiscount())"></span></span>
+                                <span>تخفیف (<span xyz-text="couponCode"></span>)</span>
+                                <span>-<span xyz-text="formatCurrency(getDiscount())"></span></span>
                             </div>
                         </template>
 
                         <div class="flex justify-between text-neutral-300">
                             <span>ارزش افزوده (۹٪)</span>
-                            <span class="font-bold text-white" x-text="formatCurrency(getTax())"></span>
+                            <span class="font-bold text-white" xyz-text="formatCurrency(getTax())"></span>
                         </div>
 
                         <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
                             <span>مبلغ قابل پرداخت</span>
-                            <span class="text-amber-400 font-bold text-xl" x-text="formatCurrency(getTotal())"></span>
+                            <span class="text-amber-400 font-bold text-xl" xyz-text="formatCurrency(getTotal())"></span>
                         </div>
                     </div>
 
@@ -314,16 +314,16 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         type="submit"
                         :disabled="isProcessing"
                         class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-black text-sm transition shadow-xl shadow-amber-500/30 flex items-center justify-center gap-2 disabled:opacity-50">
-                        <template x-if="isProcessing">
+                        <template xyz-if="isProcessing">
                             <span class="flex items-center gap-2">
                                 <span class="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></span>
                                 <span>در حال انتقال به درگاه پرداخت شاپرک...</span>
                             </span>
                         </template>
 
-                        <template x-if="!isProcessing">
+                        <template xyz-if="!isProcessing">
                             <div class="flex items-center gap-2">
-                                <span>پرداخت امن <span x-text="formatCurrency(getTotal())"></span> و فعال‌سازی</span>
+                                <span>پرداخت امن <span xyz-text="formatCurrency(getTotal())"></span> و فعال‌سازی</span>
                                 <!-- ArrowLeft Icon -->
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="m12 19-7-7 7-7" />

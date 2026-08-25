@@ -75,8 +75,7 @@
   code,
   kbd,
   samp,
-  pre,
-  . {
+  pre {
     font-family: "JetBrains Mono", "Vazirmatn", monospace !important;
     direction: ltr;
     display: inline-block;

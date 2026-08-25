@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<main class="min-h-screen pb-24 pt-8 space-y-20" dir="rtl" x-data="romonetDesignPricing()">
+<main class="min-h-screen pb-24 pt-8 space-y-20" dir="rtl" xyz-data="romonetDesignPricing()">
 
     <!-- ==================== HEADER HERO ==================== -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -38,32 +38,32 @@ get_header();
     <!-- ==================== 3 CORE DESIGN PACKAGES ==================== -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <template x-for="pkg in packages" :key="pkg.id">
+            <template xyz-for="pkg in packages" xyz-bind:key="pkg.id">
                 <div
                     class="glass-panel rounded-3xl p-8 border flex flex-col justify-between transition-all relative backdrop-blur-xl"
-                    :class="pkg.popular 
+                    xyz-bind:class="pkg.popular 
             ? 'border-amber-500/60 shadow-2xl shadow-amber-500/10 bg-gradient-to-b from-[#18140c] to-[#0f0e0c]' 
             : 'border-white/10 hover:border-white/20 bg-white/5'">
                     <!-- Popular Badge -->
-                    <template x-if="pkg.badge">
-                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-amber-500 text-black text-[11px] font-bold shadow-lg" x-text="pkg.badge"></span>
+                    <template xyz-if="pkg.badge">
+                        <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-amber-500 text-black text-[11px] font-bold shadow-lg" xyz-text="pkg.badge"></span>
                     </template>
 
                     <div class="space-y-6">
                         <div>
-                            <h3 class="text-2xl font-extrabold text-white" x-text="pkg.title"></h3>
-                            <p class="text-xs text-neutral-400 mt-1" x-text="pkg.idealFor"></p>
+                            <h3 class="text-2xl font-extrabold text-white" xyz-text="pkg.title"></h3>
+                            <p class="text-xs text-neutral-400 mt-1" xyz-text="pkg.idealFor"></p>
                         </div>
 
                         <div class="pt-2 flex items-baseline gap-2">
                             <span class="text-xs text-neutral-400">شروع سرمایه‌گذاری از</span>
-                            <span class="text-3xl sm:text-4xl font-black text-white" x-text="formatCurrency(pkg.priceStartingAt)"></span>
+                            <span class="text-3xl sm:text-4xl font-black text-white" xyz-text="formatCurrency(pkg.priceStartingAt)"></span>
                         </div>
 
                         <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1 text-xs">
                             <div class="flex justify-between text-neutral-300">
                                 <span>مدت زمان اسپرینت تحویل:</span>
-                                <span class="text-amber-400 font-bold" x-text="pkg.timeline"></span>
+                                <span class="text-amber-400 font-bold" xyz-text="pkg.timeline"></span>
                             </div>
                             <div class="flex justify-between text-neutral-400 text-[11px]">
                                 <span>تضمین امتیاز سرعت موبایل:</span>
@@ -71,19 +71,19 @@ get_header();
                             </div>
                         </div>
 
-                        <p class="text-xs text-neutral-300 leading-relaxed" x-text="pkg.description"></p>
+                        <p class="text-xs text-neutral-300 leading-relaxed" xyz-text="pkg.description"></p>
 
                         <!-- Deliverables -->
                         <div class="space-y-2.5 pt-2">
                             <div class="text-[11px] text-neutral-400 font-semibold">اقلام تحویلی در این پکیج:</div>
-                            <template x-for="(d, idx) in pkg.deliverables" :key="idx">
+                            <template xyz-for="(d, idx) in pkg.deliverables" xyz-bind:key="idx">
                                 <div class="flex items-start gap-2.5 text-xs text-neutral-300">
                                     <!-- CheckCircle2 Icon -->
                                     <svg class="w-4 h-4 text-amber-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10" />
                                         <path d="m9 12 2 2 4-4" />
                                     </svg>
-                                    <span x-text="d"></span>
+                                    <span xyz-text="d"></span>
                                 </div>
                             </template>
                         </div>
@@ -92,8 +92,8 @@ get_header();
                         <div class="pt-2">
                             <div class="text-[11px] text-neutral-400 font-semibold mb-2">استک فنی مدرن:</div>
                             <div class="flex flex-wrap gap-1.5">
-                                <template x-for="(tech, idx) in pkg.techStack" :key="idx">
-                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-amber-300 border border-white/10 " x-text="tech"></span>
+                                <template xyz-for="(tech, idx) in pkg.techStack" xyz-bind:key="idx">
+                                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-amber-300 border border-white/10 " xyz-text="tech"></span>
                                 </template>
                             </div>
                         </div>
@@ -102,12 +102,12 @@ get_header();
                     <!-- Action Button -->
                     <div class="pt-8 mt-6 border-t border-white/10">
                         <button
-                            @click="bookPackageSprint(pkg)"
+                            xyz-on:click="bookPackageSprint(pkg)"
                             class="w-full py-3.5 rounded-xl text-xs font-extrabold transition active:scale-95 flex items-center justify-center gap-2"
-                            :class="pkg.popular 
+                            xyz-bind:class="pkg.popular 
                 ? 'bg-amber-500 hover:bg-amber-400 text-black shadow-lg shadow-amber-500/25' 
                 : 'bg-white/10 hover:bg-white/20 text-white'">
-                            <span>رزرو اسپرینت و پرداخت بیعانه (<span x-text="formatCurrency(Math.round(pkg.priceStartingAt * 0.5))"></span>)</span>
+                            <span>رزرو اسپرینت و پرداخت بیعانه (<span xyz-text="formatCurrency(Math.round(pkg.priceStartingAt * 0.5))"></span>)</span>
                             <!-- ArrowLeft Icon -->
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="m12 19-7-7 7-7" />
@@ -161,8 +161,8 @@ get_header();
                         <div class="grid grid-cols-3 gap-2">
                             <button
                                 type="button"
-                                @click="projectType = 'brand'"
-                                :class="projectType === 'brand' 
+                                xyz-on:click="projectType = 'brand'"
+                                xyz-bind:class="projectType === 'brand' 
                   ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' 
                   : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'"
                                 class="p-3 rounded-xl border text-center transition">
@@ -172,8 +172,8 @@ get_header();
 
                             <button
                                 type="button"
-                                @click="projectType = 'store'"
-                                :class="projectType === 'store' 
+                                xyz-on:click="projectType = 'store'"
+                                xyz-bind:class="projectType === 'store' 
                   ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' 
                   : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'"
                                 class="p-3 rounded-xl border text-center transition">
@@ -183,8 +183,8 @@ get_header();
 
                             <button
                                 type="button"
-                                @click="projectType = 'headless'"
-                                :class="projectType === 'headless' 
+                                xyz-on:click="projectType = 'headless'"
+                                xyz-bind:class="projectType === 'headless' 
                   ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' 
                   : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'"
                                 class="p-3 rounded-xl border text-center transition">
@@ -199,14 +199,14 @@ get_header();
                         <div class="flex justify-between text-xs">
                             <span class="text-neutral-400">تعداد صفحات و تمپلیت‌های اختصاصی:</span>
                             <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
-                                <span x-text="pageCount"></span> قالب صفحه
+                                <span xyz-text="pageCount"></span> قالب صفحه
                             </span>
                         </div>
                         <input
                             type="range"
                             min="3"
                             max="25"
-                            x-model.number="pageCount"
+                            xyz-model.number="pageCount"
                             class="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-amber-400" />
                     </div>
 
@@ -214,11 +214,11 @@ get_header();
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                         <button
                             type="button"
-                            @click="needsCustomBlocks = !needsCustomBlocks"
-                            :class="needsCustomBlocks ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
+                            xyz-on:click="needsCustomBlocks = !needsCustomBlocks"
+                            xyz-bind:class="needsCustomBlocks ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
                             class="p-3 rounded-xl border text-right flex items-center justify-between transition">
                             <div class="text-xs">توسعه بلوک‌های اختصاصی ری‌اکت در گوتنبرگ</div>
-                            <svg class="w-4 h-4" :class="needsCustomBlocks ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="w-4 h-4" xyz-bind:class="needsCustomBlocks ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="m9 12 2 2 4-4" />
                             </svg>
@@ -226,11 +226,11 @@ get_header();
 
                         <button
                             type="button"
-                            @click="needsMigration = !needsMigration"
-                            :class="needsMigration ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
+                            xyz-on:click="needsMigration = !needsMigration"
+                            xyz-bind:class="needsMigration ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
                             class="p-3 rounded-xl border text-right flex items-center justify-between transition">
                             <div class="text-xs">انتقال کامل محتوا و ریدایرکت‌های ۳۰۱ سئو</div>
-                            <svg class="w-4 h-4" :class="needsMigration ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="w-4 h-4" xyz-bind:class="needsMigration ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="m9 12 2 2 4-4" />
                             </svg>
@@ -238,11 +238,11 @@ get_header();
 
                         <button
                             type="button"
-                            @click="needsCustomApi = !needsCustomApi"
-                            :class="needsCustomApi ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
+                            xyz-on:click="needsCustomApi = !needsCustomApi"
+                            xyz-bind:class="needsCustomApi ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
                             class="p-3 rounded-xl border text-right flex items-center justify-between transition">
                             <div class="text-xs">اتصال دوطرفه به وب‌سرویس و نرم‌افزار حسابداری/CRM</div>
-                            <svg class="w-4 h-4" :class="needsCustomApi ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="w-4 h-4" xyz-bind:class="needsCustomApi ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="m9 12 2 2 4-4" />
                             </svg>
@@ -250,11 +250,11 @@ get_header();
 
                         <button
                             type="button"
-                            @click="needsSpeedGuarantee = !needsSpeedGuarantee"
-                            :class="needsSpeedGuarantee ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
+                            xyz-on:click="needsSpeedGuarantee = !needsSpeedGuarantee"
+                            xyz-bind:class="needsSpeedGuarantee ? 'bg-amber-500/15 border-amber-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
                             class="p-3 rounded-xl border text-right flex items-center justify-between transition">
                             <div class="text-xs">تضمین کتبی رتبه ۱۰۰ Core Web Vitals گوگل</div>
-                            <svg class="w-4 h-4" :class="needsSpeedGuarantee ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="w-4 h-4" xyz-bind:class="needsSpeedGuarantee ? 'text-amber-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="m9 12 2 2 4-4" />
                             </svg>
@@ -272,35 +272,35 @@ get_header();
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between text-neutral-300">
                             <span>نوع معماری:</span>
-                            <span class="text-white" x-text="projectType === 'brand' ? 'سایت شرکتی / آژانسی' : projectType === 'store' ? 'فروشگاه تخصصی ووکامرس' : 'پرتال هدلس Next.js'"></span>
+                            <span class="text-white" xyz-text="projectType === 'brand' ? 'سایت شرکتی / آژانسی' : projectType === 'store' ? 'فروشگاه تخصصی ووکامرس' : 'پرتال هدلس Next.js'"></span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
                             <span>تعداد قالب‌های اختصاصی:</span>
-                            <span class=" text-white"><span x-text="pageCount"></span> تمپلیت</span>
+                            <span class=" text-white"><span xyz-text="pageCount"></span> تمپلیت</span>
                         </div>
 
                         <div class="flex justify-between text-neutral-300">
                             <span>زمان اسپرینت تحویل:</span>
-                            <span class="text-amber-400 font-bold" x-text="estimatedTimeline()"></span>
+                            <span class="text-amber-400 font-bold" xyz-text="estimatedTimeline()"></span>
                         </div>
 
                         <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
                             <span>کل برآورد سرمایه‌گذاری:</span>
-                            <span class="text-amber-400 font-bold text-xl" x-text="formatCurrency(calculateTotal())"></span>
+                            <span class="text-amber-400 font-bold text-xl" xyz-text="formatCurrency(calculateTotal())"></span>
                         </div>
 
                         <div class="flex justify-between text-xs text-neutral-400">
                             <span>بیعانه ۵۰٪ شروع پروژه:</span>
-                            <span class="text-white font-bold" x-text="formatCurrency(Math.round(calculateTotal() * 0.5))"></span>
+                            <span class="text-white font-bold" xyz-text="formatCurrency(Math.round(calculateTotal() * 0.5))"></span>
                         </div>
                     </div>
 
                     <button
                         type="button"
-                        @click="bookCustomSprint()"
+                        xyz-on:click="bookCustomSprint()"
                         class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition active:scale-95 shadow-lg shadow-amber-500/25 text-center">
-                        <span>رزرو نوبت اسپرینت با پیش‌پرداخت (<span x-text="formatCurrency(Math.round(calculateTotal() * 0.5))"></span>)</span>
+                        <span>رزرو نوبت اسپرینت با پیش‌پرداخت (<span xyz-text="formatCurrency(Math.round(calculateTotal() * 0.5))"></span>)</span>
                     </button>
                 </div>
 

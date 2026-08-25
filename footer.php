@@ -7,7 +7,7 @@
  */
 ?>
 
-<footer class="bg-[#06070a] border-t border-white/10 text-neutral-400 text-sm transition-colors duration-300" x-data="romonetFooter()">
+<footer class="bg-[#06070a] border-t border-white/10 text-neutral-400 text-sm transition-colors duration-300" xyz-data="romonetFooter()">
 
   <!-- Top Value Propositions Banner -->
   <div class="border-b border-white/5 bg-white/[0.02]">
@@ -201,7 +201,7 @@
           <div class="relative">
             <input
               type="email"
-              x-model="newsletterEmail"
+              xyz-model="newsletterEmail"
               placeholder="ایمیل خود را وارد کنید..."
               class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400 transition"
               dir="ltr" />
@@ -216,7 +216,7 @@
             </button>
           </div>
 
-          <span x-show="isSubscribed" x-cloak class="text-[11px] text-emerald-400 flex items-center gap-1">
+          <span xyz-show="isSubscribed" xyz-cloak class="text-[11px] text-emerald-400 flex items-center gap-1">
             <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
               <path d="m9 12 2 2 4-4"></path>
@@ -246,8 +246,8 @@
         <!-- Segmented Theme Toggle -->
         <div class="inline-flex items-center p-1 rounded-xl bg-black/40 border border-white/10 backdrop-blur-md">
           <button
-            @click="setGlobalTheme('dark')"
-            :class="currentTheme === 'dark' ? 'bg-gradient-to-r from-amber-500/20 to-amber-600/20 text-amber-300 border border-amber-500/30 shadow-sm' : 'text-neutral-400 hover:text-white'"
+            xyz-on:click="setGlobalTheme('dark')"
+            xyz-bind:class="currentTheme === 'dark' ? 'bg-gradient-to-r from-amber-500/20 to-amber-600/20 text-amber-300 border border-amber-500/30 shadow-sm' : 'text-neutral-400 hover:text-white'"
             class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-sans rounded-lg transition-all"
             title="حالت دارک ابسیدین">
             <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -257,8 +257,8 @@
           </button>
 
           <button
-            @click="setGlobalTheme('light')"
-            :class="currentTheme === 'light' ? 'bg-white text-slate-900 border border-slate-200 shadow-md font-semibold' : 'text-neutral-400 hover:text-white'"
+            xyz-on:click="setGlobalTheme('light')"
+            xyz-bind:class="currentTheme === 'light' ? 'bg-white text-slate-900 border border-slate-200 shadow-md font-semibold' : 'text-neutral-400 hover:text-white'"
             class="flex items-center gap-1.5 px-2.5 py-1 text-xs font-sans rounded-lg transition-all"
             title="حالت پلاتینیوم روز">
             <svg class="w-3.5 h-3.5 text-amber-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -287,15 +287,15 @@
 
 <!-- Global Toast Notification Modal -->
 <div
-  x-data="romonetToast()"
-  x-show="visible"
-  x-cloak
-  x-transition:enter="transition ease-out duration-300"
-  x-transition:enter-start="opacity-0 translate-y-5"
-  x-transition:enter-end="opacity-100 translate-y-0"
-  x-transition:leave="transition ease-in duration-200"
-  x-transition:leave-start="opacity-100 translate-y-0"
-  x-transition:leave-end="opacity-0 translate-y-5"
+  xyz-data="romonetToast()"
+  xyz-show="visible"
+  xyz-cloak
+  xyz-transition:enter="transition ease-out duration-300"
+  xyz-transition:enter-start="opacity-0 translate-y-5"
+  xyz-transition:enter-end="opacity-100 translate-y-0"
+  xyz-transition:leave="transition ease-in duration-200"
+  xyz-transition:leave-start="opacity-100 translate-y-0"
+  xyz-transition:leave-end="opacity-0 translate-y-5"
   @show-toast.window="triggerToast($event.detail)"
   class="fixed bottom-6 right-6 z-50"
   dir="rtl"
@@ -307,7 +307,7 @@
         <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
       </svg>
     </div>
-    <p class="flex-1 leading-relaxed" x-text="message"></p>
+    <p class="flex-1 leading-relaxed" xyz-text="message"></p>
   </div>
 </div>
 

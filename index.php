@@ -57,7 +57,7 @@ if ($blog_query->have_posts()) {
 }
 ?>
 
-<main class="min-h-screen pb-24 pt-8" dir="rtl" x-data="romonetBlogPage(<?php echo esc_attr(json_encode($posts_data)); ?>)">
+<main class="min-h-screen pb-24 pt-8" dir="rtl" xyz-data="romonetBlogPage(<?php echo esc_attr(json_encode($posts_data)); ?>)">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
     <!-- Blog Header -->
@@ -83,8 +83,8 @@ if ($blog_query->have_posts()) {
       <!-- Categories -->
       <div class="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-2 md:pb-0">
         <button
-          @click="selectedCategory = 'همه'"
-          :class="selectedCategory === 'همه' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'"
+          xyz-on:click="selectedCategory = 'همه'"
+          xyz-bind:class="selectedCategory === 'همه' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'"
           class="px-3.5 py-2 rounded-xl text-xs whitespace-nowrap transition">
           همه
         </button>
@@ -92,8 +92,8 @@ if ($blog_query->have_posts()) {
         <?php if (!empty($wp_categories)) : ?>
           <?php foreach ($wp_categories as $cat) : ?>
             <button
-              @click="selectedCategory = '<?php echo esc_js($cat->name); ?>'"
-              :class="selectedCategory === '<?php echo esc_js($cat->name); ?>' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'"
+              xyz-on:click="selectedCategory = '<?php echo esc_js($cat->name); ?>'"
+              xyz-bind:class="selectedCategory === '<?php echo esc_js($cat->name); ?>' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'bg-white/5 text-neutral-400 hover:text-white hover:bg-white/10'"
               class="px-3.5 py-2 rounded-xl text-xs whitespace-nowrap transition">
               <?php echo esc_html($cat->name); ?>
             </button>
@@ -109,16 +109,16 @@ if ($blog_query->have_posts()) {
         </svg>
         <input
           type="text"
-          x-model="searchQuery"
+          xyz-model="searchQuery"
           placeholder="جستجو در مقالات و راهنماها..."
           class="w-full bg-black/50 border border-white/10 focus:border-amber-400 rounded-xl pr-10 pl-4 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none transition font-sans" />
       </div>
     </div>
 
     <!-- Editorial Spotlight Banner (Featured Article) -->
-    <template x-if="selectedCategory === 'همه' && !searchQuery && featuredPost">
+    <template xyz-if="selectedCategory === 'همه' && !searchQuery && featuredPost">
       <a
-        :href="featuredPost.slug"
+        xyz-bind:href="featuredPost.slug"
         class="block glass-panel rounded-3xl border border-amber-500/30 overflow-hidden cursor-pointer group hover:border-amber-400/60 transition-all bg-gradient-to-br from-[#121522] via-[#0f111a] to-[#121522]">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           <div class="lg:col-span-7 p-6 sm:p-10 space-y-4">
@@ -126,19 +126,19 @@ if ($blog_query->have_posts()) {
               <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs border border-amber-500/30 font-semibold">
                 ⭐ مقاله ویژه تحریریه
               </span>
-              <span class="text-xs text-neutral-400 " x-text="featuredPost.readTime"></span>
+              <span class="text-xs text-neutral-400 " xyz-text="featuredPost.readTime"></span>
             </div>
 
-            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white group-hover:text-amber-300 transition leading-tight" x-text="featuredPost.title"></h2>
+            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white group-hover:text-amber-300 transition leading-tight" xyz-text="featuredPost.title"></h2>
 
-            <p class="text-sm text-neutral-300 leading-relaxed line-clamp-3" x-text="featuredPost.excerpt"></p>
+            <p class="text-sm text-neutral-300 leading-relaxed line-clamp-3" xyz-text="featuredPost.excerpt"></p>
 
             <div class="pt-4 flex items-center justify-between border-t border-white/10">
               <div class="flex items-center gap-3">
-                <img :src="featuredPost.author.avatar" :alt="featuredPost.author.name" class="w-10 h-10 rounded-full object-cover border border-amber-500/40" />
+                <img xyz-bind:src="featuredPost.author.avatar" xyz-bind:alt="featuredPost.author.name" class="w-10 h-10 rounded-full object-cover border border-amber-500/40" />
                 <div>
-                  <div class="text-xs font-bold text-white" x-text="featuredPost.author.name"></div>
-                  <div class="text-[11px] text-neutral-400" x-text="featuredPost.author.role"></div>
+                  <div class="text-xs font-bold text-white" xyz-text="featuredPost.author.name"></div>
+                  <div class="text-[11px] text-neutral-400" xyz-text="featuredPost.author.role"></div>
                 </div>
               </div>
 
@@ -154,8 +154,8 @@ if ($blog_query->have_posts()) {
 
           <div class="lg:col-span-5 h-72 sm:h-96 relative overflow-hidden">
             <img
-              :src="featuredPost.coverImage"
-              :alt="featuredPost.title"
+              xyz-bind:src="featuredPost.coverImage"
+              xyz-bind:alt="featuredPost.title"
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
             <div class="absolute inset-0 bg-gradient-to-l from-[#121522] via-transparent to-transparent hidden lg:block"></div>
           </div>
@@ -172,42 +172,42 @@ if ($blog_query->have_posts()) {
             <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
           </svg>
-          <span>همه مقالات (<span x-text="filteredPosts().length"></span>)</span>
+          <span>همه مقالات (<span xyz-text="filteredPosts().length"></span>)</span>
         </h3>
-        <template x-if="searchQuery">
-          <span class="text-xs text-neutral-400">نتایج جستجو برای: «<span x-text="searchQuery"></span>»</span>
+        <template xyz-if="searchQuery">
+          <span class="text-xs text-neutral-400">نتایج جستجو برای: «<span xyz-text="searchQuery"></span>»</span>
         </template>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <template x-for="post in filteredPosts()" :key="post.id">
+        <template xyz-for="post in filteredPosts()" xyz-bind:key="post.id">
           <article
             class="glass-card rounded-2xl border border-white/10 overflow-hidden cursor-pointer group hover:border-amber-400/40 transition flex flex-col justify-between bg-white/5 backdrop-blur-md">
             <div>
               <div class="h-48 overflow-hidden relative">
                 <img
-                  :src="post.coverImage"
-                  :alt="post.title"
+                  xyz-bind:src="post.coverImage"
+                  xyz-bind:alt="post.title"
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d0f17] via-transparent to-transparent"></div>
-                <span class="absolute bottom-3 right-3 px-2.5 py-0.5 rounded bg-black/80 backdrop-blur text-amber-400 text-[11px] border border-amber-500/30" x-text="post.category"></span>
+                <span class="absolute bottom-3 right-3 px-2.5 py-0.5 rounded bg-black/80 backdrop-blur text-amber-400 text-[11px] border border-amber-500/30" xyz-text="post.category"></span>
               </div>
 
               <div class="p-6 space-y-3">
                 <div class="flex items-center justify-between text-xs text-neutral-400">
-                  <span x-text="post.publishedAt"></span>
-                  <span x-text="post.readTime"></span>
+                  <span xyz-text="post.publishedAt"></span>
+                  <span xyz-text="post.readTime"></span>
                 </div>
 
-                <a :href="post.slug">
-                  <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition leading-snug line-clamp-2" x-text="post.title"></h3>
+                <a xyz-bind:href="post.slug">
+                  <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition leading-snug line-clamp-2" xyz-text="post.title"></h3>
                 </a>
 
-                <p class="text-xs text-neutral-400 line-clamp-2 leading-relaxed" x-text="post.excerpt"></p>
+                <p class="text-xs text-neutral-400 line-clamp-2 leading-relaxed" xyz-text="post.excerpt"></p>
 
                 <div class="pt-2 flex flex-wrap gap-1.5">
-                  <template x-for="(tag, idx) in post.tags.slice(0, 3)" :key="idx">
-                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-neutral-400 border border-white/5" x-text="'#' + tag"></span>
+                  <template xyz-for="(tag, idx) in post.tags.slice(0, 3)" xyz-bind:key="idx">
+                    <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-neutral-400 border border-white/5" xyz-text="'#' + tag"></span>
                   </template>
                 </div>
               </div>
@@ -216,11 +216,11 @@ if ($blog_query->have_posts()) {
             <div class="p-6 pt-0">
               <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs">
                 <div class="flex items-center gap-2">
-                  <img :src="post.author.avatar" :alt="post.author.name" class="w-6 h-6 rounded-full object-cover border border-white/10" />
-                  <span class="text-neutral-300 font-medium" x-text="post.author.name"></span>
+                  <img xyz-bind:src="post.author.avatar" xyz-bind:alt="post.author.name" class="w-6 h-6 rounded-full object-cover border border-white/10" />
+                  <span class="text-neutral-300 font-medium" xyz-text="post.author.name"></span>
                 </div>
 
-                <a :href="post.slug" class="text-amber-400 group-hover:-translate-x-1 transition-transform flex items-center gap-1">
+                <a xyz-bind:href="post.slug" class="text-amber-400 group-hover:-translate-x-1 transition-transform flex items-center gap-1">
                   <span>مطالعه</span>
                   <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="m12 19-7-7 7-7" />
@@ -234,11 +234,11 @@ if ($blog_query->have_posts()) {
       </div>
 
       <!-- No Posts Found -->
-      <template x-if="filteredPosts().length === 0">
+      <template xyz-if="filteredPosts().length === 0">
         <div class="glass-panel p-12 text-center rounded-2xl border border-white/10 space-y-3 bg-white/5 backdrop-blur-md">
           <p class="text-neutral-400 text-sm">هیچ مقاله‌ای با این عنوان یا دسته‌بندی یافت نشد.</p>
           <button
-            @click="selectedCategory = 'همه'; searchQuery = '';"
+            xyz-on:click="selectedCategory = 'همه'; searchQuery = '';"
             class="text-xs text-amber-400 underline">
             پاک کردن فیلترها
           </button>

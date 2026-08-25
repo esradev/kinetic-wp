@@ -33,7 +33,7 @@ while (have_posts()) : the_post();
   <main
     class="min-h-screen pb-24 pt-6"
     dir="rtl"
-    x-data="romonetSinglePost({
+    xyz-data="romonetSinglePost({
     postId: <?php echo get_the_ID(); ?>,
     initialLikes: <?php echo esc_js($likes_count); ?>
   })">
@@ -54,15 +54,15 @@ while (have_posts()) : the_post();
 
         <div class="flex items-center gap-2">
           <button
-            @click="handleShare()"
+            xyz-on:click="handleShare()"
             class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 text-xs flex items-center gap-1.5 transition"
             title="اشتراک‌گذاری مقاله">
-            <template x-if="copied">
+            <template xyz-if="copied">
               <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             </template>
-            <template x-if="!copied">
+            <template xyz-if="!copied">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="18" cy="5" r="3" />
                 <circle cx="6" cy="12" r="3" />
@@ -71,7 +71,7 @@ while (have_posts()) : the_post();
                 <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
               </svg>
             </template>
-            <span class="hidden sm:inline" x-text="copied ? 'کپی شد' : 'اشتراک‌گذاری'"></span>
+            <span class="hidden sm:inline" xyz-text="copied ? 'کپی شد' : 'اشتراک‌گذاری'"></span>
           </button>
         </div>
       </div>
@@ -118,14 +118,14 @@ while (have_posts()) : the_post();
 
           <div class="flex items-center gap-4 text-xs text-neutral-400">
             <button
-              @click="handleLike()"
-              :class="hasLiked ? 'bg-rose-500/20 text-rose-400 border-rose-500/40' : 'bg-white/5 text-neutral-300 hover:text-rose-400 border-white/10'"
+              xyz-on:click="handleLike()"
+              xyz-bind:class="hasLiked ? 'bg-rose-500/20 text-rose-400 border-rose-500/40' : 'bg-white/5 text-neutral-300 hover:text-rose-400 border-white/10'"
               class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border transition">
               <!-- Heart Icon -->
-              <svg class="w-4 h-4" :class="hasLiked ? 'fill-current text-rose-500' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <svg class="w-4 h-4" xyz-bind:class="hasLiked ? 'fill-current text-rose-500' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
               </svg>
-              <span class="" x-text="likes"></span>
+              <span class="" xyz-text="likes"></span>
             </button>
 
             <div class="flex items-center gap-1">

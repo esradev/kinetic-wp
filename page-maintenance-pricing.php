@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<main class="min-h-screen pb-24 pt-8 space-y-20" dir="rtl" x-data="romonetMaintenancePricing()">
+<main class="min-h-screen pb-24 pt-8 space-y-20" dir="rtl" xyz-data="romonetMaintenancePricing()">
 
     <!-- ==================== HEADER HERO ==================== -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,16 +37,16 @@ get_header();
                 <div class="bg-white/5 p-1 rounded-xl border border-white/10 flex items-center backdrop-blur-md">
                     <button
                         type="button"
-                        @click="billingCycle = 'monthly'"
-                        :class="billingCycle === 'monthly' ? 'bg-emerald-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
+                        xyz-on:click="billingCycle = 'monthly'"
+                        xyz-bind:class="billingCycle === 'monthly' ? 'bg-emerald-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
                         class="px-4 py-2 rounded-lg text-xs font-bold transition">
                         پرداخت ماهانه
                     </button>
 
                     <button
                         type="button"
-                        @click="billingCycle = 'annual'"
-                        :class="billingCycle === 'annual' ? 'bg-emerald-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
+                        xyz-on:click="billingCycle = 'annual'"
+                        xyz-bind:class="billingCycle === 'annual' ? 'bg-emerald-500 text-black shadow' : 'text-neutral-400 hover:text-white'"
                         class="px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-1.5">
                         <span>پرداخت سالانه</span>
                         <span class="text-[10px] bg-black/40 text-emerald-300 px-1.5 py-0.5 rounded ">
@@ -62,14 +62,14 @@ get_header();
     <!-- ==================== THREE MAIN PRICING TIERS ==================== -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <template x-for="plan in plans" :key="plan.id">
+            <template xyz-for="plan in plans" xyz-bind:key="plan.id">
                 <div
                     class="glass-panel rounded-3xl p-8 border flex flex-col justify-between transition-all relative backdrop-blur-xl"
-                    :class="plan.popular 
+                    xyz-bind:class="plan.popular 
             ? 'border-emerald-500/60 shadow-2xl shadow-emerald-500/10 bg-gradient-to-b from-[#0f171e] to-[#0c1017]' 
             : 'border-white/10 hover:border-white/20 bg-white/5'">
                     <!-- Popular Badge -->
-                    <template x-if="plan.popular">
+                    <template xyz-if="plan.popular">
                         <span class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-emerald-500 text-black text-[11px] font-bold shadow-lg whitespace-nowrap">
                             پیشنهاد ویژه سایت‌های پربازدید و فروشگاهی
                         </span>
@@ -77,14 +77,14 @@ get_header();
 
                     <div class="space-y-6">
                         <div>
-                            <h3 class="text-2xl font-extrabold text-white" x-text="plan.name"></h3>
-                            <p class="text-xs text-neutral-400 mt-1" x-text="plan.tierSubtitle"></p>
+                            <h3 class="text-2xl font-extrabold text-white" xyz-text="plan.name"></h3>
+                            <p class="text-xs text-neutral-400 mt-1" xyz-text="plan.tierSubtitle"></p>
                         </div>
 
                         <div class="pt-2 flex items-baseline gap-2">
-                            <span class="text-3xl sm:text-4xl font-black text-white" x-text="formatCurrency(billingCycle === 'annual' ? plan.annualPricePerMonth : plan.monthlyPrice)"></span>
+                            <span class="text-3xl sm:text-4xl font-black text-white" xyz-text="formatCurrency(billingCycle === 'annual' ? plan.annualPricePerMonth : plan.monthlyPrice)"></span>
                             <span class="text-xs text-neutral-400">/ ماهانه</span>
-                            <template x-if="billingCycle === 'annual'">
+                            <template xyz-if="billingCycle === 'annual'">
                                 <span class="text-[10px] text-emerald-400">تسویه سالانه</span>
                             </template>
                         </div>
@@ -93,32 +93,32 @@ get_header();
                         <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 space-y-1.5 text-xs">
                             <div class="flex justify-between text-neutral-300">
                                 <span>زمان پاسخگویی SLA:</span>
-                                <span class="text-emerald-400 font-bold" x-text="plan.responseTimeSLA"></span>
+                                <span class="text-emerald-400 font-bold" xyz-text="plan.responseTimeSLA"></span>
                             </div>
                             <div class="flex justify-between text-neutral-400 text-[11px]">
                                 <span>تهیه نسخه پشتیبان:</span>
-                                <span class="text-white" x-text="plan.backupFrequency"></span>
+                                <span class="text-white" xyz-text="plan.backupFrequency"></span>
                             </div>
                             <div class="flex justify-between text-neutral-400 text-[11px]">
                                 <span>پایش آپ‌تایم سرور:</span>
-                                <span class="text-amber-400" x-text="plan.uptimeCheckInterval"></span>
+                                <span class="text-amber-400" xyz-text="plan.uptimeCheckInterval"></span>
                             </div>
                             <div class="flex justify-between text-neutral-400 text-[11px]">
                                 <span>ساعات اختصاصی توسعه:</span>
-                                <span class="text-cyan-400" x-text="plan.devHoursIncluded"></span>
+                                <span class="text-cyan-400" xyz-text="plan.devHoursIncluded"></span>
                             </div>
                         </div>
 
                         <!-- Features List -->
                         <div class="space-y-2.5 pt-2">
-                            <template x-for="(f, idx) in plan.features" :key="idx">
+                            <template xyz-for="(f, idx) in plan.features" xyz-bind:key="idx">
                                 <div class="flex items-start gap-2.5 text-xs text-neutral-300">
                                     <!-- CheckCircle2 Icon -->
                                     <svg class="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <circle cx="12" cy="12" r="10" />
                                         <path d="m9 12 2 2 4-4" />
                                     </svg>
-                                    <span x-text="f"></span>
+                                    <span xyz-text="f"></span>
                                 </div>
                             </template>
                         </div>
@@ -128,12 +128,12 @@ get_header();
                     <div class="pt-8 mt-6 border-t border-white/10">
                         <button
                             type="button"
-                            @click="subscribePlan(plan)"
+                            xyz-on:click="subscribePlan(plan)"
                             class="w-full py-3.5 rounded-xl text-xs font-extrabold transition active:scale-95 flex items-center justify-center gap-2"
-                            :class="plan.popular 
+                            xyz-bind:class="plan.popular 
                 ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-lg shadow-emerald-500/25' 
                 : 'bg-white/10 hover:bg-white/20 text-white'">
-                            <span>سفارش اشتراک <span x-text="plan.name"></span></span>
+                            <span>سفارش اشتراک <span xyz-text="plan.name"></span></span>
                             <!-- ArrowLeft Icon -->
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="m12 19-7-7 7-7" />
@@ -186,14 +186,14 @@ get_header();
                         <div class="flex justify-between text-xs">
                             <span class="text-neutral-400">تعداد وب‌سایت‌های وردپرسی تحت پوشش:</span>
                             <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
-                                <span x-text="siteCount"></span> <span x-text="siteCount === 1 ? 'سایت' : 'سایت (ناوگان)'"></span>
+                                <span xyz-text="siteCount"></span> <span xyz-text="siteCount === 1 ? 'سایت' : 'سایت (ناوگان)'"></span>
                             </span>
                         </div>
                         <input
                             type="range"
                             min="1"
                             max="20"
-                            x-model.number="siteCount"
+                            xyz-model.number="siteCount"
                             class="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-emerald-400" />
                     </div>
 
@@ -201,14 +201,14 @@ get_header();
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <button
                             type="button"
-                            @click="isEcommerce = !isEcommerce"
-                            :class="isEcommerce ? 'bg-emerald-500/15 border-emerald-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
+                            xyz-on:click="isEcommerce = !isEcommerce"
+                            xyz-bind:class="isEcommerce ? 'bg-emerald-500/15 border-emerald-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
                             class="p-4 rounded-xl border text-right transition flex items-center justify-between">
                             <div>
                                 <div class="text-xs font-bold text-white">فروشگاه ووکامرس فعال</div>
                                 <div class="text-[11px] text-neutral-400">پایش ۲۴ ساعته فرآیند تسویه‌حساب و پرداخت</div>
                             </div>
-                            <svg class="w-5 h-5" :class="isEcommerce ? 'text-emerald-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="w-5 h-5" xyz-bind:class="isEcommerce ? 'text-emerald-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="m9 12 2 2 4-4" />
                             </svg>
@@ -216,14 +216,14 @@ get_header();
 
                         <button
                             type="button"
-                            @click="needs15mSla = !needs15mSla"
-                            :class="needs15mSla ? 'bg-emerald-500/15 border-emerald-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
+                            xyz-on:click="needs15mSla = !needs15mSla"
+                            xyz-bind:class="needs15mSla ? 'bg-emerald-500/15 border-emerald-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'"
                             class="p-4 rounded-xl border text-right transition flex items-center justify-between">
                             <div>
                                 <div class="text-xs font-bold text-white">پاسخگویی اضطراری ۱۵ دقیقه‌ای</div>
                                 <div class="text-[11px] text-neutral-400">تیم مهندسی آماده‌باش ۲۴/۷/۳۶۵</div>
                             </div>
-                            <svg class="w-5 h-5" :class="needs15mSla ? 'text-emerald-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <svg class="w-5 h-5" xyz-bind:class="needs15mSla ? 'text-emerald-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <circle cx="12" cy="12" r="10" />
                                 <path d="m9 12 2 2 4-4" />
                             </svg>
@@ -235,7 +235,7 @@ get_header();
                         <div class="flex justify-between text-xs">
                             <span class="text-neutral-400">ساعت ماهانه اختصاصی برای توسعه و تغییرات قالب:</span>
                             <span class="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
-                                <span x-text="extraDevHours"></span> ساعت در ماه
+                                <span xyz-text="extraDevHours"></span> ساعت در ماه
                             </span>
                         </div>
                         <input
@@ -243,7 +243,7 @@ get_header();
                             min="0"
                             max="20"
                             step="2"
-                            x-model.number="extraDevHours"
+                            xyz-model.number="extraDevHours"
                             class="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-emerald-400" />
                     </div>
 
@@ -258,31 +258,31 @@ get_header();
                     <div class="space-y-3 text-xs">
                         <div class="flex justify-between text-neutral-300">
                             <span>تعداد سایت‌ها:</span>
-                            <span class="text-white "><span x-text="siteCount"></span> دامنه فعال</span>
+                            <span class="text-white "><span xyz-text="siteCount"></span> دامنه فعال</span>
                         </div>
                         <div class="flex justify-between text-neutral-300">
                             <span>نوع معماری:</span>
-                            <span class="text-emerald-400" x-text="isEcommerce ? 'فروشگاهی ووکامرس پربازدید' : 'شرکتی / پرتال وردپرس'"></span>
+                            <span class="text-emerald-400" xyz-text="isEcommerce ? 'فروشگاهی ووکامرس پربازدید' : 'شرکتی / پرتال وردپرس'"></span>
                         </div>
                         <div class="flex justify-between text-neutral-300">
                             <span>سطح پاسخگویی SLA:</span>
-                            <span class="text-emerald-400" x-text="needs15mSla ? '۱۵ دقیقه اضطراری (۲۴ ساعته)' : '۱ ساعت استاندارد'"></span>
+                            <span class="text-emerald-400" xyz-text="needs15mSla ? '۱۵ دقیقه اضطراری (۲۴ ساعته)' : '۱ ساعت استاندارد'"></span>
                         </div>
                         <div class="flex justify-between text-neutral-300">
                             <span>ساعات توسعه و تغییرات:</span>
-                            <span class="text-amber-400 "><span x-text="extraDevHours"></span> ساعت در ماه</span>
+                            <span class="text-amber-400 "><span xyz-text="extraDevHours"></span> ساعت در ماه</span>
                         </div>
                         <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
                             <span>سرمایه‌گذاری ماهانه:</span>
-                            <span class="text-emerald-400 font-bold text-xl"><span x-text="formatCurrency(calculateCustomMonthly())"></span>/ماه</span>
+                            <span class="text-emerald-400 font-bold text-xl"><span xyz-text="formatCurrency(calculateCustomMonthly())"></span>/ماه</span>
                         </div>
                     </div>
 
                     <button
                         type="button"
-                        @click="orderCustomPlan()"
+                        xyz-on:click="orderCustomPlan()"
                         class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs transition active:scale-95 shadow-lg shadow-emerald-500/25 text-center">
-                        <span>ثبت سفارش پلن سفارشی (<span x-text="formatCurrency(calculateCustomMonthly())"></span>)</span>
+                        <span>ثبت سفارش پلن سفارشی (<span xyz-text="formatCurrency(calculateCustomMonthly())"></span>)</span>
                     </button>
                 </div>
 

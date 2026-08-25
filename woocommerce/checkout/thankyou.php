@@ -74,11 +74,11 @@ if ($order && is_a($order, 'WC_Order')) {
 <!-- Confetti CDN Script -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
-<div class="min-h-screen pb-24 pt-8" dir="rtl" x-data="romonetThankYou(<?php echo esc_attr(wp_json_encode($order_data)); ?>)" x-init="initConfetti()">
+<div class="min-h-screen pb-24 pt-8" dir="rtl" xyz-data="romonetThankYou(<?php echo esc_attr(wp_json_encode($order_data)); ?>)" xyz-init="initConfetti()">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
         <!-- ==================== NO ORDER FALLBACK ==================== -->
-        <template x-if="!order">
+        <template xyz-if="!order">
             <div class="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-6">
                 <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-500">
                     <svg class="w-8 h-8 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -99,7 +99,7 @@ if ($order && is_a($order, 'WC_Order')) {
         </template>
 
         <!-- ==================== CELEBRATION ORDER SUCCESS ==================== -->
-        <template x-if="order">
+        <template xyz-if="order">
             <div class="space-y-10">
 
                 <!-- Celebration Header -->
@@ -117,11 +117,11 @@ if ($order && is_a($order, 'WC_Order')) {
                     </div>
 
                     <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                        با تشکر از خرید شما، <span x-text="order.customer.fullName"></span>!
+                        با تشکر از خرید شما، <span xyz-text="order.customer.fullName"></span>!
                     </h1>
 
                     <p class="text-sm sm:text-base text-neutral-300 max-w-lg mx-auto leading-relaxed">
-                        پرداخت با موفقیت انجام شد. رسید پرداخت و مشخصات نرم‌افزار به آدرس ایمیل <strong class="text-amber-400 " dir="ltr" x-text="order.customer.email"></strong> ارسال گردید.
+                        پرداخت با موفقیت انجام شد. رسید پرداخت و مشخصات نرم‌افزار به آدرس ایمیل <strong class="text-amber-400 " dir="ltr" xyz-text="order.customer.email"></strong> ارسال گردید.
                     </p>
                 </div>
 
@@ -129,23 +129,23 @@ if ($order && is_a($order, 'WC_Order')) {
                 <div class="glass-panel p-4 sm:p-6 rounded-2xl border border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs bg-white/5 backdrop-blur-xl">
                     <div>
                         <span class="text-neutral-400 block text-[11px]">شماره پیگیری فاکتور</span>
-                        <span class="text-amber-400 font-bold text-sm " x-text="order.orderId"></span>
+                        <span class="text-amber-400 font-bold text-sm " xyz-text="order.orderId"></span>
                     </div>
                     <div>
                         <span class="text-neutral-400 block text-[11px]">تاریخ ثبت سفارش</span>
-                        <span class="text-white " x-text="order.date"></span>
+                        <span class="text-white " xyz-text="order.date"></span>
                     </div>
                     <div>
                         <span class="text-neutral-400 block text-[11px]">شیوه پرداخت</span>
-                        <span class="text-cyan-400" x-text="order.paymentMethod"></span>
+                        <span class="text-cyan-400" xyz-text="order.paymentMethod"></span>
                     </div>
                     <div>
                         <span class="text-neutral-400 block text-[11px]">مبلغ کل تسویه‌شده</span>
-                        <span class="text-white font-bold text-sm " x-text="formatCurrency(order.total)"></span>
+                        <span class="text-white font-bold text-sm " xyz-text="formatCurrency(order.total)"></span>
                     </div>
                     <button
                         type="button"
-                        @click="handlePrint()"
+                        xyz-on:click="handlePrint()"
                         class="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-white border border-white/10 flex items-center gap-1.5 transition"
                         title="چاپ فاکتور رسمی">
                         <!-- Printer Icon -->
@@ -169,29 +169,29 @@ if ($order && is_a($order, 'WC_Order')) {
                             <span>جزئیات سفارش و فایل‌های دانلود</span>
                         </h2>
                         <span class="text-xs text-neutral-400 ">
-                            <span x-text="order.items.length"></span> محصول
+                            <span xyz-text="order.items.length"></span> محصول
                         </span>
                     </div>
 
                     <div class="space-y-4">
-                        <template x-for="(item, idx) in order.items" :key="idx">
+                        <template xyz-for="(item, idx) in order.items" xyz-bind:key="idx">
                             <div class="glass-card p-6 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-[#141724] to-[#0f111a] space-y-4 shadow-xl backdrop-blur-md">
                                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                                     <div>
-                                        <h3 class="text-base font-bold text-white" x-text="item.productName"></h3>
+                                        <h3 class="text-base font-bold text-white" xyz-text="item.productName"></h3>
                                         <div class="text-xs text-neutral-400 flex items-center gap-2 mt-0.5">
-                                            <span class="text-amber-400" x-text="item.tier"></span>
+                                            <span class="text-amber-400" xyz-text="item.tier"></span>
                                             <span>•</span>
-                                            <span>اعتبار: <span x-text="item.expires"></span></span>
+                                            <span>اعتبار: <span xyz-text="item.expires"></span></span>
                                         </div>
                                     </div>
 
                                     <!-- Downloads Loop -->
-                                    <template x-if="item.downloads && item.downloads.length > 0">
+                                    <template xyz-if="item.downloads && item.downloads.length > 0">
                                         <div class="flex flex-col gap-2 w-full sm:w-auto">
-                                            <template x-for="dl in item.downloads" :key="dl.url">
+                                            <template xyz-for="dl in item.downloads" xyz-bind:key="dl.url">
                                                 <a
-                                                    :href="dl.url"
+                                                    xyz-bind:href="dl.url"
                                                     class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs flex items-center gap-2 transition active:scale-95 shadow-lg shadow-amber-500/20 w-full justify-center">
                                                     <!-- DownloadCloud Icon -->
                                                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -199,7 +199,7 @@ if ($order && is_a($order, 'WC_Order')) {
                                                         <path d="M12 12v9" />
                                                         <path d="m8 17 4 4 4-4" />
                                                     </svg>
-                                                    <span x-text="'دانلود ' + dl.name"></span>
+                                                    <span xyz-text="'دانلود ' + dl.name"></span>
                                                 </a>
                                             </template>
                                         </div>
@@ -207,18 +207,18 @@ if ($order && is_a($order, 'WC_Order')) {
                                 </div>
 
                                 <!-- Key Box (Only shows if a license key is found) -->
-                                <template x-if="item.licenseKey">
+                                <template xyz-if="item.licenseKey">
                                     <div class="p-3.5 rounded-xl bg-black/60 border border-white/15 flex items-center justify-between gap-3" dir="ltr">
                                         <div class="space-y-0.5 truncate text-left">
                                             <span class="text-[10px] text-neutral-500 uppercase block ">License Authorization Key</span>
-                                            <span class="text-sm font-bold text-emerald-400 tracking-wider select-all truncate block " x-text="item.licenseKey"></span>
+                                            <span class="text-sm font-bold text-emerald-400 tracking-wider select-all truncate block " xyz-text="item.licenseKey"></span>
                                         </div>
 
                                         <button
                                             type="button"
-                                            @click="handleCopyKey(item.licenseKey)"
+                                            xyz-on:click="handleCopyKey(item.licenseKey)"
                                             class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs flex items-center gap-1.5 transition shrink-0">
-                                            <template x-if="copiedKey === item.licenseKey">
+                                            <template xyz-if="copiedKey === item.licenseKey">
                                                 <span class="flex items-center gap-1 text-emerald-400">
                                                     <!-- Check Icon -->
                                                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -228,7 +228,7 @@ if ($order && is_a($order, 'WC_Order')) {
                                                 </span>
                                             </template>
 
-                                            <template x-if="copiedKey !== item.licenseKey">
+                                            <template xyz-if="copiedKey !== item.licenseKey">
                                                 <span class="flex items-center gap-1">
                                                     <!-- Copy Icon -->
                                                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

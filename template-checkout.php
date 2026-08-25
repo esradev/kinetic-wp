@@ -77,7 +77,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 <div
     class="min-h-screen pb-24 pt-8"
     dir="rtl"
-    x-data="romonetCheckout(<?php echo esc_attr(wp_json_encode(array(
+    xyz-data="romonetCheckout(<?php echo esc_attr(wp_json_encode(array(
                                 'cart'       => $wc_cart_items,
                                 'subtotal'   => $wc_subtotal,
                                 'discount'   => $wc_discount,
@@ -140,7 +140,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                             <input
                                 type="text"
                                 required
-                                x-model="fullName"
+                                xyz-model="fullName"
                                 placeholder="مثال: سارا محمدی"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition" />
                         </div>
@@ -150,7 +150,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                             <input
                                 type="email"
                                 required
-                                x-model="email"
+                                xyz-model="email"
                                 placeholder="name@company.com"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition text-left"
                                 dir="ltr" />
@@ -161,7 +161,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                             <input
                                 type="tel"
                                 required
-                                x-model="phone"
+                                xyz-model="phone"
                                 placeholder="09120000000"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition text-left"
                                 dir="ltr" />
@@ -171,7 +171,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                             <label class="text-xs text-neutral-400">نام شرکت / سازمان (اختیاری)</label>
                             <input
                                 type="text"
-                                x-model="company"
+                                xyz-model="company"
                                 placeholder="شرکت/آژانس شما"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition" />
                         </div>
@@ -179,7 +179,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                         <div class="space-y-1.5">
                             <label class="text-xs text-neutral-400">کشور / منطقه *</label>
                             <select
-                                x-model="country"
+                                xyz-model="country"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition">
                                 <option value="IR">ایران (پرداخت ریالی شتاب)</option>
                                 <option value="AE">امارات متحده عربی</option>
@@ -208,7 +208,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                         </span>
                     </div>
 
-                    <template x-if="gateways.length === 0">
+                    <template xyz-if="gateways.length === 0">
                         <div class="p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-sm text-center">
                             هیچ درگاه پرداختی در ووکامرس فعال نیست.
                         </div>
@@ -216,23 +216,23 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 
                     <!-- Dynamic Gateway Tabs -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        <template x-for="gw in gateways" :key="gw.id">
+                        <template xyz-for="gw in gateways" xyz-bind:key="gw.id">
                             <button
                                 type="button"
-                                @click="paymentMethod = gw.id"
+                                xyz-on:click="paymentMethod = gw.id"
                                 class="p-3 rounded-xl border text-center transition flex flex-col items-center justify-center gap-2 h-full"
-                                :class="paymentMethod === gw.id ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
-                                <div x-html="getGatewayIcon(gw.id)" class="text-current"></div>
-                                <span class="text-xs leading-tight" x-text="gw.title"></span>
+                                xyz-bind:class="paymentMethod === gw.id ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
+                                <div xyz-html="getGatewayIcon(gw.id)" class="text-current"></div>
+                                <span class="text-xs leading-tight" xyz-text="gw.title"></span>
                             </button>
                         </template>
                     </div>
 
                     <!-- Dynamic Gateway Description -->
-                    <template x-for="gw in gateways" :key="'desc-'+gw.id">
-                        <div x-show="paymentMethod === gw.id" x-cloak class="p-5 rounded-2xl bg-white/5 border border-white/10 text-center space-y-2">
-                            <div class="text-xs font-bold text-amber-300" x-text="gw.title"></div>
-                            <p class="text-xs text-neutral-400" x-html="gw.desc || 'پرداخت امن و سریع از طریق این درگاه.'"></p>
+                    <template xyz-for="gw in gateways" xyz-bind:key="'desc-'+gw.id">
+                        <div xyz-show="paymentMethod === gw.id" xyz-cloak class="p-5 rounded-2xl bg-white/5 border border-white/10 text-center space-y-2">
+                            <div class="text-xs font-bold text-amber-300" xyz-text="gw.title"></div>
+                            <p class="text-xs text-neutral-400" xyz-html="gw.desc || 'پرداخت امن و سریع از طریق این درگاه.'"></p>
                         </div>
                     </template>
                 </div>
@@ -248,15 +248,15 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 
                     <!-- Items List -->
                     <div class="space-y-3 max-h-60 overflow-y-auto pl-1">
-                        <template x-for="item in cart" :key="item.id">
+                        <template xyz-for="item in cart" xyz-bind:key="item.id">
                             <div class="flex items-center justify-between text-xs py-1 border-b border-white/5">
                                 <div>
-                                    <div class="font-bold text-white line-clamp-1" x-text="item.title"></div>
+                                    <div class="font-bold text-white line-clamp-1" xyz-text="item.title"></div>
                                     <div class="text-[11px] text-neutral-400 mt-1">
-                                        <span x-text="item.quantity"></span> عدد • <span x-text="item.licenseLabel"></span>
+                                        <span xyz-text="item.quantity"></span> عدد • <span xyz-text="item.licenseLabel"></span>
                                     </div>
                                 </div>
-                                <div class="text-amber-400 font-bold mr-2" x-text="formatCurrency(item.price * item.quantity)"></div>
+                                <div class="text-amber-400 font-bold mr-2" xyz-text="formatCurrency(item.price * item.quantity)"></div>
                             </div>
                         </template>
                     </div>
@@ -265,26 +265,26 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                     <div class="space-y-2.5 text-xs border-t border-white/10 pt-4">
                         <div class="flex justify-between text-neutral-300">
                             <span>مبلغ کل سفارش</span>
-                            <span class="font-bold text-white" x-text="formatCurrency(subtotal)"></span>
+                            <span class="font-bold text-white" xyz-text="formatCurrency(subtotal)"></span>
                         </div>
 
-                        <template x-if="discount > 0">
+                        <template xyz-if="discount > 0">
                             <div class="flex justify-between text-emerald-400">
                                 <span>تخفیف سایت</span>
-                                <span>-<span x-text="formatCurrency(discount)"></span></span>
+                                <span>-<span xyz-text="formatCurrency(discount)"></span></span>
                             </div>
                         </template>
 
-                        <template x-if="tax > 0">
+                        <template xyz-if="tax > 0">
                             <div class="flex justify-between text-neutral-300">
                                 <span>مالیات بر ارزش افزوده</span>
-                                <span class="font-bold text-white" x-text="formatCurrency(tax)"></span>
+                                <span class="font-bold text-white" xyz-text="formatCurrency(tax)"></span>
                             </div>
                         </template>
 
                         <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
                             <span>مبلغ قابل پرداخت</span>
-                            <span class="text-amber-400 font-bold text-xl" x-text="formatCurrency(total)"></span>
+                            <span class="text-amber-400 font-bold text-xl" xyz-text="formatCurrency(total)"></span>
                         </div>
                     </div>
 
@@ -293,7 +293,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                         type="submit"
                         :disabled="isProcessing"
                         class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-black text-sm transition shadow-xl shadow-amber-500/30 flex items-center justify-center gap-2 disabled:opacity-50">
-                        <template x-if="isProcessing">
+                        <template xyz-if="isProcessing">
                             <span class="flex items-center gap-2">
                                 <svg class="w-4 h-4 animate-spin text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M21 12a9 9 0 1 1-6.219-8.56" />
@@ -302,9 +302,9 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                             </span>
                         </template>
 
-                        <template x-if="!isProcessing">
+                        <template xyz-if="!isProcessing">
                             <div class="flex items-center gap-2">
-                                <span>پرداخت امن <span x-text="formatCurrency(total)"></span> و فعال‌سازی</span>
+                                <span>پرداخت امن <span xyz-text="formatCurrency(total)"></span> و فعال‌سازی</span>
                                 <!-- ArrowLeft Icon -->
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="m12 19-7-7 7-7" />

@@ -52,7 +52,7 @@ if (! empty($gallery_ids)) {
 $gallery_json = wp_json_encode($gallery_images);
 ?>
 
-<main class="min-h-screen pb-28 pt-6 space-y-12" dir="rtl" x-data="romonetProductDetail()">
+<main class="min-h-screen pb-28 pt-6 space-y-12" dir="rtl" xyz-data="romonetProductDetail()">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
         <!-- ==================== NAVIGATION BREADCRUMB ==================== -->
@@ -85,7 +85,7 @@ $gallery_json = wp_json_encode($gallery_images);
                 <!-- Main Preview -->
                 <div class="relative rounded-3xl overflow-hidden border border-white/15 bg-black/60 shadow-2xl group">
                     <img
-                        :src="activeImage"
+                        xyz-bind:src="activeImage"
                         alt="<?php echo esc_attr($product_title); ?>"
                         class="w-full h-80 sm:h-[420px] object-cover transition-all duration-500" />
                     <div class="absolute inset-0 bg-gradient-to-t from-[#0c0e17] via-transparent to-transparent opacity-60"></div>
@@ -99,7 +99,7 @@ $gallery_json = wp_json_encode($gallery_images);
                     <!-- Live Interactive Demo Trigger (Optional) -->
                     <button
                         type="button"
-                        @click="isDemoModalOpen = true"
+                        xyz-on:click="isDemoModalOpen = true"
                         class="absolute bottom-4 left-4 px-4 py-2.5 rounded-xl bg-black/80 hover:bg-black backdrop-blur-md text-white text-xs border border-white/20 flex items-center gap-2 transition hover:scale-105 shadow-xl">
                         <!-- Sparkles Icon -->
                         <svg class="w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -110,14 +110,14 @@ $gallery_json = wp_json_encode($gallery_images);
                 </div>
 
                 <!-- Thumbnail Switcher -->
-                <div class="flex items-center gap-3 overflow-x-auto pb-2" x-show="galleryImages.length > 1">
-                    <template x-for="(img, idx) in galleryImages" :key="idx">
+                <div class="flex items-center gap-3 overflow-x-auto pb-2" xyz-show="galleryImages.length > 1">
+                    <template xyz-for="(img, idx) in galleryImages" xyz-bind:key="idx">
                         <button
                             type="button"
-                            @click="activeImage = img"
+                            xyz-on:click="activeImage = img"
                             class="relative w-24 h-16 rounded-xl overflow-hidden border-2 transition shrink-0"
-                            :class="activeImage === img ? 'border-amber-400 scale-105' : 'border-white/10 opacity-60 hover:opacity-100'">
-                            <img :src="img" :alt="'تصویر گالری ' + (idx + 1)" class="w-full h-full object-cover" />
+                            xyz-bind:class="activeImage === img ? 'border-amber-400 scale-105' : 'border-white/10 opacity-60 hover:opacity-100'">
+                            <img xyz-bind:src="img" xyz-bind:alt="'تصویر گالری ' + (idx + 1)" class="w-full h-full object-cover" />
                         </button>
                     </template>
                 </div>
@@ -164,7 +164,7 @@ $gallery_json = wp_json_encode($gallery_images);
                 <div class="space-y-3 pt-2">
                     <button
                         type="button"
-                        @click="handleAddToCart($event)"
+                        xyz-on:click="handleAddToCart($event)"
                         class="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-black text-sm transition shadow-xl shadow-amber-500/30 flex items-center justify-center gap-2">
                         <!-- ShoppingBag Icon -->
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -194,15 +194,15 @@ $gallery_json = wp_json_encode($gallery_images);
 
             <!-- Tab Buttons -->
             <div class="flex items-center gap-2 overflow-x-auto border-b border-white/10 pb-2">
-                <template x-for="tab in tabs" :key="tab.id">
+                <template xyz-for="tab in tabs" xyz-bind:key="tab.id">
                     <button
                         type="button"
-                        @click="activeTab = tab.id"
-                        :class="activeTab === tab.id 
+                        xyz-on:click="activeTab = tab.id"
+                        xyz-bind:class="activeTab === tab.id 
               ? 'bg-amber-500 text-black shadow' 
               : 'text-neutral-400 hover:text-white hover:bg-white/5'"
                         class="px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition"
-                        x-text="tab.label">
+                        xyz-text="tab.label">
                     </button>
                 </template>
             </div>
@@ -211,7 +211,7 @@ $gallery_json = wp_json_encode($gallery_images);
             <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl">
 
                 <!-- Overview Pane (Product Description) -->
-                <div x-show="activeTab === 'description'" class="space-y-6 text-neutral-300 leading-relaxed text-sm sm:text-base">
+                <div xyz-show="activeTab === 'description'" class="space-y-6 text-neutral-300 leading-relaxed text-sm sm:text-base">
                     <h3 class="text-xl font-bold text-white">توضیحات محصول</h3>
                     <div class="space-y-4 leading-relaxed prose prose-invert max-w-none">
                         <?php
@@ -225,7 +225,7 @@ $gallery_json = wp_json_encode($gallery_images);
                 </div>
 
                 <!-- Reviews & Comments Pane -->
-                <div x-show="activeTab === 'reviews'" class="space-y-6" style="display: none;">
+                <div xyz-show="activeTab === 'reviews'" class="space-y-6" style="display: none;">
                     <div class="flex items-center justify-between border-b border-white/10 pb-4 mb-4">
                         <h3 class="text-xl font-bold text-white">نظرات و دیدگاه‌ها</h3>
 
@@ -259,14 +259,14 @@ $gallery_json = wp_json_encode($gallery_images);
 
     <!-- ==================== DEMO / IMAGE MODAL ==================== -->
     <div
-        x-show="isDemoModalOpen"
-        x-cloak
+        xyz-show="isDemoModalOpen"
+        xyz-cloak
         class="fixed inset-0 z-50 overflow-hidden flex items-center justify-center p-4 sm:p-6 md:p-10"
         dir="rtl"
         style="display: none;">
         <div
             class="fixed inset-0 bg-black/90 backdrop-blur-md"
-            @click="isDemoModalOpen = false"></div>
+            xyz-on:click="isDemoModalOpen = false"></div>
 
         <div class="relative w-full max-w-4xl h-[85vh] bg-[#0c0e17] border border-white/20 rounded-3xl overflow-hidden shadow-2xl flex flex-col z-10">
             <!-- Header bar -->
@@ -278,7 +278,7 @@ $gallery_json = wp_json_encode($gallery_images);
                 </div>
                 <button
                     type="button"
-                    @click="isDemoModalOpen = false"
+                    xyz-on:click="isDemoModalOpen = false"
                     class="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs transition">
                     بستن ✕
                 </button>
@@ -287,7 +287,7 @@ $gallery_json = wp_json_encode($gallery_images);
             <!-- Viewport -->
             <div class="flex-1 overflow-y-auto p-6 sm:p-12 space-y-8 flex justify-center items-center">
                 <div class="rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
-                    <img :src="activeImage" alt="<?php echo esc_attr($product_title); ?>" class="w-full h-auto max-h-[70vh] object-contain" />
+                    <img xyz-bind:src="activeImage" alt="<?php echo esc_attr($product_title); ?>" class="w-full h-auto max-h-[70vh] object-contain" />
                 </div>
             </div>
         </div>
