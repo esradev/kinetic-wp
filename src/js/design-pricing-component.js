@@ -8,6 +8,10 @@ export function romonetDesignPricing() {
     needsSpeedGuarantee: true,
     needsCustomApi: false,
 
+    // Loading States for UI
+    isBookingCustom: false,
+    bookingPackageId: null,
+
     packages: [
       {
         id: "brand-sprint",
@@ -105,39 +109,103 @@ export function romonetDesignPricing() {
       return "۶ الی ۸ هفته";
     },
 
-    bookPackageSprint(pkg) {
+    async bookPackageSprint(pkg) {
+      this.bookingPackageId = pkg.id;
       const depositAmount = Math.round(pkg.priceStartingAt * 0.5);
 
-      // Trigger global toast alert
       window.dispatchEvent(
         new CustomEvent("show-toast", {
-          detail: `اسپرینت «${pkg.title}» با بیعانه ${this.formatCurrency(
-            depositAmount,
-          )} به سبد سفارشات افزوده شد.`,
+          detail: `در حال افزودن «${pkg.title}» به سبد سفارشات...`,
         }),
       );
 
-      // In a real WooCommerce scenario, you would trigger an AJAX add_to_cart here
-      // using the WC Product ID for the specific package, similar to front-page logic.
+      // استفاده از همان اندپوینت PHP برای ساخت سفارش پکیج‌های آماده
+      const payload = new URLSearchParams({
+        action: "romonet_create_custom_order",
+        _ajax_nonce: window.romonetAjaxNonce,
+        projectType: "پکیج آماده: " + pkg.title,
+        pageCount: 0,
+        features: "پکیج استاندارد (بدون شخصی‌سازی افزوده)",
+        totalPrice: depositAmount,
+      });
+
+      try {
+        const response = await fetch(window.romonetAjaxUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: payload,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // انتقال مستقیم به صفحه پرداخت
+          window.location.href = result.data.redirect_url;
+        } else {
+          alert("خطایی در ارتباط با فروشگاه رخ داد: " + (result.data || ""));
+          this.bookingPackageId = null;
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("خطا در ارتباط با سرور.");
+        this.bookingPackageId = null;
+      }
     },
 
-    bookCustomSprint() {
+    async bookCustomSprint() {
+      this.isBookingCustom = true;
       const total = this.calculateTotal();
       const depositAmount = Math.round(total * 0.5);
       const typeLabel =
         this.projectType === "brand"
-          ? "شرکتی"
+          ? "شرکتی / آژانسی"
           : this.projectType === "store"
-          ? "فروشگاهی"
-          : "هدلس";
+          ? "فروشگاه تخصصی ووکامرس"
+          : "هدلس Next.js";
 
       window.dispatchEvent(
         new CustomEvent("show-toast", {
-          detail: `پکیج سفارشی ${typeLabel} (${this.formatCurrency(
-            depositAmount,
-          )}) به سبد سفارشات اضافه شد.`,
+          detail: `در حال آماده‌سازی پکیج سفارشی ${typeLabel} جهت پرداخت...`,
         }),
       );
+
+      // جمع‌آوری امکانات اضافی انتخاب شده توسط کاربر
+      let features = [];
+      if (this.needsCustomBlocks) features.push("توسعه بلوک‌های گوتنبرگ");
+      if (this.needsMigration) features.push("انتقال محتوا و سئو");
+      if (this.needsCustomApi) features.push("اتصال API/CRM");
+      if (this.needsSpeedGuarantee) features.push("تضمین سرعت ۱۰۰");
+
+      const payload = new URLSearchParams({
+        action: "romonet_create_custom_order",
+        _ajax_nonce: window.romonetAjaxNonce,
+        projectType: typeLabel,
+        pageCount: this.pageCount,
+        features: features.length ? features.join("، ") : "بدون امکانات اضافه",
+        totalPrice: depositAmount,
+      });
+
+      try {
+        const response = await fetch(window.romonetAjaxUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: payload,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // انتقال مستقیم به صفحه پرداخت
+          window.location.href = result.data.redirect_url;
+        } else {
+          alert("خطایی در ارتباط با فروشگاه رخ داد: " + (result.data || ""));
+          this.isBookingCustom = false;
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("خطا در ارتباط با سرور.");
+        this.isBookingCustom = false;
+      }
     },
 
     formatCurrency(amount) {
