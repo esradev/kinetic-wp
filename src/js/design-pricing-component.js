@@ -8,9 +8,17 @@ export function romonetDesignPricing() {
     needsSpeedGuarantee: true,
     needsCustomApi: false,
 
-    // Loading States for UI
-    isBookingCustom: false,
-    bookingPackageId: null,
+    // Lead Capture State
+    customerName: "",
+    customerPhone: "",
+    isModalOpen: false,
+    activeBookingType: null, // 'custom' or 'package'
+    activePackage: null, // ذخیره مشخصات پکیج آماده انتخاب شده
+
+    // Loading & Success States for UI
+    isSubmitting: false,
+    submitSuccess: false,
+    successMessage: "",
 
     packages: [
       {
@@ -109,80 +117,64 @@ export function romonetDesignPricing() {
       return "۶ الی ۸ هفته";
     },
 
-    async bookPackageSprint(pkg) {
-      this.bookingPackageId = pkg.id;
-      const depositAmount = Math.round(pkg.priceStartingAt * 0.5);
-
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: `در حال افزودن «${pkg.title}» به سبد سفارشات...`,
-        }),
-      );
-
-      // استفاده از همان اندپوینت PHP برای ساخت سفارش پکیج‌های آماده
-      const payload = new URLSearchParams({
-        action: "romonet_create_custom_order",
-        _ajax_nonce: window.romonetAjaxNonce,
-        projectType: "پکیج آماده: " + pkg.title,
-        pageCount: 0,
-        features: "پکیج استاندارد (بدون شخصی‌سازی افزوده)",
-        totalPrice: depositAmount,
-      });
-
-      try {
-        const response = await fetch(window.romonetAjaxUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: payload,
-        });
-
-        const result = await response.json();
-
-        if (result.success) {
-          // انتقال مستقیم به صفحه پرداخت
-          window.location.href = result.data.redirect_url;
-        } else {
-          alert("خطایی در ارتباط با فروشگاه رخ داد: " + (result.data || ""));
-          this.bookingPackageId = null;
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("خطا در ارتباط با سرور.");
-        this.bookingPackageId = null;
-      }
+    // باز کردن مودال جهت دریافت مشخصات مشتری
+    openBookingModal(type, pkg = null) {
+      this.activeBookingType = type;
+      this.activePackage = pkg;
+      this.isModalOpen = true;
+      this.submitSuccess = false;
     },
 
-    async bookCustomSprint() {
-      this.isBookingCustom = true;
-      const total = this.calculateTotal();
-      const depositAmount = Math.round(total * 0.5);
-      const typeLabel =
-        this.projectType === "brand"
-          ? "شرکتی / آژانسی"
-          : this.projectType === "store"
-          ? "فروشگاه تخصصی ووکامرس"
-          : "هدلس Next.js";
+    closeBookingModal() {
+      this.isModalOpen = false;
+      this.activeBookingType = null;
+      this.activePackage = null;
+      // Clear data if needed or keep it for next time
+    },
 
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: `در حال آماده‌سازی پکیج سفارشی ${typeLabel} جهت پرداخت...`,
-        }),
-      );
+    async submitBooking() {
+      // Validate inputs
+      if (!this.customerName.trim() || !this.customerPhone.trim()) {
+        alert("لطفا نام و شماره تماس خود را وارد نمایید.");
+        return;
+      }
 
-      // جمع‌آوری امکانات اضافی انتخاب شده توسط کاربر
-      let features = [];
-      if (this.needsCustomBlocks) features.push("توسعه بلوک‌های گوتنبرگ");
-      if (this.needsMigration) features.push("انتقال محتوا و سئو");
-      if (this.needsCustomApi) features.push("اتصال API/CRM");
-      if (this.needsSpeedGuarantee) features.push("تضمین سرعت ۱۰۰");
+      this.isSubmitting = true;
+
+      let typeLabel = "";
+      let features = "پکیج استاندارد (بدون شخصی‌سازی افزوده)";
+      let pCount = 0;
+
+      if (this.activeBookingType === "package" && this.activePackage) {
+        typeLabel = "پکیج آماده: " + this.activePackage.title;
+      } else {
+        typeLabel =
+          this.projectType === "brand"
+            ? "شرکتی / آژانسی"
+            : this.projectType === "store"
+            ? "فروشگاه تخصصی ووکامرس"
+            : "هدلس Next.js";
+        pCount = this.pageCount;
+
+        let customFeatures = [];
+        if (this.needsCustomBlocks)
+          customFeatures.push("توسعه بلوک‌های گوتنبرگ");
+        if (this.needsMigration) customFeatures.push("انتقال محتوا و سئو");
+        if (this.needsCustomApi) customFeatures.push("اتصال API/CRM");
+        if (this.needsSpeedGuarantee) customFeatures.push("تضمین سرعت ۱۰۰");
+        features = customFeatures.length
+          ? customFeatures.join("، ")
+          : "بدون امکانات اضافه";
+      }
 
       const payload = new URLSearchParams({
-        action: "romonet_create_custom_order",
+        action: "romonet_submit_booking_request", // اکشن جدید برای دیتابیس
         _ajax_nonce: window.romonetAjaxNonce,
+        customerName: this.customerName,
+        customerPhone: this.customerPhone,
         projectType: typeLabel,
-        pageCount: this.pageCount,
-        features: features.length ? features.join("، ") : "بدون امکانات اضافه",
-        totalPrice: depositAmount,
+        pageCount: pCount,
+        features: features,
       });
 
       try {
@@ -195,16 +187,19 @@ export function romonetDesignPricing() {
         const result = await response.json();
 
         if (result.success) {
-          // انتقال مستقیم به صفحه پرداخت
-          window.location.href = result.data.redirect_url;
+          this.submitSuccess = true;
+          this.successMessage = result.data.message;
+          // پاک کردن فرم
+          this.customerName = "";
+          this.customerPhone = "";
         } else {
-          alert("خطایی در ارتباط با فروشگاه رخ داد: " + (result.data || ""));
-          this.isBookingCustom = false;
+          alert("خطا: " + (result.data || "داده‌ای ثبت نشد."));
         }
       } catch (error) {
         console.error("Error:", error);
         alert("خطا در ارتباط با سرور.");
-        this.isBookingCustom = false;
+      } finally {
+        this.isSubmitting = false;
       }
     },
 

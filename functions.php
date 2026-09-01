@@ -69,3 +69,4 @@ function boilerplate_remove_checkout_fields($fields) {
 add_filter('woocommerce_checkout_fields', 'boilerplate_remove_checkout_fields');
 
 require_once get_theme_file_path('/includes/site-design-pricing.php');
+require_once get_theme_file_path('/includes/site-design-admin-requests.php');
