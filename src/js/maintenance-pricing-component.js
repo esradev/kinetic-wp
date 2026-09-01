@@ -1,148 +1,187 @@
 export function romonetMaintenancePricing() {
   return {
-    billingCycle: "annual",
-
-    // Scope Calculator State
+    // State for Custom Plan
     siteCount: 1,
-    isEcommerce: true,
+    isEcommerce: false,
     needs15mSla: false,
-    extraDevHours: 2,
+    extraDevHours: 0,
 
+    // General State
+    billingCycle: "monthly", // 'monthly' | 'annual'
+
+    // Lead Capture & Modal State
+    customerName: "",
+    customerPhone: "",
+    isModalOpen: false,
+    activePlanType: null, // 'custom' or 'standard'
+    activePlanDetails: null, // Holds standard plan data or custom title
+
+    // Form Status
+    isSubmitting: false,
+    submitSuccess: false,
+    successMessage: "",
+
+    // Standard Plans Array
     plans: [
       {
-        id: "plan-starter",
-        name: "پایه و شرکتی",
-        tierSubtitle: "مناسب سایت‌های شخصی، نمونه‌کار و وبلاگ‌های شرکتی",
-        monthlyPrice: 2450000,
-        annualPricePerMonth: 1960000,
+        id: "essential",
+        name: "استاندارد شرکتی",
+        tierSubtitle: "مناسب برای پرتال‌ها و سایت‌های شرکتی",
+        monthlyPrice: 2800000,
+        annualPricePerMonth: 2300000,
         popular: false,
-        responseTimeSLA: "حداکثر ۲ ساعت",
-        backupFrequency: "روزانه (نگهداری ۳۰ روز)",
-        uptimeCheckInterval: "هر ۵ دقیقه",
-        devHoursIncluded: "۱ ساعت در ماه",
+        responseTimeSLA: "حداکثر ۴ ساعت",
+        backupFrequency: "هفتگی (فضای ابری)",
+        uptimeCheckInterval: "هر ۳۰ دقیقه",
+        devHoursIncluded: "ندارد",
         features: [
-          "به‌روزرسانی امن هسته، قالب و تمام افزونه‌ها",
-          "پایش مداوم ۲۴ ساعته آپ‌تایم و در دسترس بودن سرور",
-          "بک‌آپ روزانه ابری در ۲ دیتاسنتر مجزا",
-          "گزارش ماهانه سلامت فنی، سئو و سرعت لود",
-          "پشتیبانی تیکتی در ساعات اداری",
+          "بروزرسانی امن هسته و افزونه‌ها",
+          "اسکن امنیتی و بدافزار هفتگی",
+          "گزارش‌گیری ماهانه عملکرد",
+          "پشتیبانی تیکتی",
         ],
       },
       {
-        id: "plan-business",
-        name: "تجاری و فروشگاهی",
-        tierSubtitle:
-          "ایده‌آل برای فروشگاه‌های ووکامرس فعال و وب‌سایت‌های پرترافیک",
-        monthlyPrice: 4850000,
-        annualPricePerMonth: 3880000,
+        id: "business",
+        name: "کسب و کار (ووکامرس)",
+        tierSubtitle: "مناسب فروشگاه‌های آنلاین در حال رشد",
+        monthlyPrice: 5800000,
+        annualPricePerMonth: 4800000,
         popular: true,
-        responseTimeSLA: "۳۰ دقیقه اضطراری",
-        backupFrequency: "ساعتی (پایگاه‌داده و سفارشات)",
-        uptimeCheckInterval: "هر ۱ دقیقه",
+        responseTimeSLA: "حداکثر ۱ ساعت",
+        backupFrequency: "روزانه (فضای ابری)",
+        uptimeCheckInterval: "هر ۵ دقیقه",
         devHoursIncluded: "۳ ساعت در ماه",
         features: [
-          "تست تغییرات در سرور استیجینگ شبیه‌ساز قبل از انتشار",
-          "پایش لحظه‌ای درگاه‌های بانکی و تراکنش‌های ناموفق",
-          "بک‌آپ ساعتی زنده از جدول سفارشات و مشتریان",
-          "بهینه‌سازی مستمر دیتابیس و کش آبجکت ردیس (Redis)",
-          "اسکن امنیتی خودکار و فایروال WAF اختصاصی",
-          "پشتیبانی اولویت‌دار ۲۴/۷ حتی در روزهای تعطیل",
+          "بهینه‌سازی دیتابیس فروشگاه",
+          "پایش سلامت فرآیند پرداخت",
+          "مدیریت کش و Redis",
+          "پشتیبانی تیکتی و تلفنی",
         ],
       },
       {
-        id: "plan-enterprise",
-        name: "سازمانی و پربازدید",
-        tierSubtitle:
-          "مخصوص پرتال‌های بزرگ، هلدینگ‌ها و ترافیک‌های بسیار سنگین",
-        monthlyPrice: 9800000,
-        annualPricePerMonth: 7840000,
+        id: "enterprise",
+        name: "سازمانی ویژه",
+        tierSubtitle: "ترافیک بالا و نیازمند پایداری ۱۰۰٪",
+        monthlyPrice: 12500000,
+        annualPricePerMonth: 10500000,
         popular: false,
-        responseTimeSLA: "۱۵ دقیقه اضطراری (تیم اختصاصی)",
-        backupFrequency: "همگام‌سازی لحظه‌ای (Real-time)",
-        uptimeCheckInterval: "هر ۳۰ ثانیه",
-        devHoursIncluded: "۸ ساعت در ماه",
+        responseTimeSLA: "۱۵ دقیقه (اورژانسی ۲۴ ساعته)",
+        backupFrequency: "ساعتی (لحظه‌ای)",
+        uptimeCheckInterval: "هر ۱ دقیقه",
+        devHoursIncluded: "۱۰ ساعت در ماه",
         features: [
-          "مدیر فنی اختصاصی و خط تماس اضطراری مستقیم",
-          "قرارداد مکتوب و رسمی SLA با پرداخت خسارت قطعی",
-          "مدیریت و تیونینگ مستقیم وب‌سرور (Nginx/LiteSpeed)",
-          "بهینه‌سازی تخصصی کوئری‌های سنگین دیتابیس",
-          "گارانتی بازیابی زیر ۱۰ دقیقه در شرایط بحرانی (Disaster Recovery)",
-          "تست نفوذ دوره‌ای و پایش روز صفر (Zero-Day)",
+          "مدیریت سرور و کانفیگ Nginx",
+          "کانال ارتباطی مستقیم در تلگرام",
+          "تست نفوذ و امنیت پیشرفته",
+          "توسعه فیچرهای اختصاصی",
         ],
       },
     ],
 
+    // Formula for custom plan calculation
     calculateCustomMonthly() {
-      const baseCost = this.isEcommerce ? 4200000 : 2500000;
-      const siteMultiplier = this.siteCount === 1 ? 1 : this.siteCount * 0.85;
-      const slaAddon = this.needs15mSla ? 2800000 : 0;
-      const devHoursAddon = this.extraDevHours * 650000;
-      return Math.round(baseCost * siteMultiplier + slaAddon + devHoursAddon);
-    },
+      let baseRatePerSite = 2500000;
 
-    subscribePlan(plan) {
-      const price =
-        this.billingCycle === "annual"
-          ? plan.annualPricePerMonth
-          : plan.monthlyPrice;
+      // Additions
+      if (this.isEcommerce) baseRatePerSite += 1500000;
 
-      if (typeof this.cart !== "undefined") {
-        this.cart.push({
-          id: "maint-" + plan.id + "-" + Date.now(),
-          itemType: "maintenance_plan",
-          title: `پلن پشتیبانی ${plan.name} (wpstorm)`,
-          subtitle: `${plan.responseTimeSLA} SLA • پرداخت ${
-            this.billingCycle === "annual" ? "سالانه" : "ماهانه"
-          }`,
-          price: price,
-          quantity: 1,
-          billingPeriod: this.billingCycle,
-          licenseLabel: `سطح پشتیبانی ${plan.name}`,
-        });
-        this.isCartDrawerOpen = true;
-      }
+      let total = this.siteCount * baseRatePerSite;
 
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: `پلن پشتیبانی «${plan.name}» (${this.formatCurrency(
-            price,
-          )}/ماه) به سبد سفارشات افزوده شد.`,
-        }),
-      );
-    },
+      // SLA and Dev Hours are usually calculated globally per project, not per site
+      if (this.needs15mSla) total += 3500000;
+      total += this.extraDevHours * 750000; // 750k toman per extra dev hour
 
-    orderCustomPlan() {
-      const cost = this.calculateCustomMonthly();
-
-      if (typeof this.cart !== "undefined") {
-        this.cart.push({
-          id: "custom-maint-" + Date.now(),
-          itemType: "maintenance_plan",
-          title: `پلن سفارشی پشتیبانی (${this.siteCount} سایت)`,
-          subtitle: `${
-            this.needs15mSla ? "پاسخگویی ۱۵ دقیقه‌ای" : "پاسخگویی ۱ ساعته"
-          } • ${this.extraDevHours} ساعت توسعه`,
-          price: cost,
-          quantity: 1,
-          billingPeriod: "monthly",
-          licenseLabel: `قرارداد پشتیبانی ${this.siteCount} سایته`,
-        });
-        this.isCartDrawerOpen = true;
-      }
-
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: `پلن سفارشی ${this.siteCount} سایته (${this.formatCurrency(
-            cost,
-          )}/ماه) به سبد سفارشات افزوده شد.`,
-        }),
-      );
+      return total;
     },
 
     formatCurrency(amount) {
       return (
         new Intl.NumberFormat("fa-IR").format(Math.round(amount)) + " تومان"
       );
+    },
+
+    // Triggered by Custom Plan Button
+    orderCustomPlan() {
+      this.activePlanType = "custom";
+      this.activePlanDetails = {
+        name: "پلن سفارشی اختصاصی",
+        price: this.calculateCustomMonthly(),
+      };
+      this.isModalOpen = true;
+      this.submitSuccess = false;
+    },
+
+    // Triggered by Standard Plan Button
+    subscribePlan(plan) {
+      this.activePlanType = "standard";
+      this.activePlanDetails = plan;
+      this.isModalOpen = true;
+      this.submitSuccess = false;
+    },
+
+    closeBookingModal() {
+      this.isModalOpen = false;
+    },
+
+    // Submit to PHP Backend
+    async submitMaintenanceRequest() {
+      if (!this.customerName.trim() || !this.customerPhone.trim()) {
+        alert("لطفا نام و شماره تماس خود را وارد نمایید.");
+        return;
+      }
+
+      this.isSubmitting = true;
+
+      // Prepare Payload Data Based on Plan Type
+      let planName = this.activePlanDetails.name;
+      let finalPrice =
+        this.activePlanType === "custom"
+          ? this.activePlanDetails.price
+          : this.billingCycle === "annual"
+          ? this.activePlanDetails.annualPricePerMonth
+          : this.activePlanDetails.monthlyPrice;
+
+      const payload = new URLSearchParams({
+        action: "romonet_submit_maintenance_request",
+        _ajax_nonce: window.romonetAjaxNonce,
+        customerName: this.customerName,
+        customerPhone: this.customerPhone,
+        planType: this.activePlanType,
+        planName: planName,
+        billingCycle: this.billingCycle,
+        siteCount: this.activePlanType === "custom" ? this.siteCount : 1,
+        isEcommerce:
+          this.activePlanType === "custom" ? (this.isEcommerce ? 1 : 0) : -1,
+        needsSla:
+          this.activePlanType === "custom" ? (this.needs15mSla ? 1 : 0) : -1,
+        devHours: this.activePlanType === "custom" ? this.extraDevHours : 0,
+        finalPrice: finalPrice,
+      });
+
+      try {
+        const response = await fetch(window.romonetAjaxUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: payload,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          this.submitSuccess = true;
+          this.successMessage = result.data.message;
+          this.customerName = "";
+          this.customerPhone = "";
+        } else {
+          alert("خطا: " + (result.data || "درخواست ثبت نشد."));
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("خطا در ارتباط با سرور. لطفاً مجدداً تلاش کنید.");
+      } finally {
+        this.isSubmitting = false;
+      }
     },
   };
 }
