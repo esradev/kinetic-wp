@@ -1,258 +1,183 @@
 export function romonetSmsPricing() {
   return {
-    selectedCountry: "IR",
-    smsVolume: 15000,
+    // Calculator State
+    smsVolume: 10000,
+    selectedCountry: "ir",
 
     countryRates: {
-      IR: {
-        name: "ایران (خط خدماتی بدون بلک‌لیست)",
-        rate: 0.0035,
-        tomanPrice: 165,
+      ir: {
+        name: "ایران (خطوط خدماتی)",
         flag: "🇮🇷",
-        carrier: "همراه اول / ایرانسل / رایتل (مسیر مستقیم 1000/2000/3000)",
+        tomanPrice: 135,
+        carrier: "همراه اول / ایرانسل / رایتل",
       },
-      AE: {
-        name: "امارات متحده عربی",
-        rate: 0.0195,
-        tomanPrice: 980,
-        flag: "🇦🇪",
-        carrier: "اتصالات (e&) / du Direct Carrier",
-      },
-      TR: {
+      tr: {
         name: "ترکیه",
-        rate: 0.0125,
-        tomanPrice: 620,
         flag: "🇹🇷",
-        carrier: "Turkcell / Vodafone TR Tier-1",
+        tomanPrice: 950,
+        carrier: "Turkcell / Vodafone / Turk Telekom",
       },
-      OM: {
-        name: "عمان",
-        rate: 0.018,
-        tomanPrice: 900,
-        flag: "🇴🇲",
-        carrier: "Omantel / Ooredoo Direct",
-      },
-      DE: {
-        name: "آلمان و اروپا",
-        rate: 0.0165,
-        tomanPrice: 830,
-        flag: "🇩🇪",
-        carrier: "Deutsche Telekom / Vodafone DE",
-      },
-      US: {
-        name: "آمریکا و کانادا (10DLC)",
-        rate: 0.0098,
-        tomanPrice: 490,
-        flag: "🇺🇸",
-        carrier: "AT&T / Verizon / T-Mobile Direct",
-      },
-      UK: {
-        name: "انگلستان",
-        rate: 0.0142,
-        tomanPrice: 710,
-        flag: "🇬🇧",
-        carrier: "Vodafone / EE / O2 SS7 Direct",
-      },
-      IQ: {
-        name: "عراق",
-        rate: 0.0175,
-        tomanPrice: 880,
-        flag: "🇮🇶",
-        carrier: "Zain / Asiacell / Korek Telecom",
+      uae: {
+        name: "امارات متحده",
+        flag: "🇦🇪",
+        tomanPrice: 1650,
+        carrier: "Etisalat / Du",
       },
     },
 
+    // Subscription Plans State
     smsPlans: [
       {
-        id: "sms-starter",
-        name: "پایه و استارتر",
-        tagline: "مناسب فروشگاه‌های نوپا با ارسال تا ۱,۵۰۰ پیامک ماهانه",
-        monthlyPrice: 490000,
-        includedCredits: 1500,
-        extraRatePerSms: "۱۷۵ تومان",
-        webhookSpeed: "< ۲.۴ ثانیه",
+        id: "starter",
+        name: "استارتر فروشگاهی",
+        tagline: "مناسب پیج‌های اینستاگرامی و سایت‌های نوپا",
+        monthlyPrice: 199000,
+        includedCredits: 1000,
+        extraRatePerSms: "۱۴۵ تومان / پیامک",
+        webhookSpeed: "زیر ۳ ثانیه (OTP)",
         popular: false,
         features: [
-          "دسترسی به خط خدماتی عمومی اشتراکی",
-          "وب‌هوک هوشمند OTP برای افزونه Digits و ووکامرس",
-          "پشتیبانی تیکتی و راه‌اندازی اولیه رایگان",
-          "گزارش‌گیری آنلاین وضعیت دلیوری پیامک‌ها",
+          "خط خدماتی عمومی رایگان",
+          "پلاگین وردپرس و ووکامرس",
+          "ارسال پترن (بدون تایید ناظر)",
+          "پشتیبانی تیکتی",
         ],
       },
       {
-        id: "sms-pro",
-        name: "حرفه‌ای و فروشگاهی",
-        tagline: "ایده‌آل برای فروشگاه‌های پرفروش و ارسال کمپین‌های تخفیفی",
-        monthlyPrice: 1150000,
+        id: "pro",
+        name: "حرفه‌ای (محبوب)",
+        tagline: "ایده‌آل برای فروشگاه‌های ووکامرسی پرفروش",
+        monthlyPrice: 450000,
         includedCredits: 5000,
-        extraRatePerSms: "۱۵۵ تومان",
-        webhookSpeed: "< ۱.۵ ثانیه (اولویت بالا)",
+        extraRatePerSms: "۱۳۵ تومان / پیامک",
+        webhookSpeed: "زیر ۱ ثانیه (Ultra OTP)",
         popular: true,
         features: [
-          "ارسال همزمان با ۲ مسیر مخابراتی بک‌آپ بدون قطعی",
-          "سناریوهای خودکار بازگردانی سبد خرید رهاشده",
-          "سفارشی‌سازی متن پترن‌های پیامکی بدون انتظار تایید",
-          "لایسنس دائمی افزونه TelePulse پرو",
-          "پشتیبانی تلفنی و تلگرامی ۲۴ ساعته",
+          "خط خدماتی نیمه‌اختصاصی",
+          "سیستم بازگردانی سبد خرید رهاشده",
+          "اتصال به فرم‌های گرویتی و المنتور",
+          "پشتیبانی تلفنی اختصاصی",
         ],
       },
       {
-        id: "sms-enterprise",
-        name: "سازمانی و نامحدود",
-        tagline: "مخصوص پلتفرم‌ها و اپلیکیشن‌ها با ترافیک ارسال فوق سنگین",
-        monthlyPrice: 2850000,
+        id: "enterprise",
+        name: "سازمانی",
+        tagline: "شرکت‌های بزرگ، اپلیکیشن‌ها و فین‌تک‌ها",
+        monthlyPrice: 1250000,
         includedCredits: 20000,
-        extraRatePerSms: "۱۳۵ تومان",
-        webhookSpeed: "< ۰.۸ ثانیه (مسیر اختصاصی)",
+        extraRatePerSms: "۱۱۵ تومان / پیامک",
+        webhookSpeed: "آنی (Dedicated Node)",
         popular: false,
         features: [
-          "اختصاص خط خدماتی اختصاصی با نام برند (Masking)",
-          "سرور ایزوله با ظرفیت ارسال ۵۰۰ پیامک در ثانیه",
-          "اتصال به تمام اپراتورهای بین‌المللی با تسویه ریالی",
-          "قرارداد رسمی SLA تحویل با تضمین بازگشت وجه",
-          "مدیر اکانت اختصاصی و مانیتورینگ زنده صف ارسال",
+          "خط خدماتی اختصاصی با نام برند",
+          "وب‌هوک و API اختصاصی نامحدود",
+          "ارسال پیامک بین‌المللی (OTP ارزی)",
+          "مدیر اکانت اختصاصی ۲۴ ساعته",
         ],
       },
     ],
 
-    smsCreditBundles: [
-      {
-        id: "bundle-5k",
-        credits: 5000,
-        price: 890000,
-        bonus: "+۳۰۰ پیامک هدیه",
-        pricePerSms: "۱۷۸ تومان/پیامک",
-        popular: false,
-      },
-      {
-        id: "bundle-15k",
-        credits: 15000,
-        price: 2450000,
-        bonus: "+۱,۵۰۰ پیامک هدیه",
-        pricePerSms: "۱۶۳ تومان/پیامک",
-        popular: true,
-      },
-      {
-        id: "bundle-50k",
-        credits: 50000,
-        price: 7450000,
-        bonus: "+۷,۵۰۰ پیامک هدیه",
-        pricePerSms: "۱۴۹ تومان/پیامک",
-        popular: false,
-      },
-      {
-        id: "bundle-100k",
-        credits: 100000,
-        price: 13500000,
-        bonus: "+۲۰,۰۰۰ پیامک هدیه",
-        pricePerSms: "۱۳۵ تومان/پیامک",
-        popular: false,
-      },
-    ],
+    // Lead Capture & Modal State
+    isModalOpen: false,
+    customerName: "",
+    customerPhone: "",
+    requestType: null, // 'credits' or 'plan'
+    activeDetails: null, // Details for modal display
+    isSubmitting: false,
+    submitSuccess: false,
+    successMessage: "",
 
+    // Calculator Methods
     currentCountry() {
-      return this.countryRates[this.selectedCountry] || this.countryRates["IR"];
+      return this.countryRates[this.selectedCountry];
     },
-
     calculatedCostToman() {
-      return Math.round(this.smsVolume * this.currentCountry().tomanPrice);
+      return this.smsVolume * this.currentCountry().tomanPrice;
     },
-
     estimatedRecoveredOrders() {
-      return Math.floor(this.smsVolume * 0.035);
+      // Assuming 2% conversion/recovery rate on SMS notifications
+      return Math.floor(this.smsVolume * 0.02);
     },
-
     estimatedRecoveredRevenue() {
-      return this.estimatedRecoveredOrders() * 4500000;
+      // Assuming average order value is 450,000 Toman
+      return this.estimatedRecoveredOrders() * 450000;
     },
-
-    subscribeSmsPlan(plan) {
-      if (typeof this.cart !== "undefined") {
-        this.cart.push({
-          id: "sms-plan-" + plan.id + "-" + Date.now(),
-          itemType: "sms_plan",
-          title: `اشتراک ${plan.name} سامانه پیامک رومونت`,
-          subtitle: `${plan.includedCredits.toLocaleString(
-            "fa-IR",
-          )} پیامک هدیه اولیه`,
-          price: plan.monthlyPrice,
-          quantity: 1,
-          billingPeriod: "monthly",
-          licenseLabel: "اشتراک ماهانه سامانه پیامک",
-        });
-        this.isCartDrawerOpen = true;
-      }
-
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: `پلن پیامکی «${plan.name}» (${this.formatCurrency(
-            plan.monthlyPrice,
-          )}/ماه) به سبد سفارشات افزوده شد.`,
-        }),
-      );
-    },
-
-    orderCalculatedCredits() {
-      const cost = this.calculatedCostToman();
-      const country = this.currentCountry();
-
-      if (typeof this.cart !== "undefined") {
-        this.cart.push({
-          id: "sms-custom-" + Date.now(),
-          itemType: "sms_credits",
-          title: `بسته شارژ اختصاصی (${this.smsVolume.toLocaleString(
-            "fa-IR",
-          )} پیامک)`,
-          subtitle: `مسیر مخابراتی: ${country.name}`,
-          price: cost,
-          quantity: 1,
-          billingPeriod: "one-time",
-          licenseLabel: `${this.smsVolume.toLocaleString(
-            "fa-IR",
-          )} اعتبار پیامک`,
-        });
-        this.isCartDrawerOpen = true;
-      }
-
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: `بسته شارژ ${this.smsVolume.toLocaleString(
-            "fa-IR",
-          )} پیامک (${this.formatCurrency(cost)}) به سبد سفارشات اضافه شد.`,
-        }),
-      );
-    },
-
-    orderCreditBundle(bundle) {
-      if (typeof this.cart !== "undefined") {
-        this.cart.push({
-          id: "sms-bundle-" + bundle.id + "-" + Date.now(),
-          itemType: "sms_credits",
-          title: `بسته شارژ ${bundle.credits.toLocaleString("fa-IR")} پیامک`,
-          subtitle: bundle.bonus,
-          price: bundle.price,
-          quantity: 1,
-          billingPeriod: "one-time",
-          licenseLabel: `${bundle.credits.toLocaleString(
-            "fa-IR",
-          )} پیامک رومونت`,
-        });
-        this.isCartDrawerOpen = true;
-      }
-
-      window.dispatchEvent(
-        new CustomEvent("show-toast", {
-          detail: `بسته شارژ ${bundle.credits.toLocaleString(
-            "fa-IR",
-          )} پیامک به سبد سفارشات افزوده شد.`,
-        }),
-      );
-    },
-
     formatCurrency(amount) {
       return (
         new Intl.NumberFormat("fa-IR").format(Math.round(amount)) + " تومان"
       );
+    },
+
+    // Modal Triggers
+    orderCalculatedCredits() {
+      this.requestType = "credits";
+      this.activeDetails = {
+        title: `بسته ${this.smsVolume.toLocaleString("fa-IR")} پیامکی (${
+          this.currentCountry().name
+        })`,
+        price: this.calculatedCostToman(),
+      };
+      this.isModalOpen = true;
+      this.submitSuccess = false;
+    },
+    subscribeSmsPlan(plan) {
+      this.requestType = "plan";
+      this.activeDetails = {
+        title: `اشتراک ماهانه: ${plan.name}`,
+        price: plan.monthlyPrice,
+      };
+      this.isModalOpen = true;
+      this.submitSuccess = false;
+    },
+    closeBookingModal() {
+      this.isModalOpen = false;
+    },
+
+    // Submit to PHP Backend via AJAX
+    async submitSmsRequest() {
+      if (!this.customerName.trim() || !this.customerPhone.trim()) {
+        alert("لطفاً نام و شماره تماس خود را وارد نمایید.");
+        return;
+      }
+
+      this.isSubmitting = true;
+
+      const payload = new URLSearchParams({
+        action: "romonet_submit_sms_request",
+        _ajax_nonce: window.romonetAjaxNonce,
+        customerName: this.customerName,
+        customerPhone: this.customerPhone,
+        requestType: this.requestType,
+        planTitle: this.activeDetails.title,
+        smsVolume: this.requestType === "credits" ? this.smsVolume : 0,
+        countryCode:
+          this.requestType === "credits" ? this.selectedCountry : "ir",
+        finalPrice: this.activeDetails.price,
+      });
+
+      try {
+        const response = await fetch(window.romonetAjaxUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: payload,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          this.submitSuccess = true;
+          this.successMessage = result.data.message;
+          this.customerName = "";
+          this.customerPhone = "";
+        } else {
+          alert("خطا: " + (result.data || "درخواست ثبت نشد."));
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("خطا در ارتباط با سرور. لطفاً مجدداً تلاش کنید.");
+      } finally {
+        this.isSubmitting = false;
+      }
     },
   };
 }
