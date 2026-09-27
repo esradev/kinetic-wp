@@ -52,7 +52,7 @@ $cart_json = wp_json_encode($wc_cart_items);
   @keydown.window.ctrl.k.prevent="isSearchOpen = !isSearchOpen"
   @keydown.window.cmd.k.prevent="isSearchOpen = !isSearchOpen"
   @keydown.window.escape="isSearchOpen = false; isCartDrawerOpen = false; isMobileMenuOpen = false">
-  
+   
   <?php wp_body_open(); ?>
 
   <?php get_template_part('template-parts/header/notification', 'bar'); ?>

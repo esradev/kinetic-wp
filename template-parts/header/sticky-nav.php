@@ -6,7 +6,7 @@
   xyz-transition:leave="transition ease-in duration-200"
   xyz-transition:leave-start="opacity-100 translate-y-0"
   xyz-transition:leave-end="opacity-0 -translate-y-2"
-  class="block sticky top-0 z-40 border-t border-white/10 bg-[#0b0d14]/90 backdrop-blur-xl">
+  class="sticky-nav block sticky top-0 z-40 border-t border-white/10 bg-[#0b0d14]/90 backdrop-blur-xl">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <nav class="flex items-center  gap-2 py-2 overflow-x-auto whitespace-nowrap scrollbar-thin">
       <a
@@ -25,23 +25,23 @@
         </div>
       </a>
 
-      <a href="<?php echo esc_url(home_url('/site-design-pricing')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+      <a href="<?php echo esc_url(home_url('/site-design-pricing')); ?>" class="sticky-nav-link inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
         <span>طراحی سایت اختصاصی</span>
-        <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اسپرینت</span>
+        <span class="sticky-nav-badge text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اسپرینت</span>
       </a>
-      <a href="<?php echo esc_url(home_url('/maintenance-pricing')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+      <a href="<?php echo esc_url(home_url('/maintenance-pricing')); ?>" class="sticky-nav-link inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
         <span>پشتیبانی وردپرس (wpstorm)</span>
-        <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">SLA</span>
+        <span class="sticky-nav-badge text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">SLA</span>
       </a>
-      <a href="<?php echo esc_url(home_url('/sms-pricing')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+      <a href="<?php echo esc_url(home_url('/sms-pricing')); ?>" class="sticky-nav-link inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
         <span>سامانه پیامک رومونت</span>
-        <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">خط خدماتی</span>
+        <span class="sticky-nav-badge text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">خط خدماتی</span>
       </a>
-      <a href="<?php echo esc_url(home_url('/shop')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+      <a href="<?php echo esc_url(home_url('/shop')); ?>" class="sticky-nav-link inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
         <span>مارکت‌پلیس قالب و افزونه</span>
-        <span class="text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اورجینال</span>
+        <span class="sticky-nav-badge text-[10px] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 border border-amber-500/30">اورجینال</span>
       </a>
-      <a href="<?php echo esc_url(home_url('/blog')); ?>" class="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
+      <a href="<?php echo esc_url(home_url('/blog')); ?>" class="sticky-nav-link inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-xl bg-white/5 border border-white/10 text-neutral-200 hover:text-white hover:bg-white/10 hover:border-amber-400/40 transition-all">
         <span>وبلاگ و آموزش‌ها</span>
       </a>
     </nav>

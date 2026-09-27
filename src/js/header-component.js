@@ -62,11 +62,8 @@ export function romonetHeader() {
     setTheme(mode) {
       this.theme = mode;
       localStorage.setItem("romonet_theme", mode);
-      if (mode === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      document.documentElement.classList.toggle("dark", mode === "dark");
+      document.documentElement.classList.toggle("light", mode === "light");
     },
 
     totalItemsCount() {

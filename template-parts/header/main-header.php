@@ -54,7 +54,7 @@
       <!-- Right Action Icons & Controls -->
       <div class="flex items-center gap-2 sm:gap-3">
         <!-- Theme Toggle -->
-        <button
+        <button 
           xyz-on:click="toggleTheme()"
           class="flex p-2.5 rounded-lg transition-all duration-300 relative group overflow-hidden border"
           xyz-bind:class="theme === 'dark' ? 'bg-white/5 hover:bg-white/10 text-neutral-300 hover:text-amber-300 border-white/10' : 'bg-white/80 hover:bg-white text-slate-800 hover:text-amber-600 border-slate-200 shadow-sm'">
