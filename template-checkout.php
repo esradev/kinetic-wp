@@ -88,7 +88,8 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                                 'name'       => $default_name,
                                 'email'      => $default_email,
                                 'phone'      => $default_phone,
-                                'nonce'      => $checkout_nonce
+                                'nonce'      => $checkout_nonce,
+                                'checkoutUrl' => wc_get_checkout_url()
                             ))); ?>)">
 
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
@@ -390,32 +391,30 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
                 formData.append('billing_city', 'دیجیتال');
 
                 formData.append('payment_method', this.paymentMethod);
-                formData.append('woocommerce_checkout_place_order', this.nonce);
-                formData.append('_wpnonce', this.nonce);
+                formData.append('security', this.nonce);
 
                 try {
-                    // ارسال درخواست به AJAX پیش‌فرض ووکامرس
-                    const response = await fetch('/?wc-ajax=checkout', {
+                    const response = await fetch('<?php echo esc_url_raw(wc_get_checkout_url()); ?>?wc-ajax=checkout', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
                         },
                         body: formData
                     });
 
-                    const data = await response.json();
+                    const data = await response.json().catch(() => null);
 
-                    if (data.result === 'success') {
+                    if (data && data.result === 'success' && data.redirect) {
                         // در صورت موفقیت، ووکامرس ما را به درگاه پرداخت یا صفحه تشکر می‌فرستد
                         window.location.href = data.redirect;
-                    } else if (data.result === 'failure') {
+                    } else if (data && data.result === 'failure') {
                         // تمیز کردن پیام خطای ووکامرس از تگ‌های HTML
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = data.messages;
                         alert('خطا در ثبت سفارش:\n' + tempDiv.textContent.trim());
                         this.isProcessing = false;
                     } else {
-                        alert('خطای نامشخصی رخ داد.');
+                        alert('پاسخ نامعتبر از سرور دریافت شد. لطفاً دوباره تلاش کنید.');
                         this.isProcessing = false;
                     }
                 } catch (error) {

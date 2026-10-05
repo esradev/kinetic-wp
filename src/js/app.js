@@ -6,6 +6,7 @@ import { romonetDesignPricing } from "./design-pricing-component.js";
 import { romonetMaintenancePricing } from "./maintenance-pricing-component.js";
 import { romonetSmsPricing } from "./sms-pricing-component.js";
 import { romonetShop } from "./shop-component.js";
+import { romonetCheckout } from "./checkout-component.js";
 
 Alpine.prefix("xyz-");
 
@@ -18,6 +19,7 @@ Alpine.data("romonetDesignPricing", romonetDesignPricing);
 Alpine.data("romonetMaintenancePricing", romonetMaintenancePricing);
 Alpine.data("romonetSmsPricing", romonetSmsPricing);
 Alpine.data("romonetShop", romonetShop);
+Alpine.data("romonetCheckout", romonetCheckout);
 
 // استارت آلپاین
 Alpine.start();

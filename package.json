@@ -1,5 +1,5 @@
 {
-  "name": "brads-boilerplate-theme",
+  "name": "kinetic-wp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -14,8 +14,18 @@
     "tailwindwatch": "tailwindcss -i ./src/index.css -o ./build/index.css --watch --minify",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build:alpine": "vite build"
+    "build:alpine": "vite build",
+    "plugin-zip": "wp-scripts plugin-zip"
   },
+  "files": [
+    "assets/**",
+    "build/**",
+    "includes/**",
+    "template-parts/**",
+    "woocommerce",
+    "*.php",
+    "style.css"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

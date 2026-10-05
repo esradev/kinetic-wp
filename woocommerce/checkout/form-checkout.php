@@ -45,10 +45,16 @@ if (function_exists('WC') && WC()->cart) {
 $current_user = wp_get_current_user();
 $default_name = $current_user->exists() ? $current_user->display_name : 'سارا محمدی';
 $default_email = $current_user->exists() ? $current_user->user_email : 'sara.mohammadi@example.com';
+$default_phone = $current_user->exists() ? get_user_meta($current_user->ID, 'billing_phone', true) : '';
 $initial_coupon = !empty($applied_coupons) ? strtoupper($applied_coupons[0]) : 'ROMONET20';
 
 $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart');
 $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('order-received', '', wc_get_checkout_url()) : home_url('/thank-you');
+$available_gateways = function_exists('WC') && WC()->payment_gateways()
+    ? WC()->payment_gateways->get_available_payment_gateways()
+    : array();
+$checkout_nonce = wp_create_nonce('woocommerce-process_checkout');
+$default_gateway = !empty($available_gateways) ? (string) key($available_gateways) : '';
 ?>
 
 <div
@@ -58,8 +64,12 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
     initialCart: <?php echo esc_attr(json_encode($wc_cart_items)); ?>,
     defaultName: '<?php echo esc_js($default_name); ?>',
     defaultEmail: '<?php echo esc_js($default_email); ?>',
+    checkoutUrl: '<?php echo esc_url(wc_get_checkout_url()); ?>',
+    defaultPhone: '<?php echo esc_js($default_phone); ?>',
     initialCoupon: '<?php echo esc_js($initial_coupon); ?>',
-    thankYouUrl: '<?php echo esc_url($thank_you_url); ?>'
+    thankYouUrl: '<?php echo esc_url($thank_you_url); ?>',
+    gatewayId: '<?php echo esc_js($default_gateway); ?>',
+    nonce: '<?php echo esc_js($checkout_nonce); ?>'
   })">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
 
@@ -84,6 +94,8 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                 </svg>
                 <span>پروتکل امن رمزنگاری ۲۵۶ بیتی SSL</span>
             </div>
+
+            <?php get_footer(); ?>
         </div>
 
         <!-- ==================== CHECKOUT FORM ==================== -->
@@ -122,6 +134,17 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                                 required
                                 xyz-model="email"
                                 placeholder="name@company.com"
+                                class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition text-left"
+                                dir="ltr" />
+                        </div>
+
+                        <div class="space-y-1.5 sm:col-span-2">
+                            <label class="text-xs text-neutral-400">شماره موبایل *</label>
+                            <input
+                                type="tel"
+                                required
+                                xyz-model="phone"
+                                placeholder="۰۹۱۲۱۲۳۴۵۶۷"
                                 class="w-full bg-black/50 border border-white/15 focus:border-amber-400 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none transition text-left"
                                 dir="ltr" />
                         </div>
@@ -174,7 +197,7 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
                         <!-- Zarinpal -->
                         <button
                             type="button"
-                            xyz-on:click="paymentMethod = 'zarinpal'"
+                            xyz-on:click="paymentMethod = config.gatewayId || 'zarinpal'"
                             class="p-3 rounded-xl border text-center transition flex flex-col items-center gap-1.5"
                             xyz-bind:class="paymentMethod === 'zarinpal' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold' : 'bg-black/30 border-white/10 text-neutral-400 hover:text-white'">
                             <!-- CreditCard Icon -->
@@ -342,79 +365,3 @@ $thank_you_url = function_exists('wc_get_endpoint_url') ? wc_get_endpoint_url('o
         </form>
     </div>
 </div>
-
-<script>
-    function romonetCheckout(config) {
-        return {
-            fullName: config.defaultName || 'سارا محمدی',
-            email: config.defaultEmail || 'sara.mohammadi@example.com',
-            company: 'آژانس دیجیتال روناک',
-            country: 'ایران',
-            paymentMethod: 'zarinpal',
-            isProcessing: false,
-            couponCode: config.initialCoupon || 'ROMONET20',
-
-            // Cart items with fallback
-            cart: config.initialCart && config.initialCart.length > 0 ? config.initialCart : [{
-                    id: 'item-1',
-                    title: 'قالب اختصاصی آژانسی و شرکتی Apex Studio',
-                    price: 2450000,
-                    quantity: 1,
-                    licenseLabel: 'لایسنس تک دامنه'
-                },
-                {
-                    id: 'item-2',
-                    title: 'پلن پشتیبانی تجاری و فروشگاهی (wpstorm)',
-                    price: 3880000,
-                    quantity: 1,
-                    licenseLabel: 'سطح تجاری'
-                }
-            ],
-
-            getSubtotal() {
-                return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            },
-
-            getDiscount() {
-                if (this.couponCode === 'ROMONET20') {
-                    return this.getSubtotal() * 0.20;
-                } else if (this.couponCode === 'WPSTORM50') {
-                    return this.getSubtotal() * 0.50;
-                }
-                return 0;
-            },
-
-            getTax() {
-                return Math.round((this.getSubtotal() - this.getDiscount()) * 0.09);
-            },
-
-            getTotal() {
-                return (this.getSubtotal() - this.getDiscount()) + this.getTax();
-            },
-
-            handleCheckoutSubmit() {
-                if (!this.fullName.trim() || !this.email.trim()) {
-                    window.dispatchEvent(new CustomEvent('show-toast', {
-                        detail: 'لطفاً نام و نام خانوادگی و ایمیل معتبر خود را وارد نمایید'
-                    }));
-                    return;
-                }
-
-                this.isProcessing = true;
-
-                setTimeout(() => {
-                    window.dispatchEvent(new CustomEvent('show-toast', {
-                        detail: 'سفارش شما با موفقیت ثبت شد! در حال انتقال...'
-                    }));
-
-                    // Redirect to WooCommerce thank you / order received URL
-                    window.location.href = config.thankYouUrl;
-                }, 1200);
-            },
-
-            formatCurrency(amount) {
-                return new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
-            }
-        };
-    }
-</script>
