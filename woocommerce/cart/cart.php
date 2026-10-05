@@ -1,442 +1,129 @@
 <?php
-
 /**
- * Custom WooCommerce Cart Page Template
+ * Cart Page
  *
- * @package Romonet_WPStorm
+ * @package WooCommerce\Templates
+ * @version 7.9.0
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-// Prepare initial cart data from WooCommerce (or mock fallback)
-$wc_cart_items = array();
-$wc_subtotal   = 0;
-$wc_discount   = 0;
-$wc_tax        = 0;
-$wc_total      = 0;
-
-if (function_exists('WC') && WC()->cart) {
-    $wc_subtotal = WC()->cart->get_subtotal();
-    $wc_discount = WC()->cart->get_discount_total();
-    $wc_tax      = WC()->cart->get_taxes_total();
-    $wc_total    = WC()->cart->get_total('edit');
-
-    foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
-        $_product   = apply_filters('woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key);
-        $product_id = apply_filters('woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key);
-
-        if ($_product && $_product->exists() && $cart_item['quantity'] > 0) {
-            $wc_cart_items[] = array(
-                'id'           => $cart_item_key,
-                'productId'    => $product_id,
-                'itemType'     => $_product->is_type('subscription') ? 'maintenance_plan' : 'product',
-                'title'        => $_product->get_name(),
-                'subtitle'     => $_product->get_short_description() ? wp_strip_all_tags($_product->get_short_description()) : 'لایسنس تجاری اورجینال',
-                'price'        => (int) $_product->get_price(),
-                'quantity'     => (int) $cart_item['quantity'],
-                'licenseLabel' => 'لایسنس تک دامنه'
-            );
-        }
-    }
-}
-
-// Fallback initial cart items if cart is initialized empty or via Alpine store
-$checkout_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/checkout');
+do_action( 'woocommerce_before_cart' );
 ?>
 
-<div class="min-h-screen pb-24 pt-8" dir="rtl" xyz-data="romonetCartPage(<?php echo esc_attr(json_encode($wc_cart_items)); ?>)">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right woocommerce">
+	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-slate-800 pb-4">
+		<div>
+			<h1 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">سبد خرید شما</h1>
+			<p class="text-xs text-slate-500 mt-1">
+				شامل <?php echo esc_html( WC()->cart->get_cart_contents_count() ); ?> کالا
+			</p>
+		</div>
+		<a href="<?php echo esc_url( wc_get_cart_url() . '?empty-cart' ); ?>" class="text-xs text-rose-500 hover:underline flex items-center gap-1 font-semibold self-start sm:self-auto">
+			<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6m4-6v6"/></svg>
+			<span>خالی کردن سبد خرید</span>
+		</a>
+	</div>
 
-        <!-- ==================== EMPTY STATE ==================== -->
-        <template xyz-if="cart.length === 0">
-            <div class="min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-6">
-                <div class="w-20 h-20 rounded-3xl bg-white/5 border border-white/10 flex items-center justify-center text-neutral-500 shadow-xl backdrop-blur-md">
-                    <!-- ShoppingBag Icon -->
-                    <svg class="w-10 h-10 text-neutral-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-                        <path d="M3 6h18" />
-                        <path d="M16 10a4 4 0 0 1-8 0" />
-                    </svg>
-                </div>
+	<form class="woocommerce-cart-form grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
+		<div class="lg:col-span-8 space-y-4">
+			<?php foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) :
+				$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+				if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 ) :
+					$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+					?>
+					<div class="p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-sm hover:border-teal-200 dark:hover:border-teal-900 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+						<div class="flex items-start gap-4 flex-1">
+							<a href="<?php echo esc_url( $product_permalink ); ?>" class="w-24 h-24 rounded-2xl bg-stone-50 dark:bg-slate-800 p-2 shrink-0 border border-stone-200 dark:border-slate-700 overflow-hidden flex items-center justify-center">
+								<?php echo $_product->get_image( 'woocommerce_thumbnail', array( 'class' => 'w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal hover:scale-105 transition-transform' ) ); ?>
+							</a>
+							<div class="space-y-1.5 flex-1">
+								<a href="<?php echo esc_url( $product_permalink ); ?>" class="font-bold text-sm sm:text-base text-slate-900 dark:text-white hover:text-teal-600 transition-colors">
+									<?php echo wp_kses_post( $_product->get_name() ); ?>
+								</a>
+								<div class="flex flex-wrap items-center gap-2 pt-1 text-xs text-slate-600 dark:text-slate-300">
+									<?php echo wc_get_formatted_cart_item_data( $cart_item ); ?>
+								</div>
+							</div>
+						</div>
 
-                <div class="space-y-2">
-                    <h2 class="text-2xl font-bold text-white">سبد خرید شما خالی است</h2>
-                    <p class="text-sm text-neutral-400 max-w-sm mx-auto leading-relaxed">
-                        از قالب‌ها، افزونه‌ها یا خدمات طراحی و نگهداری دپارتمان <strong class="text-amber-400">wpstorm</strong> دیدن فرمایید.
-                    </p>
-                </div>
+						<div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-4 pt-4 sm:pt-0 border-t sm:border-t-0 border-stone-100 dark:border-slate-800">
+							<div class="text-sm sm:text-base font-black text-slate-900 dark:text-white">
+								<?php echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); ?>
+							</div>
+							<div class="flex items-center gap-3">
+								<div class="flex items-center gap-1 bg-stone-100 dark:bg-slate-800 p-1 rounded-xl border border-stone-200 dark:border-slate-700 custom-qty">
+									<button type="button" class="p-1 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 minus" aria-label="کاهش تعداد">−</button>
+									<?php
+									echo woocommerce_quantity_input(
+										array(
+											'input_name'  => "cart[{$cart_item_key}][qty]",
+											'input_value' => $cart_item['quantity'],
+											'max_value'   => $_product->get_max_purchase_quantity(),
+											'min_value'   => '0',
+											'classes'     => array( 'qty', 'w-8', 'text-center', 'font-bold', 'text-xs', 'bg-transparent', 'border-none', 'p-0', 'focus:ring-0', 'text-slate-900', 'dark:text-white' ),
+										),
+										$_product,
+										false
+									);
+									?>
+									<button type="button" class="p-1 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 plus" aria-label="افزایش تعداد">+</button>
+								</div>
+								<?php
+								echo apply_filters(
+									'woocommerce_cart_item_remove_link',
+									sprintf( '<a href="%s" class="p-2 rounded-xl text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/60 transition-colors" aria-label="%s">×</a>', esc_url( wc_get_cart_remove_url( $cart_item_key ) ), esc_attr__( 'Remove this item', 'woocommerce' ) ),
+									$cart_item_key
+								);
+								?>
+							</div>
+						</div>
+					</div>
+				<?php endif; ?>
+			<?php endforeach; ?>
 
-                <div class="flex flex-wrap items-center justify-center gap-4">
-                    <a
-                        href="<?php echo esc_url(home_url('/shop')); ?>"
-                        class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs transition shadow-lg shadow-amber-500/25 text-center">
-                        مشاهده فروشگاه قالب و افزونه
-                    </a>
-                    <a
-                        href="<?php echo esc_url(home_url('/maintenance-pricing')); ?>"
-                        class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs border border-white/10 transition text-center">
-                        تعرفه‌های پشتیبانی سایت
-                    </a>
-                </div>
-            </div>
-        </template>
+			<div class="hidden">
+				<button type="submit" class="button update-cart-btn" name="update_cart"><?php esc_html_e( 'Update cart', 'woocommerce' ); ?></button>
+				<?php wp_nonce_field( 'woocommerce-cart', 'woocommerce-cart-nonce' ); ?>
+			</div>
+		</div>
 
-        <!-- ==================== FILLED CART ==================== -->
-        <template xyz-if="cart.length > 0">
-            <div class="space-y-8">
+		<div class="lg:col-span-4 space-y-6">
+			<?php if ( wc_coupons_enabled() ) : ?>
+				<div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 space-y-3">
+					<div class="flex items-center gap-2 font-bold text-xs text-slate-900 dark:text-white">
+						<span>کد تخفیف یا هدیه:</span>
+					</div>
+					<div class="flex gap-2">
+						<input type="text" name="coupon_code" class="input-text min-w-0 flex-1 bg-stone-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 px-3 py-2 rounded-xl text-xs border border-stone-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 font-mono" id="coupon_code" placeholder="کد تخفیف" />
+						<button type="submit" class="px-4 py-2 bg-slate-900 hover:bg-slate-800 dark:bg-slate-700 text-white rounded-xl text-xs font-bold" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>">اعمال</button>
+					</div>
+				</div>
+			<?php endif; ?>
 
-                <!-- Header -->
-                <div class="flex items-center justify-between pb-4 border-b border-white/10">
-                    <div class="space-y-1">
-                        <h1 class="text-3xl font-extrabold text-white">سبد خرید</h1>
-                        <p class="text-xs text-neutral-400">
-                            <span xyz-text="totalItemsCount()"></span> مورد در سبد خرید شما موجود است
-                        </p>
-                    </div>
-
-                    <button
-                        type="button"
-                        xyz-on:click="clearCart()"
-                        class="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1.5 transition">
-                        <!-- Trash2 Icon -->
-                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M3 6h18" />
-                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                            <line x1="10" x2="10" y1="11" y2="17" />
-                            <line x1="14" x2="14" y1="11" y2="17" />
-                        </svg>
-                        <span>خالی کردن سبد خرید</span>
-                    </button>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-
-                    <!-- Cart Items List -->
-                    <div class="lg:col-span-8 space-y-4">
-                        <template xyz-for="item in cart" xyz-bind:key="item.id">
-                            <div
-                                class="glass-card p-6 rounded-2xl border border-white/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 bg-white/5 backdrop-blur-md">
-                                <div class="space-y-1 flex-1">
-                                    <div class="flex items-center gap-2">
-                                        <span
-                                            class="text-[10px] px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20"
-                                            xyz-text="getItemTypeLabel(item.itemType)"></span>
-                                        <template xyz-if="item.licenseLabel">
-                                            <span class="text-[10px] px-2 py-0.5 rounded bg-white/5 text-neutral-300 border border-white/10" xyz-text="item.licenseLabel"></span>
-                                        </template>
-                                    </div>
-
-                                    <h3 class="text-lg font-bold text-white" xyz-text="item.title"></h3>
-
-                                    <template xyz-if="item.subtitle">
-                                        <p class="text-xs text-neutral-400" xyz-text="item.subtitle"></p>
-                                    </template>
-
-                                    <div class="text-xs text-emerald-400 flex items-center gap-1 pt-1">
-                                        <!-- DownloadCloud Icon -->
-                                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-                                            <path d="M12 12v9" />
-                                            <path d="m8 17 4 4 4-4" />
-                                        </svg>
-                                        <span>تحویل آنی فایل دانلود و صدور خودکار کلید لایسنس</span>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-6">
-                                    <!-- Quantity controls -->
-                                    <div class="flex items-center bg-black/40 rounded-xl border border-white/10 p-1">
-                                        <button
-                                            type="button"
-                                            xyz-on:click="updateQuantity(item.id, -1)"
-                                            class="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 transition">
-                                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M5 12h14" />
-                                            </svg>
-                                        </button>
-                                        <span class="px-3 text-xs font-bold text-white " xyz-text="item.quantity"></span>
-                                        <button
-                                            type="button"
-                                            xyz-on:click="updateQuantity(item.id, 1)"
-                                            class="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 transition">
-                                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M5 12h14" />
-                                                <path d="M12 5v14" />
-                                            </svg>
-                                        </button>
-                                    </div>
-
-                                    <div class="text-left min-w-[120px]" dir="ltr">
-                                        <div class="text-lg font-extrabold text-amber-400 " xyz-text="formatCurrency(item.price * item.quantity)"></div>
-                                        <template xyz-if="item.quantity > 1">
-                                            <div class="text-[10px] text-neutral-500 ">
-                                                هر عدد <span xyz-text="formatCurrency(item.price)"></span>
-                                            </div>
-                                        </template>
-                                    </div>
-
-                                    <button
-                                        type="button"
-                                        xyz-on:click="removeFromCart(item.id)"
-                                        class="p-2 text-neutral-500 hover:text-rose-400 transition"
-                                        title="حذف آیتم">
-                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M3 6h18" />
-                                            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </template>
-
-                        <!-- Back to shop -->
-                        <div class="pt-4">
-                            <a
-                                href="<?php echo esc_url(home_url('/shop')); ?>"
-                                class="inline-flex items-center gap-2 text-xs text-neutral-400 hover:text-amber-400 transition">
-                                <!-- ArrowRight Icon -->
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M5 12h14" />
-                                    <path d="m12 5 7 7-7 7" />
-                                </svg>
-                                <span>ادامه خرید در مارکت‌پلیس محصولات</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Right: Order Summary Card -->
-                    <div class="lg:col-span-4 space-y-6">
-                        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/15 bg-gradient-to-b from-[#111422] to-[#0c0f1a] space-y-6 backdrop-blur-xl">
-                            <h3 class="text-lg font-bold text-white border-b border-white/10 pb-4">
-                                خلاصه فاکتور سفارش
-                            </h3>
-
-                            <!-- Promo code form -->
-                            <div>
-                                <template xyz-if="couponCode">
-                                    <div class="flex items-center justify-between p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs">
-                                        <div class="flex items-center gap-2">
-                                            <!-- Tag Icon -->
-                                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
-                                                <path d="M7 7h.01" />
-                                            </svg>
-                                            <div>
-                                                کد تخفیف <span class=" font-bold" xyz-text="couponCode"></span> با موفقیت اعمال شد!
-                                            </div>
-                                        </div>
-                                        <button type="button" xyz-on:click="couponCode = null; couponError = null;" class="underline hover:text-emerald-200">
-                                            حذف
-                                        </button>
-                                    </div>
-                                </template>
-
-                                <template xyz-if="!couponCode">
-                                    <form @submit.prevent="handleApplyPromo()" class="space-y-1.5">
-                                        <div class="flex gap-2">
-                                            <input
-                                                type="text"
-                                                xyz-model="promoInput"
-                                                placeholder="کد تخفیف یا معرف"
-                                                class="flex-1 bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400 uppercase " />
-                                            <button
-                                                type="submit"
-                                                class="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition">
-                                                اعمال کد
-                                            </button>
-                                        </div>
-                                        <template xyz-if="couponError">
-                                            <p class="text-[11px] text-rose-400" xyz-text="couponError"></p>
-                                        </template>
-                                        <p class="text-[10px] text-neutral-500 ">کدهای تست: ROMONET20 یا WPSTORM50</p>
-                                    </form>
-                                </template>
-                            </div>
-
-                            <!-- Calculations -->
-                            <div class="space-y-3 text-xs border-t border-white/10 pt-4">
-                                <div class="flex justify-between text-neutral-300">
-                                    <span>جمع اقلام سبد خرید</span>
-                                    <span class="font-bold text-white" xyz-text="formatCurrency(getSubtotal())"></span>
-                                </div>
-
-                                <template xyz-if="getDiscount() > 0">
-                                    <div class="flex justify-between text-emerald-400">
-                                        <span>تخفیف ویژه (<span xyz-text="couponCode"></span>)</span>
-                                        <span>-<span xyz-text="formatCurrency(getDiscount())"></span></span>
-                                    </div>
-                                </template>
-
-                                <div class="flex justify-between text-neutral-300">
-                                    <span>ارزش افزوده و خدمات (۹٪)</span>
-                                    <span class="font-bold text-white" xyz-text="formatCurrency(getTax())"></span>
-                                </div>
-
-                                <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
-                                    <span>مبلغ نهایی قابل پرداخت</span>
-                                    <span class="text-amber-400 text-xl font-bold" xyz-text="formatCurrency(getTotal())"></span>
-                                </div>
-                            </div>
-
-                            <!-- Proceed to Checkout CTA -->
-                            <a
-                                href="<?php echo esc_url($checkout_url); ?>"
-                                class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-black text-sm transition shadow-xl shadow-amber-500/25 flex items-center justify-center gap-2 text-center">
-                                <span>تکمیل اطلاعات و ثبت نهایی سفارش</span>
-                                <!-- ArrowLeft Icon -->
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="m12 19-7-7 7-7" />
-                                    <path d="M19 12H5" />
-                                </svg>
-                            </a>
-
-                            <div class="space-y-2 text-[11px] text-neutral-400 pt-2 border-t border-white/5">
-                                <div class="flex items-center gap-2">
-                                    <!-- ShieldCheck Icon -->
-                                    <svg class="w-4 h-4 text-emerald-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
-                                        <path d="m9 12 2 2 4-4" />
-                                    </svg>
-                                    <span>گارانتی ۳۰ روزه بازگشت بی‌قیدوشرط وجه</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <!-- Lock Icon -->
-                                    <svg class="w-4 h-4 text-cyan-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                    </svg>
-                                    <span>اتصال امن به درگاه‌های شاپرک و زرین‌پال / ارز دیجیتال</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </template>
-
-    </div>
+			<div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-sm space-y-5">
+				<h3 class="font-black text-sm text-slate-900 dark:text-white border-b border-stone-100 dark:border-slate-800 pb-3">خلاصه فاکتور سفارش</h3>
+				<?php do_action( 'woocommerce_cart_collaterals' ); ?>
+			</div>
+		</div>
+	</form>
 </div>
 
 <script>
-    function romonetCartPage(initialWcItems) {
-        return {
-            promoInput: '',
-            couponCode: null,
-            couponError: null,
-
-            // Bind with header global cart or initialize with WooCommerce server items
-            cart: initialWcItems && initialWcItems.length > 0 ? initialWcItems : [{
-                    id: 'item-1',
-                    itemType: 'product',
-                    title: 'قالب اختصاصی آژانسی و شرکتی Apex Studio',
-                    subtitle: 'لایسنس استاندارد تک دامنه',
-                    price: 2450000,
-                    quantity: 1,
-                    licenseLabel: 'تک دامنه'
-                },
-                {
-                    id: 'item-2',
-                    itemType: 'maintenance_plan',
-                    title: 'پلن پشتیبانی تجاری و فروشگاهی (wpstorm)',
-                    subtitle: 'پاسخگویی ۳۰ دقیقه‌ای SLA • پرداخت سالانه',
-                    price: 3880000,
-                    quantity: 1,
-                    licenseLabel: 'سطح تجاری'
-                }
-            ],
-
-            totalItemsCount() {
-                return this.cart.reduce((sum, i) => sum + i.quantity, 0);
-            },
-
-            updateQuantity(id, delta) {
-                const item = this.cart.find(i => i.id === id);
-                if (item) {
-                    item.quantity += delta;
-                    if (item.quantity <= 0) {
-                        this.removeFromCart(id);
-                    }
-                }
-            },
-
-            removeFromCart(id) {
-                const item = this.cart.find(i => i.id === id);
-                this.cart = this.cart.filter(i => i.id !== id);
-                if (item) {
-                    window.dispatchEvent(new CustomEvent('show-toast', {
-                        detail: `«${item.title}» از سبد خرید حذف شد.`
-                    }));
-                }
-            },
-
-            clearCart() {
-                this.cart = [];
-                window.dispatchEvent(new CustomEvent('show-toast', {
-                    detail: 'سبد خرید با موفقیت خالی شد.'
-                }));
-            },
-
-            handleApplyPromo() {
-                const code = this.promoInput.trim().toUpperCase();
-                if (!code) return;
-
-                if (code === 'ROMONET20') {
-                    this.couponCode = 'ROMONET20';
-                    this.couponError = null;
-                    window.dispatchEvent(new CustomEvent('show-toast', {
-                        detail: 'کد تخفیف ۲۰٪ ویژه رومونت با موفقیت اعمال گردید!'
-                    }));
-                } else if (code === 'WPSTORM50') {
-                    this.couponCode = 'WPSTORM50';
-                    this.couponError = null;
-                    window.dispatchEvent(new CustomEvent('show-toast', {
-                        detail: 'کد تخفیف ۵۰٪ ویژه دپارتمان wpstorm اعمال گردید!'
-                    }));
-                } else {
-                    this.couponError = 'کد تخفیف وارد شده معتبر یا فعال نمی‌باشد.';
-                }
-                this.promoInput = '';
-            },
-
-            getSubtotal() {
-                return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            },
-
-            getDiscount() {
-                if (this.couponCode === 'ROMONET20') {
-                    return this.getSubtotal() * 0.20;
-                } else if (this.couponCode === 'WPSTORM50') {
-                    return this.getSubtotal() * 0.50;
-                }
-                return 0;
-            },
-
-            getTax() {
-                return Math.round((this.getSubtotal() - this.getDiscount()) * 0.09); // 9% VAT
-            },
-
-            getTotal() {
-                return (this.getSubtotal() - this.getDiscount()) + this.getTax();
-            },
-
-            getItemTypeLabel(type) {
-                const labels = {
-                    'product': 'قالب یا افزونه',
-                    'sms_plan': 'اشتراک پیامک',
-                    'sms_credits': 'شارژ پیامک',
-                    'maintenance_plan': 'پشتیبانی وردپرس',
-                    'design_package': 'طراحی سایت'
-                };
-                return labels[type] || 'محصول';
-            },
-
-            formatCurrency(amount) {
-                return new Intl.NumberFormat('fa-IR').format(Math.round(amount)) + ' تومان';
-            }
-        };
-    }
+document.querySelectorAll('.custom-qty').forEach(function (wrapper) {
+	const input = wrapper.querySelector('input.qty');
+	const updateButton = document.querySelector('.update-cart-btn');
+	if (!input || !updateButton) return;
+	wrapper.querySelector('.minus').addEventListener('click', function () {
+		input.value = Math.max(parseInt(input.value, 10) - 1, parseInt(input.min || 0, 10));
+		updateButton.click();
+	});
+	wrapper.querySelector('.plus').addEventListener('click', function () {
+		const max = parseInt(input.max || 999999, 10);
+		input.value = Math.min(parseInt(input.value, 10) + 1, max);
+		updateButton.click();
+	});
+});
 </script>
+
+<?php do_action( 'woocommerce_after_cart' ); ?>
