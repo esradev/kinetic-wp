@@ -22,7 +22,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 ?>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right">
-	<form name="checkout" method="post" class="checkout woocommerce-checkout grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" action="<?php echo esc_url( wc_get_checkout_url() ); ?>" enctype="multipart/form-data">
+	<form name="checkout" method="post" class="checkout woocommerce-checkout grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" action="<?php echo esc_url( kinetic_wp_checkout_url() ); ?>" enctype="multipart/form-data">
 
 		<div class="lg:col-span-8 space-y-6">
 			<?php if ( $checkout->get_checkout_fields() ) : ?>

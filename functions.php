@@ -1,7 +1,7 @@
 <?php
 
 // ۱. یکپارچه کردن لود فایل‌های استایل و جاوااسکریپت
-function boilerplate_load_assets() {
+function kinetic_wp_load_assets() {
     // لود کردن استایل‌های اصلی تم (فایل بیلد شده Tailwind یا CSS شما)
     wp_enqueue_style('ourmaincss', get_theme_file_uri('/build/index.css'));
 
@@ -21,7 +21,7 @@ function boilerplate_load_assets() {
         true 
     );
 }
-add_action('wp_enqueue_scripts', 'boilerplate_load_assets');
+add_action('wp_enqueue_scripts', 'kinetic_wp_load_assets');
 
 
 // ۲. اضافه کردن type="module" به تگ فایل جاوااسکریپت (دقت کنید این قطعه کد باید مستقل و بیرون توابع دیگر باشد)
@@ -35,7 +35,7 @@ add_filter('script_loader_tag', function($tag, $handle, $src) {
 
 
 // ۳. پشتیبانی‌های تم
-function boilerplate_add_support() {
+function kinetic_wp_add_support() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
 
@@ -58,11 +58,11 @@ function boilerplate_add_support() {
     add_theme_support( 'wc-product-gallery-lightbox' );
     add_theme_support( 'wc-product-gallery-slider' );
 }
-add_action('after_setup_theme', 'boilerplate_add_support');
+add_action('after_setup_theme', 'kinetic_wp_add_support');
 
 
 // ۴. رندر کردن کدهای SVG
-function boilerplate_render_svg($filename) {
+function kinetic_wp_render_svg($filename) {
     $file = get_theme_file_path("/assets/images/{$filename}.svg");
     if (file_exists($file)) {
         return file_get_contents($file);
@@ -72,7 +72,7 @@ function boilerplate_render_svg($filename) {
 
 
 // ۵. ویرایش فیلدهای صفحه تسویه حساب ووکامرس
-function boilerplate_remove_checkout_fields($fields) {
+function kinetic_wp_remove_checkout_fields($fields) {
     // Keep the compact visible form while still submitting the fields required by WooCommerce and gateways.
     $visible_fields = array(
         'billing_first_name',
@@ -112,7 +112,46 @@ function boilerplate_remove_checkout_fields($fields) {
     unset($fields['shipping']);
     return $fields;
 }
-add_filter('woocommerce_checkout_fields', 'boilerplate_remove_checkout_fields');
+add_filter('woocommerce_checkout_fields', 'kinetic_wp_remove_checkout_fields');
+
+/**
+ * Return the stable frontend URL for the cart page.
+ */
+function kinetic_wp_cart_url() {
+    return home_url('/cart/');
+}
+
+/**
+ * Return the stable frontend URL for the checkout page.
+ */
+function kinetic_wp_checkout_url() {
+    return home_url('/checkout/');
+}
+
+/**
+ * Load the store pages even when their WordPress pages have not been assigned
+ * in WooCommerce settings yet.
+ */
+function kinetic_wp_store_page_template($template) {
+    if (is_admin()) {
+        return $template;
+    }
+
+    $request_path = untrailingslashit(wp_parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+    $home_path = untrailingslashit(wp_parse_url(home_url('/'), PHP_URL_PATH));
+    $request_path = preg_replace('#^' . preg_quote($home_path, '#') . '#', '', $request_path);
+
+    if ('/cart' === $request_path) {
+        return get_theme_file_path('/page-cart.php');
+    }
+
+    if ('/checkout' === $request_path) {
+        return get_theme_file_path('/page-checkout.php');
+    }
+
+    return $template;
+}
+add_filter('template_include', 'kinetic_wp_store_page_template');
 
 require_once get_theme_file_path('/includes/site-design-pricing.php');
 require_once get_theme_file_path('/includes/site-design-admin-requests.php');

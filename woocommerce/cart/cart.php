@@ -19,13 +19,13 @@ do_action( 'woocommerce_before_cart' );
 				شامل <?php echo esc_html( WC()->cart->get_cart_contents_count() ); ?> کالا
 			</p>
 		</div>
-		<a href="<?php echo esc_url( wc_get_cart_url() . '?empty-cart' ); ?>" class="text-xs text-rose-500 hover:underline flex items-center gap-1 font-semibold self-start sm:self-auto">
+		<a href="<?php echo esc_url( kinetic_wp_cart_url() . '?empty-cart' ); ?>" class="text-xs text-rose-500 hover:underline flex items-center gap-1 font-semibold self-start sm:self-auto">
 			<svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><path d="M10 11v6m4-6v6"/></svg>
 			<span>خالی کردن سبد خرید</span>
 		</a>
 	</div>
 
-	<form class="woocommerce-cart-form grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
+	<form class="woocommerce-cart-form grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" action="<?php echo esc_url( kinetic_wp_cart_url() ); ?>" method="post">
 		<div class="lg:col-span-8 space-y-4">
 			<?php foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) :
 				$_product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );

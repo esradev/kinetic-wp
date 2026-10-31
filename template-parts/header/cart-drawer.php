@@ -92,11 +92,11 @@
             </div>
           </div>
           <div class="pt-2 space-y-2">
-            <a href="<?php echo esc_url(function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/checkout')); ?>" class="w-full py-3 px-4 rounded-xl bg-linear-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-extrabold text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
+            <a href="<?php echo esc_url(function_exists('kinetic_wp_checkout_url') ? kinetic_wp_checkout_url() : home_url('/checkout/')); ?>" class="w-full py-3 px-4 rounded-xl bg-linear-to-r from-amber-500 via-amber-400 to-amber-500 hover:brightness-110 active:scale-95 text-black font-extrabold text-sm transition shadow-lg shadow-amber-500/25 flex items-center justify-center gap-2">
               <span>ادامه و تسویه‌حساب سریع</span>
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
             </a>
-            <a href="<?php echo esc_url(function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart')); ?>" class="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-medium text-xs text-center block">مشاهده سبد کامل خرید</a>
+            <a href="<?php echo esc_url(function_exists('kinetic_wp_cart_url') ? kinetic_wp_cart_url() : home_url('/cart/')); ?>" class="w-full py-2.5 px-4 rounded-xl bg-white/5 hover:bg-white/10 text-neutral-300 font-medium text-xs text-center block">مشاهده سبد کامل خرید</a>
           </div>
         </div>
       </template>
