@@ -31,7 +31,7 @@ while (have_posts()) : the_post();
 ?>
 
   <main
-    class="min-h-screen pb-24 pt-6"
+    class="single-post-content min-h-screen pb-24 pt-6"
     dir="rtl"
     xyz-data="romonetSinglePost({
     postId: <?php echo get_the_ID(); ?>,
@@ -146,7 +146,8 @@ while (have_posts()) : the_post();
           <img
             src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>"
             alt="<?php the_title_attribute(); ?>"
-            class="w-full h-80 sm:h-[440px] object-cover" />
+            class="post-featured-image w-full max-w-full h-auto object-contain"
+            loading="eager" />
         </div>
       <?php endif; ?>
 
@@ -188,6 +189,8 @@ while (have_posts()) : the_post();
         <?php endif; ?>
 
       </div>
+
+      <?php comments_template(); ?>
 
       <!-- CTA Box Inside Post -->
       <div class="glass-card p-8 rounded-3xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-transparent flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-md">

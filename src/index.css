@@ -263,6 +263,87 @@
   color: #ffffff !important;
 }
 
+.single-post-content .post-featured-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.single-post-content .prose {
+  color: var(--text-primary);
+}
+
+.single-post-content .prose :where(h1, h2, h3, h4, h5, h6, strong, th) {
+  color: var(--text-primary);
+}
+
+.single-post-content .prose :where(p, li, td, blockquote) {
+  color: var(--text-secondary);
+}
+
+.single-post-content .prose :where(a) {
+  color: var(--accent-gold);
+}
+
+.single-post-content .comments-area input,
+.single-post-content .comments-area textarea {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-subtle);
+}
+
+.single-post-content .comments-area .comment-form {
+  color: var(--text-secondary);
+}
+
+.single-post-content .comments-area .comment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.single-post-content .comments-area .comment-list .comment {
+  border: 1px solid var(--border-subtle);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.single-post-content .comments-area .comment-list .children {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding-right: 1rem;
+}
+
+.light .single-post-content .prose-invert {
+  --tw-prose-body: var(--text-secondary);
+  --tw-prose-headings: var(--text-primary);
+  --tw-prose-lead: var(--text-secondary);
+  --tw-prose-links: var(--accent-gold);
+  --tw-prose-bold: var(--text-primary);
+  --tw-prose-counters: var(--text-muted);
+  --tw-prose-bullets: var(--text-muted);
+  --tw-prose-hr: var(--border-subtle);
+  --tw-prose-quotes: var(--text-secondary);
+  --tw-prose-quote-borders: var(--border-subtle);
+  --tw-prose-captions: var(--text-muted);
+  --tw-prose-code: var(--text-primary);
+  --tw-prose-pre-code: #e2e8f0;
+  --tw-prose-pre-bg: #1a1d2d;
+  --tw-prose-th-borders: var(--border-subtle);
+  --tw-prose-td-borders: var(--border-subtle);
+}
+
+.light .single-post-content .comments-area input,
+.light .single-post-content .comments-area textarea {
+  background-color: rgba(255, 255, 255, 0.95);
+}
+
+.light .single-post-content .comments-area .text-white,
+.light .single-post-content .comments-area .comment-form {
+  color: var(--text-primary) !important;
+}
+
 .light .bg-\[\#08090d\],
 .light .bg-\[\#090a0f\],
 .light .bg-\[\#06070a\],
