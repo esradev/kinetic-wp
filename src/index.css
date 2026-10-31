@@ -391,6 +391,21 @@
   border-color: rgba(15, 23, 42, 0.09) !important;
 }
 
+.cart-drawer {
+  color: var(--text-primary);
+}
+
+.light .cart-drawer,
+.light .cart-drawer-header,
+.light .cart-drawer-footer {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(15, 23, 42, 0.09) !important;
+}
+
+.light .cart-drawer [class*="bg-black/"] {
+  background-color: rgba(241, 245, 251, 0.9) !important;
+}
+
 .light header {
   background-color: rgba(238, 242, 248, 0.88) !important;
   border-color: rgba(15, 23, 42, 0.08) !important;
