@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_cart_is_empty' );
 ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center woocommerce">
+<div class="woocommerce woocommerce-cart-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
 	<div class="max-w-lg mx-auto p-8 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-sm">
 		<div class="w-20 h-20 mx-auto rounded-3xl bg-stone-100 dark:bg-slate-800 flex items-center justify-center text-teal-600">
 			<svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

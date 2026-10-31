@@ -21,12 +21,12 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 }
 ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right">
+<div class="woocommerce woocommerce-checkout-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right">
 	<form name="checkout" method="post" class="checkout woocommerce-checkout grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" action="<?php echo esc_url( kinetic_wp_checkout_url() ); ?>" enctype="multipart/form-data">
 
 		<div class="lg:col-span-8 space-y-6">
 			<?php if ( $checkout->get_checkout_fields() ) : ?>
-				<div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-stone-200 dark:border-slate-800 space-y-4" id="customer_details">
+				<div class="woocommerce-checkout-details bg-white dark:bg-slate-900 rounded-3xl p-6 border border-stone-200 dark:border-slate-800 space-y-4" id="customer_details">
 					<div class="flex items-center gap-2 font-bold text-sm text-slate-900 dark:text-white border-b border-stone-100 dark:border-slate-800 pb-3 mb-4">
 						<svg class="w-5 h-5 text-teal-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
 							<path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
@@ -42,7 +42,7 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 		</div>
 
 		<div class="lg:col-span-4 space-y-5">
-			<div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-stone-200 dark:border-slate-800 space-y-4 shadow-sm sticky top-24">
+			<div class="woocommerce-checkout-summary bg-white dark:bg-slate-900 rounded-3xl p-6 border border-stone-200 dark:border-slate-800 space-y-4 shadow-sm sticky top-24">
 				<h3 class="font-bold text-sm text-slate-900 dark:text-white border-b border-stone-100 dark:border-slate-800 pb-3">
 					بازبینی و پرداخت نهایی
 				</h3>

@@ -74,7 +74,7 @@ if ($order && is_a($order, 'WC_Order')) {
 <!-- Confetti CDN Script -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 
-<div class="min-h-screen pb-24 pt-8" dir="rtl" xyz-data="romonetThankYou(<?php echo esc_attr(wp_json_encode($order_data)); ?>)" xyz-init="initConfetti()">
+<div class="woocommerce woocommerce-thankyou-page min-h-screen pb-24 pt-8" dir="rtl" xyz-data="romonetThankYou(<?php echo esc_attr(wp_json_encode($order_data)); ?>)" xyz-init="initConfetti()">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
         <!-- ==================== NO ORDER FALLBACK ==================== -->

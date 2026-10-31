@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <div class="cart-collaterals">
 	<?php do_action( 'woocommerce_before_cart_collaterals' ); ?>
-	<div class="cart_totals">
+	<div class="cart_totals woocommerce-cart-totals">
 		<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
 		<h2 class="text-base font-black text-slate-900 dark:text-white mb-4"><?php esc_html_e( 'Cart totals', 'woocommerce' ); ?></h2>

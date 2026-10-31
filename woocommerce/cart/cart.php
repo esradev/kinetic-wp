@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 do_action( 'woocommerce_before_cart' );
 ?>
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right woocommerce">
+<div class="woocommerce woocommerce-cart-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 text-right">
 	<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 dark:border-slate-800 pb-4">
 		<div>
 			<h1 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">سبد خرید شما</h1>
@@ -32,7 +32,7 @@ do_action( 'woocommerce_before_cart' );
 				if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 ) :
 					$product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
 					?>
-					<div class="p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-sm hover:border-teal-200 dark:hover:border-teal-900 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+					<div class="woocommerce-cart-item p-5 sm:p-6 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-sm hover:border-teal-200 dark:hover:border-teal-900 transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
 						<div class="flex items-start gap-4 flex-1">
 							<a href="<?php echo esc_url( $product_permalink ); ?>" class="w-24 h-24 rounded-2xl bg-stone-50 dark:bg-slate-800 p-2 shrink-0 border border-stone-200 dark:border-slate-700 overflow-hidden flex items-center justify-center">
 								<?php echo $_product->get_image( 'woocommerce_thumbnail', array( 'class' => 'w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal hover:scale-105 transition-transform' ) ); ?>
@@ -90,7 +90,7 @@ do_action( 'woocommerce_before_cart' );
 
 		<div class="lg:col-span-4 space-y-6">
 			<?php if ( wc_coupons_enabled() ) : ?>
-				<div class="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 space-y-3">
+				<div class="woocommerce-cart-coupon p-5 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 space-y-3">
 					<div class="flex items-center gap-2 font-bold text-xs text-slate-900 dark:text-white">
 						<span>کد تخفیف یا هدیه:</span>
 					</div>
@@ -101,7 +101,7 @@ do_action( 'woocommerce_before_cart' );
 				</div>
 			<?php endif; ?>
 
-			<div class="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-sm space-y-5">
+			<div class="woocommerce-cart-summary p-6 rounded-3xl bg-white dark:bg-slate-900 border border-stone-200 dark:border-slate-800 shadow-sm space-y-5">
 				<h3 class="font-black text-sm text-slate-900 dark:text-white border-b border-stone-100 dark:border-slate-800 pb-3">خلاصه فاکتور سفارش</h3>
 				<?php do_action( 'woocommerce_cart_collaterals' ); ?>
 			</div>
