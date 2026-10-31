@@ -1,7 +1,6 @@
 <?php
 /**
- * Template Name: مارکت‌پلیس قالب‌ها و افزونه‌ها
- * Template Post Type: page
+ * WooCommerce archive product template.
  *
  * @package Romonet_WPStorm
  */
