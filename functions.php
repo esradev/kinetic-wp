@@ -73,13 +73,40 @@ function boilerplate_render_svg($filename) {
 
 // ۵. ویرایش فیلدهای صفحه تسویه حساب ووکامرس
 function boilerplate_remove_checkout_fields($fields) {
-    // Remove all fields except for billing first name, last name, and email and phone number
-    $fields['billing'] = array(
-        'billing_first_name' => $fields['billing']['billing_first_name'],
-        'billing_last_name'  => $fields['billing']['billing_last_name'],
-        'billing_email'      => $fields['billing']['billing_email'],
-        'billing_phone'      => $fields['billing']['billing_phone'],
+    // Keep the compact visible form while still submitting the fields required by WooCommerce and gateways.
+    $visible_fields = array(
+        'billing_first_name',
+        'billing_last_name',
+        'billing_email',
+        'billing_phone',
     );
+    $hidden_defaults = array(
+        'billing_company'   => '',
+        'billing_country'   => 'IR',
+        'billing_address_1' => 'ثبت دیجیتال',
+        'billing_address_2' => '',
+        'billing_city'      => 'تهران',
+        'billing_state'     => 'THR',
+        'billing_postcode'  => '1111111111',
+    );
+
+    $billing_fields = array();
+
+    foreach ($visible_fields as $field_key) {
+        if (isset($fields['billing'][$field_key])) {
+            $billing_fields[$field_key] = $fields['billing'][$field_key];
+        }
+    }
+
+    foreach ($hidden_defaults as $field_key => $default) {
+        if (isset($fields['billing'][$field_key])) {
+            $billing_fields[$field_key] = $fields['billing'][$field_key];
+            $billing_fields[$field_key]['type'] = 'hidden';
+            $billing_fields[$field_key]['default'] = $default;
+        }
+    }
+
+    $fields['billing'] = $billing_fields;
 
     // Remove shipping fields
     unset($fields['shipping']);
