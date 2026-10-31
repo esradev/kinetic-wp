@@ -526,7 +526,10 @@
   color: var(--text-primary);
   padding: 0.65rem 0.85rem;
   outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .woocommerce-checkout textarea {
@@ -703,7 +706,9 @@
   color: #111827;
   font-weight: 800;
   cursor: pointer;
-  transition: filter 0.2s ease, transform 0.2s ease;
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
 .woocommerce-checkout #payment #place_order:hover {
@@ -805,10 +810,15 @@
   font-size: 0.8rem;
   font-weight: 800;
   text-align: center;
-  transition: filter 0.2s ease, transform 0.2s ease;
+  transition:
+    filter 0.2s ease,
+    transform 0.2s ease;
 }
 
-.woocommerce-cart-page .woocommerce-cart-totals .wc-proceed-to-checkout a:hover {
+.woocommerce-cart-page
+  .woocommerce-cart-totals
+  .wc-proceed-to-checkout
+  a:hover {
   filter: brightness(1.08);
   transform: translateY(-1px);
 }
@@ -824,7 +834,7 @@
 .woocommerce-checkout-page input.input-text,
 .woocommerce-checkout-page select,
 .woocommerce-checkout-page textarea {
-  background-color: var(--bg-main);
+  background-color: var(--bg-main) !important;
   border-color: var(--border-subtle);
   color: var(--text-primary);
 }

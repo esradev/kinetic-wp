@@ -77,7 +77,6 @@ function kinetic_wp_remove_checkout_fields($fields) {
     $visible_fields = array(
         'billing_first_name',
         'billing_last_name',
-        'billing_email',
         'billing_phone',
     );
     $hidden_defaults = array(
@@ -95,6 +94,8 @@ function kinetic_wp_remove_checkout_fields($fields) {
     foreach ($visible_fields as $field_key) {
         if (isset($fields['billing'][$field_key])) {
             $billing_fields[$field_key] = $fields['billing'][$field_key];
+            $billing_fields[$field_key]['required'] = true;
+            $billing_fields[$field_key]['validate'] = array();
         }
     }
 
@@ -103,6 +104,9 @@ function kinetic_wp_remove_checkout_fields($fields) {
             $billing_fields[$field_key] = $fields['billing'][$field_key];
             $billing_fields[$field_key]['type'] = 'hidden';
             $billing_fields[$field_key]['default'] = $default;
+            $billing_fields[$field_key]['label'] = '';
+            $billing_fields[$field_key]['required'] = false;
+            $billing_fields[$field_key]['validate'] = array();
         }
     }
 
@@ -121,7 +125,7 @@ function kinetic_wp_cart_url() {
     return home_url('/cart/');
 }
 
-/**
+/** 
  * Return the stable frontend URL for the checkout page.
  */
 function kinetic_wp_checkout_url() {
