@@ -55,6 +55,16 @@ $cart_json = wp_json_encode($wc_cart_items);
     };
   </script>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2FPNH2YPW8"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-2FPNH2YPW8');
+  </script>
+
   <?php wp_head(); ?>
 </head>
 
