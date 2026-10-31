@@ -36,7 +36,8 @@ export function romonetHeader() {
     cart: window.romonetHeaderData ? window.romonetHeaderData.cart : [],
 
     initHeader() {
-      const savedTheme = localStorage.getItem("romonet_theme") || "dark";
+      const savedTheme =
+        localStorage.getItem("romonet_theme") === "light" ? "light" : "dark";
       this.setTheme(savedTheme);
       this.onScroll();
       window.addEventListener("scroll", () => this.onScroll(), {
@@ -60,10 +61,17 @@ export function romonetHeader() {
     },
 
     setTheme(mode) {
-      this.theme = mode;
-      localStorage.setItem("romonet_theme", mode);
-      document.documentElement.classList.toggle("dark", mode === "dark");
-      document.documentElement.classList.toggle("light", mode === "light");
+      const normalizedMode = mode === "light" ? "light" : "dark";
+      this.theme = normalizedMode;
+      localStorage.setItem("romonet_theme", normalizedMode);
+      document.documentElement.classList.toggle(
+        "dark",
+        normalizedMode === "dark",
+      );
+      document.documentElement.classList.toggle(
+        "light",
+        normalizedMode === "light",
+      );
     },
 
     totalItemsCount() {

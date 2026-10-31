@@ -7,7 +7,7 @@
     "preview": "npm-run-all --parallel sync wpstart tailwindwatch",
     "sync": "browser-sync start -p romonet.local --files '**/*.php' 'build/*.js' 'build/*.css'",
     "buildwp": "wp-scripts build",
-    "build": "npm-run-all --sequential buildwp tailwindbuild",
+    "build": "npm-run-all --sequential buildwp tailwindbuild build:alpine",
     "wpstart": "wp-scripts start",
     "start": "npm-run-all --parallel wpstart tailwindwatch",
     "tailwindbuild": "tailwindcss -i ./src/index.css -o ./build/index.css --minify",

@@ -53,7 +53,7 @@
 
       <!-- Right Action Icons & Controls -->
       <div class="flex items-center gap-2 sm:gap-3">
-        <!-- Theme Toggle -->
+        <!-- Theme Toggle --> 
         <button 
           xyz-on:click="toggleTheme()"
           class="flex p-2.5 rounded-lg transition-all duration-300 relative group overflow-hidden border"

@@ -4,7 +4,7 @@
 
   <div class="fixed inset-y-0 left-0 max-w-full flex pr-10">
     <div xyz-show="isCartDrawerOpen" xyz-transition class="w-screen max-w-md bg-[#0d0f17] border-r border-white/10 shadow-2xl flex flex-col relative overflow-hidden">
-
+ 
       <div xyz-show="isCartUpdating" class="absolute inset-0 z-100 bg-[#0d0f17]/70 backdrop-blur-sm flex flex-col items-center justify-center transition-all" style="display: none;">
         <svg class="w-10 h-10 text-amber-500 animate-spin mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>
         <span class="text-sm font-bold text-white">در حال همگام‌سازی...</span>

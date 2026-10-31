@@ -5,13 +5,17 @@ export function romonetFooter() {
     currentTheme: localStorage.getItem("romonet_theme") || "dark",
 
     setGlobalTheme(mode) {
-      this.currentTheme = mode;
-      localStorage.setItem("romonet_theme", mode);
-      if (mode === "dark") {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      const normalizedMode = mode === "light" ? "light" : "dark";
+      this.currentTheme = normalizedMode;
+      localStorage.setItem("romonet_theme", normalizedMode);
+      document.documentElement.classList.toggle(
+        "dark",
+        normalizedMode === "dark",
+      );
+      document.documentElement.classList.toggle(
+        "light",
+        normalizedMode === "light",
+      );
     },
 
     handleNewsletter() {

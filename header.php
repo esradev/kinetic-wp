@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * The header for our theme
  *
  * @package Romonet_WPStorm
@@ -33,6 +33,18 @@ $cart_json = wp_json_encode($wc_cart_items);
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="profile" href="https://gmpg.org/xfn/11">
+
+  <script>
+    (() => {
+      try {
+        const theme = localStorage.getItem('romonet_theme') === 'light' ? 'light' : 'dark';
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+        document.documentElement.classList.toggle('light', theme === 'light');
+      } catch (error) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 
   <!-- پاس دادن اطلاعات PHP به اسکریپت‌های Build شده Alpine -->
   <script>

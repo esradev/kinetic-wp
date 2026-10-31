@@ -356,7 +356,9 @@
 .light .bg-\[\#0f171e\],
 .light .bg-\[\#18140c\],
 .light .bg-\[\#14110b\],
-.light .bg-\[\#0d1117\] {
+.light .bg-\[\#0d1117\],
+.light .bg-\[\#0d0f17\],
+.light .bg-\[\#111420\] {
   background-color: rgba(255, 255, 255, 0.92) !important;
 }
 
