@@ -163,3 +163,34 @@ require_once get_theme_file_path('/includes/admin-maintenance.php');
 require_once get_theme_file_path('/includes/maintenance-ajax.php');
 require_once get_theme_file_path('/includes/sms-ajax.php');
 require_once get_theme_file_path('/includes/admin-sms.php');
+
+/**
+ * Add focused SEO metadata for the website design pricing landing page.
+ */
+function kinetic_wp_site_design_pricing_seo() {
+    if ( ! is_page_template( 'page-site-design-pricing.php' ) ) {
+        return;
+    }
+
+    $title       = 'قیمت طراحی سایت در سال ۱۴۰۵ | تعرفه طراحی سایت رومونت';
+    $description = 'هزینه طراحی سایت در سال ۱۴۰۵ به نوع سایت، امکانات و طراحی بستگی دارد. با عوامل مؤثر بر قیمت، انواع سایت و روش دریافت برآورد هزینه از رومونت آشنا شوید.';
+    $url         = home_url( '/site-design-pricing/' );
+
+    echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta name="robots" content="index,follow">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+}
+add_action( 'wp_head', 'kinetic_wp_site_design_pricing_seo', 2 );
+
+function kinetic_wp_site_design_pricing_title( $title ) {
+    if ( is_page_template( 'page-site-design-pricing.php' ) ) {
+        return 'قیمت طراحی سایت در سال ۱۴۰۵ | تعرفه طراحی سایت رومونت';
+    }
+
+    return $title;
+}
+add_filter( 'pre_get_document_title', 'kinetic_wp_site_design_pricing_title' );

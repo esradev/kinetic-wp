@@ -1,20 +1,13 @@
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-3xl mx-auto space-y-4">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-xs">
-            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"></path>
-                <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"></path>
-                <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"></path>
-            </svg>
-            <span>مهندسی و طراحی اختصاصی دپارتمان wpstorm (Romonet.ir)</span>
-        </div>
-
-        <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight">
-            تعرفه‌های <span class="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">طراحی سایت و فروشگاه اختصاصی</span> وردپرس
-        </h1>
-
-        <p class="text-base sm:text-lg text-neutral-300 leading-relaxed">
-            ما صفحه‌سازهای سنگین را با سیستم طراحی دیزاین سیستم فیگما، بلوک‌های اختصاصی ری‌اکت در گوتنبرگ و تضمین سرعت لود زیر ۱۸۰ میلی‌ثانیه جایگزین کرده‌ایم.
+<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div class="max-w-3xl">
+        <p class="text-sm font-semibold text-amber-400">راهنمای قیمت‌گذاری رومونت</p>
+        <h1 class="mt-4 text-4xl font-bold leading-[1.4] tracking-tight text-white sm:text-6xl">قیمت طراحی سایت در سال ۱۴۰۵ چقدر است؟</h1>
+        <p class="mt-6 max-w-2xl text-base leading-8 text-neutral-300 sm:text-lg">
+            هزینه طراحی سایت به نوع کسب‌وکار، امکانات موردنیاز، سطح طراحی و پیچیدگی اجرای پروژه بستگی دارد. در رومونت، ابتدا نیازهای پروژه شما بررسی می‌شود تا راهکار مناسب و برآورد هزینه‌ای متناسب با نیازتان ارائه کنیم.
         </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="#inquiry" class="inline-flex min-h-12 items-center justify-center rounded-xl bg-amber-500 px-7 text-sm font-bold text-black transition hover:bg-amber-400">دریافت مشاوره و برآورد هزینه</a>
+            <a href="#website-types" class="inline-flex min-h-12 items-center justify-center rounded-xl border border-white/15 px-7 text-sm font-semibold text-white transition hover:border-amber-400/60 hover:text-amber-300">مشاهده خدمات طراحی سایت</a>
+        </div>
     </div>
 </section>
