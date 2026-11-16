@@ -6,12 +6,12 @@
  */
 ?>
 
-<footer class="border-t border-white/10 bg-[#06070a] text-sm text-neutral-400">
-  <?php get_template_part( 'template-parts/footer/minimal' ); ?>
+<footer class="rm-site-footer text-sm">
+	<?php get_template_part( 'template-parts/footer/minimal' ); ?>
 </footer>
 
 <!-- Toast Notification Component -->
-<?php get_template_part('template-parts/footer/toast'); ?>
+<?php get_template_part( 'template-parts/footer/toast' ); ?>
 
 <?php wp_footer(); ?>
 </body>
