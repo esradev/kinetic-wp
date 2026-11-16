@@ -77,8 +77,12 @@ $cart_json = wp_json_encode($wc_cart_items);
    
   <?php wp_body_open(); ?>
 
-  <?php get_template_part('template-parts/header/notification', 'bar'); ?>
+  <?php if ( ! is_front_page() ) : ?>
+    <?php get_template_part('template-parts/header/notification', 'bar'); ?>
+  <?php endif; ?>
   <?php get_template_part('template-parts/header/main', 'header'); ?>
-  <?php get_template_part('template-parts/header/sticky', 'nav'); ?>
+  <?php if ( ! is_front_page() ) : ?>
+    <?php get_template_part('template-parts/header/sticky', 'nav'); ?>
+  <?php endif; ?>
   <?php get_template_part('template-parts/header/search', 'modal'); ?>
   <?php get_template_part('template-parts/header/cart', 'drawer'); ?>
