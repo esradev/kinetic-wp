@@ -168,6 +168,7 @@ require_once get_theme_file_path('/includes/admin-sms.php');
 require_once get_theme_file_path('/includes/portfolio.php');
 require_once get_theme_file_path('/includes/woocommerce-development.php');
 require_once get_theme_file_path('/includes/custom-wordpress-development.php');
+require_once get_theme_file_path('/includes/sms-services.php');
 
 /**
  * Add focused SEO metadata for the website design pricing landing page.
