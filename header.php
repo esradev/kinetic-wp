@@ -71,18 +71,9 @@ $cart_json = wp_json_encode($wc_cart_items);
 <body <?php body_class('bg-[#08090d] text-white selection:bg-amber-500 selection:text-black antialiased'); ?>
   xyz-data="romonetHeader()"
   xyz-init="initHeader()"
-  @keydown.window.ctrl.k.prevent="isSearchOpen = !isSearchOpen"
-  @keydown.window.cmd.k.prevent="isSearchOpen = !isSearchOpen"
-  @keydown.window.escape="isSearchOpen = false; isCartDrawerOpen = false; isMobileMenuOpen = false">
+  @keydown.window.escape="isCartDrawerOpen = false; isMobileMenuOpen = false">
    
   <?php wp_body_open(); ?>
 
-  <?php if ( ! is_front_page() ) : ?>
-    <?php get_template_part('template-parts/header/notification', 'bar'); ?>
-  <?php endif; ?>
-  <?php get_template_part('template-parts/header/main', 'header'); ?>
-  <?php if ( ! is_front_page() ) : ?>
-    <?php get_template_part('template-parts/header/sticky', 'nav'); ?>
-  <?php endif; ?>
-  <?php get_template_part('template-parts/header/search', 'modal'); ?>
-  <?php get_template_part('template-parts/header/cart', 'drawer'); ?>
+  <?php get_template_part( 'template-parts/header/main', 'header' ); ?>
+  <?php get_template_part( 'template-parts/header/cart', 'drawer' ); ?>
