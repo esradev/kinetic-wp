@@ -300,3 +300,27 @@ function kinetic_wp_contact_title( $title ) {
     return is_page_template( 'page-contact.php' ) ? 'ارتباط با رومونت | تماس و درخواست مشاوره طراحی سایت' : $title;
 }
 add_filter( 'pre_get_document_title', 'kinetic_wp_contact_title' );
+
+function kinetic_wp_website_design_seo() {
+    if ( ! is_page_template( 'page-website-design.php' ) ) {
+        return;
+    }
+
+    $title       = 'طراحی سایت حرفه‌ای | طراحی سایت شرکتی و فروشگاهی رومونت';
+    $description = 'رومونت ارائه‌دهنده خدمات طراحی سایت شرکتی و فروشگاهی، طراحی وردپرسی و توسعه اختصاصی وب‌سایت است. برای بررسی نیازهای پروژه و دریافت مشاوره اقدام کنید.';
+    $url         = home_url( '/website-design/' );
+
+    echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta name="robots" content="index,follow">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+}
+add_action( 'wp_head', 'kinetic_wp_website_design_seo', 2 );
+
+function kinetic_wp_website_design_title( $title ) {
+    return is_page_template( 'page-website-design.php' ) ? 'طراحی سایت حرفه‌ای | طراحی سایت شرکتی و فروشگاهی رومونت' : $title;
+}
+add_filter( 'pre_get_document_title', 'kinetic_wp_website_design_title' );

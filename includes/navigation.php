@@ -17,7 +17,7 @@ function romonet_global_navigation() {
 		'contact'      => home_url( '/contact-us/' ),
 		'consultation' => home_url( '/contact-us/' ),
 		'service_items' => array(
-			array( 'label' => 'طراحی سایت', 'url' => home_url( '/site-design-pricing/' ) ),
+			array( 'label' => 'طراحی سایت', 'url' => home_url( '/website-design/' ) ),
 			array( 'label' => 'پشتیبانی وردپرس', 'url' => home_url( '/maintenance-pricing/' ) ),
 			array( 'label' => 'طراحی و توسعه فروشگاه ووکامرس', 'url' => home_url( '/site-design-pricing/' ) ),
 			array( 'label' => 'توسعه اختصاصی افزونه و قالب', 'url' => home_url( '/shop/' ) ),
