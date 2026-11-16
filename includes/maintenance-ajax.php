@@ -21,6 +21,8 @@ function romonet_create_maintenance_db_table() {
             customer_name varchar(100) NOT NULL,
             customer_phone varchar(20) NOT NULL,
             site_url varchar(255) NOT NULL,
+            site_type varchar(50) NOT NULL,
+            request_type varchar(100) NOT NULL,
             notes text NOT NULL,
             plan_type varchar(20) NOT NULL,
             plan_name varchar(150) NOT NULL,
@@ -54,6 +56,8 @@ function romonet_ajax_save_maintenance_db() {
 	$customer_name  = isset($_POST['customerName']) ? sanitize_text_field(wp_unslash($_POST['customerName'])) : '';
 	$customer_phone = isset($_POST['customerPhone']) ? sanitize_text_field(wp_unslash($_POST['customerPhone'])) : '';
 	$site_url       = isset($_POST['siteUrl']) ? esc_url_raw(wp_unslash($_POST['siteUrl'])) : '';
+	$site_type      = isset($_POST['siteType']) ? sanitize_text_field(wp_unslash($_POST['siteType'])) : '';
+	$request_type   = isset($_POST['requestType']) ? sanitize_text_field(wp_unslash($_POST['requestType'])) : '';
 	$notes          = isset($_POST['notes']) ? sanitize_textarea_field(wp_unslash($_POST['notes'])) : '';
 	$plan_type      = isset($_POST['planType']) ? sanitize_text_field(wp_unslash($_POST['planType'])) : 'standard';
 	$plan_name      = isset($_POST['planName']) ? sanitize_text_field(wp_unslash($_POST['planName'])) : '';
@@ -79,6 +83,8 @@ function romonet_ajax_save_maintenance_db() {
 			'customer_name'  => $customer_name,
 			'customer_phone' => $customer_phone,
 			'site_url'       => $site_url,
+			'site_type'      => $site_type,
+			'request_type'   => $request_type,
 			'notes'          => $notes,
 			'plan_type'      => $plan_type,
 			'plan_name'      => $plan_name,
@@ -91,7 +97,7 @@ function romonet_ajax_save_maintenance_db() {
 			'status'         => 'pending',
 			'created_at'     => current_time('mysql', 1)
 		),
-		array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s', '%s' )
+		array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s', '%s' )
 	);
 
 	if ( false === $inserted ) {

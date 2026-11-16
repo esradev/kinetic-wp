@@ -46,6 +46,8 @@ export function romonetMaintenancePricing() {
         planType: "inquiry",
         planName,
         billingCycle: "custom",
+        siteType: this.siteType,
+        requestType: this.requestType,
         siteCount: "1",
         isEcommerce: this.siteType === "فروشگاهی" ? "1" : "0",
         needsSla: "0",

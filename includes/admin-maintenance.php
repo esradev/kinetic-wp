@@ -25,6 +25,8 @@ class Romonet_Maintenance_List_Table extends WP_List_Table {
 			'customer_name'  => 'نام مشتری',
 			'customer_phone' => 'شماره تماس',
 			'site_url'       => 'آدرس سایت',
+			'site_type'      => 'نوع سایت',
+			'request_type'   => 'نوع درخواست',
 			'plan_name'      => 'نام پلن / نوع',
 			'details'        => 'جزئیات پلن سفارشی',
 			'notes'          => 'توضیحات',
@@ -53,11 +55,14 @@ class Romonet_Maintenance_List_Table extends WP_List_Table {
 			case 'site_url':
 				return $item['site_url'] ? '<a href="' . esc_url( $item['site_url'] ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $item['site_url'] ) . '</a>' : '-';
 
+			case 'site_type':
+			case 'request_type':
 			case 'notes':
-				return $item['notes'] ? esc_html( $item['notes'] ) : '-';
+				return ! empty( $item[ $column_name ] ) ? esc_html( $item[ $column_name ] ) : '-';
 				
 			case 'plan_name':
-			    $type = $item['plan_type'] === 'custom' ? '<br><span style="color:#777; font-size:11px;">(پلن سفارشی)</span>' : '<br><span style="color:#777; font-size:11px;">(پکیج آماده)</span>';
+			    $type_label = 'inquiry' === $item['plan_type'] ? 'استعلام' : ( 'custom' === $item['plan_type'] ? 'پلن سفارشی' : 'پکیج آماده' );
+			    $type = '<br><span style="color:#777; font-size:11px;">(' . esc_html( $type_label ) . ')</span>';
 			    return esc_html( $item['plan_name'] ) . $type;
 
 			case 'details':
@@ -69,7 +74,7 @@ class Romonet_Maintenance_List_Table extends WP_List_Table {
 			    return $html;
 
             case 'billing_cycle':
-                return $item['billing_cycle'] === 'annual' ? '<span style="color:#46b450">سالانه</span>' : 'ماهانه';
+                return 'custom' === $item['billing_cycle'] ? 'استعلام' : ( 'annual' === $item['billing_cycle'] ? '<span style="color:#46b450">سالانه</span>' : 'ماهانه' );
 
 			case 'final_price':
 				return number_format( (int) $item['final_price'] );
@@ -141,7 +146,7 @@ function romonet_render_maintenance_admin_page() {
 		<hr class="wp-header-end">
 		
 		<div class="notice notice-info inline" style="margin: 15px 0;">
-			<p>در این جدول می‌توانید درخواست‌های پلن‌های آماده و پلن‌های اختصاصی چنددامنه‌ای را مشاهده کنید.</p>
+			<p>در این جدول می‌توانید درخواست‌های پشتیبانی و نگهداری سایت را مشاهده کنید.</p>
 		</div>
 
 		<form id="romonet-maintenance-filter" method="get">
