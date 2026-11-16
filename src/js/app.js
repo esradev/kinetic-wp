@@ -8,6 +8,7 @@ import { romonetContact } from "./contact-component.js";
 import { romonetShop } from "./shop-component.js";
 import { romonetCheckout } from "./checkout-component.js";
 import { romonetWooCommerceDevelopment } from "./woocommerce-development-component.js";
+import { romonetCustomWordPressDevelopment } from "./custom-wordpress-development-component.js";
 
 Alpine.prefix("xyz-");
 
@@ -22,6 +23,7 @@ Alpine.data("romonetContact", romonetContact);
 Alpine.data("romonetShop", romonetShop);
 Alpine.data("romonetCheckout", romonetCheckout);
 Alpine.data("romonetWooCommerceDevelopment", romonetWooCommerceDevelopment);
+Alpine.data("romonetCustomWordPressDevelopment", romonetCustomWordPressDevelopment);
 
 // استارت آلپاین
 Alpine.start();
