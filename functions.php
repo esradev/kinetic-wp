@@ -324,3 +324,27 @@ function kinetic_wp_website_design_title( $title ) {
     return is_page_template( 'page-website-design.php' ) ? 'طراحی سایت حرفه‌ای | طراحی سایت شرکتی و فروشگاهی رومونت' : $title;
 }
 add_filter( 'pre_get_document_title', 'kinetic_wp_website_design_title' );
+
+function kinetic_wp_wordpress_support_seo() {
+    if ( ! is_page_template( 'page-wordpress-support.php' ) ) {
+        return;
+    }
+
+    $title       = 'پشتیبانی وردپرس | نگهداری و رفع مشکلات سایت – رومونت';
+    $description = 'رومونت ارائه‌دهنده خدمات پشتیبانی وردپرس، نگهداری سایت، به‌روزرسانی، رفع خطا و توسعه وب‌سایت است. برای بررسی نیاز سایت خود و دریافت مشاوره اقدام کنید.';
+    $url         = home_url( '/wordpress-support/' );
+
+    echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta name="robots" content="index,follow">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+}
+add_action( 'wp_head', 'kinetic_wp_wordpress_support_seo', 2 );
+
+function kinetic_wp_wordpress_support_title( $title ) {
+    return is_page_template( 'page-wordpress-support.php' ) ? 'پشتیبانی وردپرس | نگهداری و رفع مشکلات سایت – رومونت' : $title;
+}
+add_filter( 'pre_get_document_title', 'kinetic_wp_wordpress_support_title' );
