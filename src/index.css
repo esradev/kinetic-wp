@@ -42,6 +42,11 @@
       sans-serif;
   }
 
+  .portfolio-card-image {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
+
   html.light {
     --bg-main: #eef2f8;
     --bg-card: rgba(255, 255, 255, 0.88);
