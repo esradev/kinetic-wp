@@ -162,6 +162,7 @@ require_once get_theme_file_path('/includes/site-design-admin-requests.php');
 require_once get_theme_file_path('/includes/admin-maintenance.php');
 require_once get_theme_file_path('/includes/maintenance-ajax.php');
 require_once get_theme_file_path('/includes/sms-pricing-config.php');
+require_once get_theme_file_path('/includes/navigation.php');
 require_once get_theme_file_path('/includes/sms-ajax.php');
 require_once get_theme_file_path('/includes/admin-sms.php');
 

@@ -71,7 +71,7 @@ $cart_json = wp_json_encode($wc_cart_items);
 <body <?php body_class('bg-[#08090d] text-white selection:bg-amber-500 selection:text-black antialiased'); ?>
   xyz-data="romonetHeader()"
   xyz-init="initHeader()"
-  @keydown.window.escape="isCartDrawerOpen = false; isMobileMenuOpen = false">
+  @keydown.window.escape="isCartDrawerOpen = false; closeNavigation()">
    
   <?php wp_body_open(); ?>
 

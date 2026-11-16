@@ -1,6 +1,14 @@
 export function romonetHeader() {
   return {
     isMobileMenuOpen: false,
+    openDropdowns: {
+      services: false,
+      pricing: false,
+    },
+    mobileDropdowns: {
+      services: false,
+      pricing: false,
+    },
     isSearchOpen: false,
     isCartDrawerOpen: false,
     isCartUpdating: false,
@@ -50,6 +58,42 @@ export function romonetHeader() {
             100,
           );
       });
+    },
+
+    toggleDropdown(name) {
+      this.openDropdowns[name] = !this.openDropdowns[name];
+    },
+
+    openDropdown(name) {
+      this.openDropdowns[name] = true;
+    },
+
+    closeDropdown(name) {
+      this.openDropdowns[name] = false;
+    },
+
+    toggleMobileDropdown(name) {
+      this.mobileDropdowns[name] = !this.mobileDropdowns[name];
+    },
+
+    toggleMobileMenu() {
+      this.isMobileMenuOpen = !this.isMobileMenuOpen;
+      if (!this.isMobileMenuOpen) {
+        this.mobileDropdowns.services = false;
+        this.mobileDropdowns.pricing = false;
+      }
+    },
+
+    closeMobileMenu() {
+      this.isMobileMenuOpen = false;
+      this.mobileDropdowns.services = false;
+      this.mobileDropdowns.pricing = false;
+    },
+
+    closeNavigation() {
+      this.closeMobileMenu();
+      this.openDropdowns.services = false;
+      this.openDropdowns.pricing = false;
     },
 
     onScroll() {
