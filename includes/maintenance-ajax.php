@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 add_action( 'after_setup_theme', 'romonet_create_maintenance_db_table' );
 function romonet_create_maintenance_db_table() {
     $current_version = get_option( 'romonet_maintenance_db_version' );
-    $db_version      = '1.0.0';
+    $db_version      = '1.1.0';
     
     if ( $current_version !== $db_version ) {
         global $wpdb;
@@ -20,6 +20,8 @@ function romonet_create_maintenance_db_table() {
             id mediumint(9) NOT NULL AUTO_INCREMENT,
             customer_name varchar(100) NOT NULL,
             customer_phone varchar(20) NOT NULL,
+            site_url varchar(255) NOT NULL,
+            notes text NOT NULL,
             plan_type varchar(20) NOT NULL,
             plan_name varchar(150) NOT NULL,
             billing_cycle varchar(20) NOT NULL,
@@ -51,6 +53,8 @@ function romonet_ajax_save_maintenance_db() {
 
 	$customer_name  = isset($_POST['customerName']) ? sanitize_text_field(wp_unslash($_POST['customerName'])) : '';
 	$customer_phone = isset($_POST['customerPhone']) ? sanitize_text_field(wp_unslash($_POST['customerPhone'])) : '';
+	$site_url       = isset($_POST['siteUrl']) ? esc_url_raw(wp_unslash($_POST['siteUrl'])) : '';
+	$notes          = isset($_POST['notes']) ? sanitize_textarea_field(wp_unslash($_POST['notes'])) : '';
 	$plan_type      = isset($_POST['planType']) ? sanitize_text_field(wp_unslash($_POST['planType'])) : 'standard';
 	$plan_name      = isset($_POST['planName']) ? sanitize_text_field(wp_unslash($_POST['planName'])) : '';
 	$billing_cycle  = isset($_POST['billingCycle']) ? sanitize_text_field(wp_unslash($_POST['billingCycle'])) : 'monthly';
@@ -62,8 +66,8 @@ function romonet_ajax_save_maintenance_db() {
 	$dev_hours      = isset($_POST['devHours']) ? absint($_POST['devHours']) : 0;
 	$final_price    = isset($_POST['finalPrice']) ? absint($_POST['finalPrice']) : 0;
 
-	if ( empty( $customer_name ) || empty( $customer_phone ) ) {
-		wp_send_json_error( 'نام و شماره تماس الزامی است.', 400 );
+	if ( empty( $customer_name ) || empty( $customer_phone ) || empty( $site_url ) ) {
+		wp_send_json_error( 'نام، شماره تماس و آدرس سایت الزامی است.', 400 );
 	}
 
 	global $wpdb;
@@ -74,6 +78,8 @@ function romonet_ajax_save_maintenance_db() {
 		array(
 			'customer_name'  => $customer_name,
 			'customer_phone' => $customer_phone,
+			'site_url'       => $site_url,
+			'notes'          => $notes,
 			'plan_type'      => $plan_type,
 			'plan_name'      => $plan_name,
 			'billing_cycle'  => $billing_cycle,
@@ -85,7 +91,7 @@ function romonet_ajax_save_maintenance_db() {
 			'status'         => 'pending',
 			'created_at'     => current_time('mysql', 1)
 		),
-		array( '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s', '%s' )
+		array( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%s', '%s' )
 	);
 
 	if ( false === $inserted ) {

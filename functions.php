@@ -194,3 +194,31 @@ function kinetic_wp_site_design_pricing_title( $title ) {
     return $title;
 }
 add_filter( 'pre_get_document_title', 'kinetic_wp_site_design_pricing_title' );
+
+function kinetic_wp_maintenance_pricing_seo() {
+    if ( ! is_page_template( 'page-maintenance-pricing.php' ) ) {
+        return;
+    }
+
+    $title       = 'قیمت پشتیبانی سایت در سال ۱۴۰۵ | تعرفه پشتیبانی وردپرس رومونت';
+    $description = 'قیمت پشتیبانی سایت به امکانات، میزان نگهداری و سطح خدمات موردنیاز بستگی دارد. با خدمات، عوامل مؤثر بر هزینه و پلن‌های پشتیبانی وردپرس رومونت آشنا شوید.';
+    $url         = home_url( '/maintenance-pricing/' );
+
+    echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta name="robots" content="index,follow">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+}
+add_action( 'wp_head', 'kinetic_wp_maintenance_pricing_seo', 2 );
+
+function kinetic_wp_maintenance_pricing_title( $title ) {
+    if ( is_page_template( 'page-maintenance-pricing.php' ) ) {
+        return 'قیمت پشتیبانی سایت در سال ۱۴۰۵ | تعرفه پشتیبانی وردپرس رومونت';
+    }
+
+    return $title;
+}
+add_filter( 'pre_get_document_title', 'kinetic_wp_maintenance_pricing_title' );

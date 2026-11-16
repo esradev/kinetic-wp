@@ -1,52 +1,46 @@
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+        <p class="text-sm font-semibold text-amber-400">شفافیت در انتخاب</p>
+        <h2 class="mt-3 text-3xl font-bold text-white sm:text-4xl">چه عواملی بر قیمت پشتیبانی سایت تأثیر می‌گذارند؟</h2>
+    </div>
+    <div class="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <?php
+        $factors = array(
+            'حجم و پیچیدگی سایت' => 'تعداد صفحات، محصولات، کاربران و وابستگی‌های فنی روی حجم نگهداری اثر دارد.',
+            'شرکتی یا فروشگاهی بودن سایت' => 'فروشگاه‌ها معمولاً به بررسی دقیق‌تر پرداخت، سفارش و فرایندهای خرید نیاز دارند.',
+            'افزونه‌ها و سرویس‌های متصل' => 'تعداد و حساسیت افزونه‌ها، APIها و سرویس‌های بیرونی باید در محدوده کار دیده شود.',
+            'حساسیت اطلاعات و تراکنش‌ها' => 'سایت‌های دارای داده حساس یا پرداخت آنلاین به بررسی و مراقبت متناسب نیاز دارند.',
+            'تعداد درخواست‌های ماهانه' => 'حجم درخواست‌های پشتیبانی و تغییرات کوچک، سطح همکاری را مشخص می‌کند.',
+            'سطح پاسخ‌گویی موردنیاز' => 'زمان پاسخ‌گویی و روش ارتباط باید در قرارداد شفاف و متناسب با نیاز پروژه تعیین شود.',
+        );
+        foreach ( $factors as $title => $description ) :
+        ?>
+            <article>
+                <h3 class="font-bold text-white"><?php echo esc_html( $title ); ?></h3>
+                <p class="mt-2 text-sm leading-7 text-neutral-400"><?php echo esc_html( $description ); ?></p>
+            </article>
+        <?php endforeach; ?>
+    </div>
+</section>
 
-        <!-- Feature 1: Staging -->
-        <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-3 bg-white/5 backdrop-blur-md">
-            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
-                <!-- RefreshCw Icon -->
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-                    <path d="M21 3v5h-5" />
-                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-                    <path d="M8 16H3v5" />
-                </svg>
+<section class="border-y border-white/10 bg-white/[0.02]">
+    <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
+            <div>
+                <p class="text-sm font-semibold text-amber-400">انتخاب مدل همکاری</p>
+                <h2 class="mt-3 text-3xl font-bold text-white sm:text-4xl">پشتیبانی ماهانه بهتر است یا رفع مشکل موردی؟</h2>
+                <p class="mt-5 text-sm leading-8 text-neutral-400">انتخاب مناسب به اهمیت سایت، تکرار نیازهای فنی و سطح رسیدگی مورد انتظار شما بستگی دارد.</p>
             </div>
-            <h3 class="text-base font-bold text-white">تست تغییرات در استیجینگ شبیه‌ساز</h3>
-            <p class="text-xs text-neutral-400 leading-relaxed">
-                هرگونه به‌روزرسانی قالب یا افزونه ابتدا در سرور استیجینگ کلون شده و با مقایسه خودکار اسکرین‌شات‌ها بررسی می‌شود، سپس روی سایت اصلی اعمال خواهد شد.
-            </p>
-        </div>
-
-        <!-- Feature 2: 15m Response -->
-        <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-3 bg-white/5 backdrop-blur-md">
-            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
-                <!-- Clock Icon -->
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                </svg>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <article class="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                    <h3 class="text-lg font-bold text-white">پشتیبانی موردی</h3>
+                    <ul class="mt-4 space-y-3 text-sm leading-7 text-neutral-400"><li>مناسب مشکلات مشخص و محدود</li><li>پرداخت بر اساس درخواست یا پروژه</li><li>بدون برنامه نگهداری مستمر</li><li>مناسب سایت‌هایی که نیاز دائمی ندارند</li></ul>
+                </article>
+                <article class="rounded-2xl border border-amber-400/40 bg-amber-500/[0.05] p-6">
+                    <h3 class="text-lg font-bold text-white">پشتیبانی ماهانه</h3>
+                    <ul class="mt-4 space-y-3 text-sm leading-7 text-neutral-400"><li>رسیدگی مستمر به وضعیت سایت</li><li>برنامه منظم نگهداری</li><li>پیگیری بهتر مشکلات</li><li>مناسب سایت‌های مهم برای کسب‌وکار</li></ul>
+                </article>
             </div>
-            <h3 class="text-base font-bold text-white">پاسخگویی ۱۵ دقیقه‌ای تیم مهندسی</h3>
-            <p class="text-xs text-neutral-400 leading-relaxed">
-                در صورت بروز هرگونه اختلال پیش‌بینی‌نشده در پایگاه‌داده یا سرور، سیستم مانیتورینگ رومونت بلافاصله مهندس کشیک را آگاه کرده و مشکل سریعاً برطرف می‌شود.
-            </p>
         </div>
-
-        <!-- Feature 3: Malware Guarantee -->
-        <div class="glass-card p-6 rounded-2xl border border-white/10 space-y-3 bg-white/5 backdrop-blur-md">
-            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
-                <!-- Lock Icon -->
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-            </div>
-            <h3 class="text-base font-bold text-white">گارانتی پاکسازی بدافزار و ویروس</h3>
-            <p class="text-xs text-neutral-400 leading-relaxed">
-                در صورت نفوذ به لایه‌های امنیتی، کارشناسان امنیت سایبری wpstorm فایل‌ها را ایزوله و پایگاه‌داده را بدون دریافت هیچ‌گونه هزینه اضافه پاکسازی کامل می‌کنند.
-            </p>
-        </div>
-
     </div>
 </section>

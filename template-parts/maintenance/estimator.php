@@ -1,109 +1,38 @@
-
-<!-- Custom Maintenance Scope Estimator -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/15 bg-gradient-to-r from-[#0c1219] via-[#0f1722] to-[#0c1219] space-y-8 backdrop-blur-xl">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
-            <div>
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs mb-2">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="4" x2="4" y1="21" y2="14" /><line x1="4" x2="4" y1="10" y2="3" />
-                        <line x1="12" x2="12" y1="21" y2="12" /><line x1="12" x2="12" y1="8" y2="3" />
-                        <line x1="20" x2="20" y1="21" y2="16" /><line x1="20" x2="20" y1="12" y2="3" />
-                        <line x1="2" x2="6" y1="14" y2="14" /><line x1="10" x2="14" y1="8" y2="8" />
-                        <line x1="18" x2="22" y1="16" y2="16" />
-                    </svg>
-                    <span>شخصی‌سازی پکیج چند دامنه‌ای و سازمانی</span>
-                </div>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
-                    پیکربندی قرارداد پشتیبانی متناسب با تعداد سایت‌های شما
-                </h2>
-            </div>
-            <div class="text-xs text-neutral-400">
-                صدور آنی پیش‌فاکتور و عقد قرارداد رسمی شرکتی
-            </div>
+<section id="inquiry" class="scroll-mt-24">
+    <div class="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-start lg:px-8">
+        <div>
+            <p class="text-sm font-semibold text-amber-400">درخواست بررسی سایت</p>
+            <h2 class="mt-3 text-3xl font-bold leading-[1.45] text-white sm:text-4xl">برای انتخاب پلن مناسب، اطلاعات سایت را ارسال کنید</h2>
+            <p class="mt-5 text-sm leading-8 text-neutral-400">پس از بررسی اولیه، محدوده خدمات، سطح پشتیبانی و هزینه متناسب با شرایط سایت به شما پیشنهاد می‌شود.</p>
         </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Right Controls -->
-            <div class="lg:col-span-7 space-y-6">
-                <!-- Site Count Slider -->
-                <div class="space-y-2">
-                    <div class="flex justify-between text-xs">
-                        <span class="text-neutral-400">تعداد وب‌سایت‌های وردپرسی تحت پوشش:</span>
-                        <span class="text-base font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
-                            <span xyz-text="siteCount"></span> <span xyz-text="siteCount === 1 ? 'سایت' : 'سایت (ناوگان)'"></span>
-                        </span>
-                    </div>
-                    <input type="range" min="1" max="20" xyz-model.number="siteCount" class="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-emerald-400" />
+        <form xyz-on:submit.prevent="submitMaintenanceRequest()" class="rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
+            <div xyz-show="!submitSuccess" class="space-y-5">
+                <div class="grid gap-5 sm:grid-cols-2">
+                    <label class="block text-sm text-neutral-300">نام و نام خانوادگی *
+                        <input type="text" xyz-model="customerName" required autocomplete="name" class="mt-2 w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white outline-none focus:border-amber-400" placeholder="مثال: علی احمدی">
+                    </label>
+                    <label class="block text-sm text-neutral-300">شماره تماس *
+                        <input type="tel" xyz-model="customerPhone" required autocomplete="tel" inputmode="tel" dir="ltr" class="mt-2 w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-left text-sm text-white outline-none focus:border-amber-400" placeholder="09123456789">
+                    </label>
                 </div>
-
-                <!-- Toggles -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <button type="button" xyz-on:click="isEcommerce = !isEcommerce" xyz-bind:class="isEcommerce ? 'bg-emerald-500/15 border-emerald-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'" class="p-4 rounded-xl border text-right transition flex items-center justify-between">
-                        <div>
-                            <div class="text-xs font-bold text-white">فروشگاه ووکامرس فعال</div>
-                            <div class="text-[11px] text-neutral-400">پایش ۲۴ ساعته فرآیند تسویه‌حساب و پرداخت</div>
-                        </div>
-                        <svg class="w-5 h-5" xyz-bind:class="isEcommerce ? 'text-emerald-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" />
-                        </svg>
-                    </button>
-
-                    <button type="button" xyz-on:click="needs15mSla = !needs15mSla" xyz-bind:class="needs15mSla ? 'bg-emerald-500/15 border-emerald-400 text-white' : 'bg-black/30 border-white/10 text-neutral-400'" class="p-4 rounded-xl border text-right transition flex items-center justify-between">
-                        <div>
-                            <div class="text-xs font-bold text-white">پاسخگویی اضطراری ۱۵ دقیقه‌ای</div>
-                            <div class="text-[11px] text-neutral-400">تیم مهندسی آماده‌باش ۲۴/۷/۳۶۵</div>
-                        </div>
-                        <svg class="w-5 h-5" xyz-bind:class="needs15mSla ? 'text-emerald-400' : 'text-neutral-600'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" />
-                        </svg>
-                    </button>
+                <label class="block text-sm text-neutral-300">آدرس سایت *
+                    <input type="url" xyz-model="siteUrl" required dir="ltr" class="mt-2 w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-left text-sm text-white outline-none focus:border-amber-400" placeholder="https://example.com">
+                </label>
+                <div class="grid gap-5 sm:grid-cols-2">
+                    <label class="block text-sm text-neutral-300">نوع سایت *
+                        <select xyz-model="siteType" required class="mt-2 w-full rounded-xl border border-white/10 bg-[#11131c] px-4 py-3 text-sm text-white outline-none focus:border-amber-400"><option>شرکتی</option><option>فروشگاهی</option><option>شخصی</option><option>سایر</option></select>
+                    </label>
+                    <label class="block text-sm text-neutral-300">نوع درخواست *
+                        <select xyz-model="requestType" required class="mt-2 w-full rounded-xl border border-white/10 bg-[#11131c] px-4 py-3 text-sm text-white outline-none focus:border-amber-400"><option>پشتیبانی ماهانه</option><option>رفع مشکل</option><option>بررسی فنی</option><option>توسعه سایت</option></select>
+                    </label>
                 </div>
-
-                <!-- Included Dev Hours -->
-                <div class="space-y-2">
-                    <div class="flex justify-between text-xs">
-                        <span class="text-neutral-400">ساعت ماهانه اختصاصی برای توسعه و تغییرات قالب:</span>
-                        <span class="text-xs font-bold text-white bg-black/60 px-3 py-1 rounded-lg border border-white/10 ">
-                            <span xyz-text="extraDevHours"></span> ساعت در ماه
-                        </span>
-                    </div>
-                    <input type="range" min="0" max="20" step="2" xyz-model.number="extraDevHours" class="w-full h-2 bg-neutral-700 rounded-lg appearance-none cursor-pointer accent-emerald-400" />
-                </div>
+                <label class="block text-sm text-neutral-300">توضیحات تکمیلی
+                    <textarea xyz-model="notes" rows="4" class="mt-2 w-full rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm leading-7 text-white outline-none focus:border-amber-400" placeholder="مشکل یا نیاز اصلی سایت را توضیح دهید."></textarea>
+                </label>
+                <p xyz-show="submitError" xyz-text="submitError" class="text-sm leading-6 text-rose-300" style="display: none;"></p>
+                <button type="submit" xyz-bind:disabled="isSubmitting" class="inline-flex min-h-12 w-full items-center justify-center rounded-xl bg-amber-500 text-sm font-bold text-black transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-70"><span xyz-show="!isSubmitting">درخواست بررسی و استعلام قیمت</span><span xyz-show="isSubmitting" style="display: none;">در حال ارسال...</span></button>
             </div>
-
-            <!-- Left Quote Card -->
-            <div class="lg:col-span-5 bg-gradient-to-br from-[#101824] to-[#0a0f18] p-6 sm:p-8 rounded-2xl border border-emerald-500/30 space-y-6">
-                <h3 class="text-base font-bold text-white border-b border-white/10 pb-3">
-                    خلاصه پلن سفارشی شما
-                </h3>
-                <div class="space-y-3 text-xs">
-                    <div class="flex justify-between text-neutral-300">
-                        <span>تعداد سایت‌ها:</span>
-                        <span class="text-white "><span xyz-text="siteCount"></span> دامنه فعال</span>
-                    </div>
-                    <div class="flex justify-between text-neutral-300">
-                        <span>نوع معماری:</span>
-                        <span class="text-emerald-400" xyz-text="isEcommerce ? 'فروشگاهی ووکامرس پربازدید' : 'شرکتی / پرتال وردپرس'"></span>
-                    </div>
-                    <div class="flex justify-between text-neutral-300">
-                        <span>سطح پاسخگویی SLA:</span>
-                        <span class="text-emerald-400" xyz-text="needs15mSla ? '۱۵ دقیقه اضطراری (۲۴ ساعته)' : '۱ ساعت استاندارد'"></span>
-                    </div>
-                    <div class="flex justify-between text-neutral-300">
-                        <span>ساعات توسعه و تغییرات:</span>
-                        <span class="text-amber-400 "><span xyz-text="extraDevHours"></span> ساعت در ماه</span>
-                    </div>
-                    <div class="flex justify-between text-base font-bold text-white pt-3 border-t border-white/10">
-                        <span>سرمایه‌گذاری ماهانه:</span>
-                        <span class="text-emerald-400 font-bold text-xl"><span xyz-text="formatCurrency(calculateCustomMonthly())"></span>/ماه</span>
-                    </div>
-                </div>
-
-                <button type="button" xyz-on:click="orderCustomPlan()" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold text-xs transition active:scale-95 shadow-lg shadow-emerald-500/25 text-center">
-                    <span>ثبت سفارش پلن سفارشی</span>
-                </button>
-            </div>
-        </div>
+            <div xyz-show="submitSuccess" class="py-8 text-center" style="display: none;"><div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400">✓</div><h3 class="mt-5 text-xl font-bold text-white">درخواست شما ثبت شد</h3><p class="mt-3 text-sm leading-7 text-neutral-300" xyz-text="successMessage"></p></div>
+        </form>
     </div>
 </section>

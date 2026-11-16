@@ -24,8 +24,10 @@ class Romonet_Maintenance_List_Table extends WP_List_Table {
 			'id'             => 'شناسه',
 			'customer_name'  => 'نام مشتری',
 			'customer_phone' => 'شماره تماس',
+			'site_url'       => 'آدرس سایت',
 			'plan_name'      => 'نام پلن / نوع',
 			'details'        => 'جزئیات پلن سفارشی',
+			'notes'          => 'توضیحات',
 			'billing_cycle'  => 'دوره پرداخت',
 			'final_price'    => 'مبلغ ماهیانه (تومان)',
 			'status'         => 'وضعیت',
@@ -47,6 +49,12 @@ class Romonet_Maintenance_List_Table extends WP_List_Table {
 			case 'customer_name':
 			case 'customer_phone':
 				return esc_html( $item[ $column_name ] );
+
+			case 'site_url':
+				return $item['site_url'] ? '<a href="' . esc_url( $item['site_url'] ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $item['site_url'] ) . '</a>' : '-';
+
+			case 'notes':
+				return $item['notes'] ? esc_html( $item['notes'] ) : '-';
 				
 			case 'plan_name':
 			    $type = $item['plan_type'] === 'custom' ? '<br><span style="color:#777; font-size:11px;">(پلن سفارشی)</span>' : '<br><span style="color:#777; font-size:11px;">(پکیج آماده)</span>';
