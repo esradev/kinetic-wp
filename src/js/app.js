@@ -7,6 +7,7 @@ import { romonetMaintenancePricing } from "./maintenance-pricing-component.js";
 import { romonetContact } from "./contact-component.js";
 import { romonetShop } from "./shop-component.js";
 import { romonetCheckout } from "./checkout-component.js";
+import { romonetWooCommerceDevelopment } from "./woocommerce-development-component.js";
 
 Alpine.prefix("xyz-");
 
@@ -20,6 +21,7 @@ Alpine.data("romonetMaintenancePricing", romonetMaintenancePricing);
 Alpine.data("romonetContact", romonetContact);
 Alpine.data("romonetShop", romonetShop);
 Alpine.data("romonetCheckout", romonetCheckout);
+Alpine.data("romonetWooCommerceDevelopment", romonetWooCommerceDevelopment);
 
 // استارت آلپاین
 Alpine.start();
