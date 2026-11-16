@@ -152,6 +152,9 @@ function romonet_booking_ajax_save_db() {
 	if ( empty( $customer_name ) || empty( $customer_phone ) ) {
 		wp_send_json_error( 'نام و شماره تماس الزامی است.', 400 );
 	}
+	if ( ! preg_match( '/^(?:\+98|0098|98|0)?9[0-9]{9}$/', preg_replace( '/[\s-]/', '', $customer_phone ) ) ) {
+		wp_send_json_error( 'شماره تماس معتبر نیست.', 400 );
+	}
     if ( empty( $project_type ) ) {
 		wp_send_json_error( 'نوع پروژه مشخص نشده است.', 400 );
 	}

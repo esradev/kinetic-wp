@@ -4,6 +4,7 @@ import { romonetFooter, romonetToast } from "./footer-component.js";
 import { romonetFrontPage } from "./front-page-component.js";
 import { romonetDesignPricing } from "./design-pricing-component.js";
 import { romonetMaintenancePricing } from "./maintenance-pricing-component.js";
+import { romonetContact } from "./contact-component.js";
 import { romonetShop } from "./shop-component.js";
 import { romonetCheckout } from "./checkout-component.js";
 
@@ -16,6 +17,7 @@ Alpine.data("romonetToast", romonetToast);
 Alpine.data("romonetFrontPage", romonetFrontPage);
 Alpine.data("romonetDesignPricing", romonetDesignPricing);
 Alpine.data("romonetMaintenancePricing", romonetMaintenancePricing);
+Alpine.data("romonetContact", romonetContact);
 Alpine.data("romonetShop", romonetShop);
 Alpine.data("romonetCheckout", romonetCheckout);
 

@@ -252,3 +252,51 @@ function kinetic_wp_sms_pricing_title( $title ) {
     return $title;
 }
 add_filter( 'pre_get_document_title', 'kinetic_wp_sms_pricing_title' );
+
+function kinetic_wp_about_seo() {
+    if ( ! is_page_template( 'page-about.php' ) ) {
+        return;
+    }
+
+    $title       = 'درباره رومونت | شرکت طراحی سایت و توسعه وردپرس';
+    $description = 'با رومونت آشنا شوید؛ ارائه‌دهنده خدمات طراحی سایت، توسعه وردپرس، فروشگاه اینترنتی، برنامه‌نویسی اختصاصی و پشتیبانی وب‌سایت.';
+    $url         = home_url( '/about-us/' );
+
+    echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta name="robots" content="index,follow">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+}
+add_action( 'wp_head', 'kinetic_wp_about_seo', 2 );
+
+function kinetic_wp_about_title( $title ) {
+    return is_page_template( 'page-about.php' ) ? 'درباره رومونت | شرکت طراحی سایت و توسعه وردپرس' : $title;
+}
+add_filter( 'pre_get_document_title', 'kinetic_wp_about_title' );
+
+function kinetic_wp_contact_seo() {
+    if ( ! is_page_template( 'page-contact.php' ) ) {
+        return;
+    }
+
+    $title       = 'ارتباط با رومونت | تماس و درخواست مشاوره طراحی سایت';
+    $description = 'برای دریافت مشاوره طراحی سایت، پشتیبانی وردپرس، توسعه فروشگاه اینترنتی و خدمات برنامه‌نویسی با رومونت در ارتباط باشید.';
+    $url         = home_url( '/contact-us/' );
+
+    echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta name="robots" content="index,follow">' . "\n";
+    echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+    echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+    echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+    echo '<meta property="og:type" content="website">' . "\n";
+}
+add_action( 'wp_head', 'kinetic_wp_contact_seo', 2 );
+
+function kinetic_wp_contact_title( $title ) {
+    return is_page_template( 'page-contact.php' ) ? 'ارتباط با رومونت | تماس و درخواست مشاوره طراحی سایت' : $title;
+}
+add_filter( 'pre_get_document_title', 'kinetic_wp_contact_title' );

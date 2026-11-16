@@ -13,9 +13,9 @@ function romonet_global_navigation() {
 		'products'     => home_url( '/shop/' ),
 		'portfolio'    => home_url( '/#projects' ),
 		'articles'     => home_url( '/blog/' ),
-		'about'        => home_url( '/' ),
-		'contact'      => home_url( '/#contact' ),
-		'consultation' => home_url( '/#contact' ),
+		'about'        => home_url( '/about-us/' ),
+		'contact'      => home_url( '/contact-us/' ),
+		'consultation' => home_url( '/contact-us/' ),
 		'service_items' => array(
 			array( 'label' => 'طراحی سایت', 'url' => home_url( '/site-design-pricing/' ) ),
 			array( 'label' => 'پشتیبانی وردپرس', 'url' => home_url( '/maintenance-pricing/' ) ),
