@@ -676,6 +676,72 @@
   display: none;
 }
 
+/* Checkout Coupon */
+.checkout_coupon {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin: 0 0 1.25rem;
+  padding: 1rem;
+  border: 1px solid var(--border-subtle);
+  border-radius: 1rem;
+  background: var(--bg-card);
+}
+
+.checkout_coupon .form-row {
+  width: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.checkout_coupon .input-text {
+  min-height: 2.875rem;
+  background: var(--bg-main) !important;
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary);
+}
+
+.checkout_coupon .button {
+  min-height: 2.875rem;
+  padding: 0.65rem 1.1rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #fbbf24, var(--accent-gold));
+  color: #09090b;
+  font-size: 0.875rem;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+
+.checkout_coupon .button:hover {
+  background: linear-gradient(135deg, #fcd34d, #f59e0b);
+  box-shadow: 0 0.5rem 1.25rem rgba(245, 158, 11, 0.2);
+  transform: translateY(-1px);
+}
+
+.checkout_coupon .button:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+.showcoupon {
+  color: var(--accent-gold);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.showcoupon:hover {
+  color: #fbbf24;
+}
+
 /* Order Review Table */
 .woocommerce-checkout .shop_table {
   width: 100%;
@@ -846,6 +912,10 @@
   .woocommerce-checkout .form-row-last {
     float: none;
     width: 100%;
+  }
+
+  .checkout_coupon {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1047,6 +1117,14 @@
   background-color: var(--bg-main) !important;
   border-color: var(--border-subtle);
   color: var(--text-primary);
+}
+
+.woocommerce-checkout-page input.input-text,
+.woocommerce-checkout-page select,
+.woocommerce-checkout-page textarea,
+.woocommerce-checkout-page .select2-container .select2-selection__rendered {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary);
 }
 
 .woocommerce-cart-page input.qty {
