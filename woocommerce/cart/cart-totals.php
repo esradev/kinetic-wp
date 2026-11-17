@@ -8,12 +8,186 @@
 
 defined( 'ABSPATH' ) || exit;
 ?>
+
+<style>
+	.romonet-cart-totals table.shop_table {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0;
+		margin: 0;
+		border: 0;
+		background: transparent;
+	}
+	.romonet-cart-totals table.shop_table tr th,
+	.romonet-cart-totals table.shop_table tr td {
+		padding: 0.75rem 0;
+		border: 0;
+		border-bottom: 1px solid rgba(163, 163, 163, 0.22);
+		background: transparent !important;
+		vertical-align: middle;
+	}
+	.dark .romonet-cart-totals table.shop_table tr th,
+	.dark .romonet-cart-totals table.shop_table tr td {
+		border-bottom-color: rgba(255, 255, 255, 0.1);
+	}
+	.romonet-cart-totals table.shop_table tr th {
+		text-align: right;
+		font-size: 0.8125rem;
+		font-weight: 500;
+		color: #737373;
+		width: 44%;
+	}
+	.dark .romonet-cart-totals table.shop_table tr th {
+		color: #a3a3a3;
+	}
+	.romonet-cart-totals table.shop_table tr td {
+		text-align: left;
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: #171717;
+		font-variant-numeric: tabular-nums;
+	}
+	.dark .romonet-cart-totals table.shop_table tr td {
+		color: #fafafa;
+	}
+	.romonet-cart-totals table.shop_table tr.cart-discount th,
+	.romonet-cart-totals table.shop_table tr.cart-discount td {
+		color: #b45309;
+	}
+	.dark .romonet-cart-totals table.shop_table tr.cart-discount th,
+	.dark .romonet-cart-totals table.shop_table tr.cart-discount td {
+		color: #fbbf24;
+	}
+	.romonet-cart-totals table.shop_table tr.cart-discount .woocommerce-remove-coupon {
+		display: inline-block;
+		margin-right: 0.375rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: #e11d48;
+		text-decoration: underline;
+	}
+	.dark .romonet-cart-totals table.shop_table tr.cart-discount .woocommerce-remove-coupon {
+		color: #fb7185;
+	}
+	.romonet-cart-totals table.shop_table tr.shipping td {
+		text-align: right;
+		font-weight: 500;
+	}
+	.romonet-cart-totals table.shop_table ul#shipping_method {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.romonet-cart-totals table.shop_table ul#shipping_method li {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.8125rem;
+	}
+	.romonet-cart-totals table.shop_table ul#shipping_method input[type="radio"] {
+		accent-color: #f59e0b;
+	}
+	.romonet-cart-totals table.shop_table tr.order-total th,
+	.romonet-cart-totals table.shop_table tr.order-total td {
+		border-bottom: 0;
+		padding-top: 1.125rem;
+		padding-bottom: 0.25rem;
+	}
+	.romonet-cart-totals table.shop_table tr.order-total th {
+		font-size: 0.9375rem;
+		font-weight: 800;
+		color: #171717;
+	}
+	.dark .romonet-cart-totals table.shop_table tr.order-total th {
+		color: #ffffff;
+	}
+	.romonet-cart-totals table.shop_table tr.order-total td {
+		font-size: 1.125rem;
+		font-weight: 900;
+		color: #b45309;
+	}
+	.dark .romonet-cart-totals table.shop_table tr.order-total td {
+		color: #fbbf24;
+	}
+	.romonet-cart-totals .wc-proceed-to-checkout {
+		margin-top: 1.25rem;
+		padding: 0;
+	}
+	.romonet-cart-totals .wc-proceed-to-checkout a.checkout-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		min-height: 3rem;
+		padding: 0.875rem 1.25rem;
+		border-radius: 0.75rem;
+		background-color: #f59e0b;
+		color: #09090b !important;
+		font-size: 0.875rem;
+		font-weight: 800;
+		text-align: center;
+		text-decoration: none;
+		border: 1px solid transparent;
+		transition: background-color 0.2s ease, transform 0.15s ease;
+	}
+	.romonet-cart-totals .wc-proceed-to-checkout a.checkout-button:hover {
+		background-color: #fbbf24;
+	}
+	.romonet-cart-totals .wc-proceed-to-checkout a.checkout-button:focus-visible {
+		outline: 2px solid #f59e0b;
+		outline-offset: 2px;
+	}
+	@media (max-width: 768px) {
+		.romonet-cart-totals table.shop_table_responsive tr {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+			border-bottom: 1px solid rgba(163, 163, 163, 0.22);
+		}
+		.dark .romonet-cart-totals table.shop_table_responsive tr {
+			border-bottom-color: rgba(255, 255, 255, 0.1);
+		}
+		.romonet-cart-totals table.shop_table_responsive tr.shipping {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0.375rem;
+			padding: 0.75rem 0;
+		}
+		.romonet-cart-totals table.shop_table_responsive tr.shipping th,
+		.romonet-cart-totals table.shop_table_responsive tr.shipping td {
+			padding: 0;
+			width: 100%;
+		}
+		.romonet-cart-totals table.shop_table_responsive tr.order-total {
+			border-bottom: 0;
+		}
+		.romonet-cart-totals table.shop_table_responsive tr th,
+		.romonet-cart-totals table.shop_table_responsive tr td {
+			display: block;
+			width: auto;
+			border-bottom: 0;
+		}
+		.romonet-cart-totals table.shop_table_responsive tr td::before {
+			content: none !important;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.romonet-cart-totals .wc-proceed-to-checkout a.checkout-button {
+			transition: none;
+		}
+	}
+</style>
+
 <div class="cart-collaterals">
 	<?php do_action( 'woocommerce_before_cart_collaterals' ); ?>
-	<div class="cart_totals woocommerce-cart-totals">
+	<div class="cart_totals woocommerce-cart-totals romonet-cart-totals">
 		<?php do_action( 'woocommerce_before_cart_totals' ); ?>
 
-		<h2 class="text-base font-black text-slate-900 dark:text-white mb-4"><?php esc_html_e( 'Cart totals', 'woocommerce' ); ?></h2>
+		<h3 class="sr-only"><?php esc_html_e( 'Cart totals', 'woocommerce' ); ?></h3>
 
 		<table cellspacing="0" class="shop_table shop_table_responsive">
 			<tr class="cart-subtotal">
