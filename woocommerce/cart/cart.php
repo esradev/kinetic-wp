@@ -120,7 +120,7 @@ do_action( 'woocommerce_before_cart' );
 		<div class="lg:col-span-8 romonet-cart-ledger romonet-cart-transition transition-opacity">
 			<div class="rounded-2xl bg-white dark:bg-neutral-900/75 border border-stone-200 dark:border-white/10 overflow-hidden shadow-sm">
 				<!-- Ledger Header Bar -->
-				<div class="px-5 sm:px-6 py-3.5 bg-stone-50/90 dark:bg-neutral-950/60 border-b border-stone-200 dark:border-white/10 flex items-center justify-between text-xs font-bold text-neutral-600 dark:text-neutral-300">
+				<div class="cart-box-heading px-5 sm:px-6 py-3.5 bg-stone-50/90 dark:bg-neutral-950/60 border-b border-stone-200 dark:border-white/10 flex items-center justify-between text-xs font-bold text-neutral-600 dark:text-neutral-300">
 					<span>اقلام سفارش</span>
 					<span class="hidden sm:inline">تعداد و جمع ردیف</span>
 				</div>
@@ -248,7 +248,7 @@ do_action( 'woocommerce_before_cart' );
 
 			<!-- Invoice Summary Card -->
 			<div class="woocommerce-cart-summary rounded-2xl bg-white dark:bg-neutral-900/80 border border-stone-200 dark:border-white/10 border-t-2 border-t-amber-500 shadow-sm overflow-hidden">
-				<div class="px-6 py-4 bg-stone-50/80 dark:bg-neutral-950/60 border-b border-stone-200 dark:border-white/10 flex items-center justify-between">
+				<div class="cart-box-heading px-6 py-4 bg-stone-50/80 dark:bg-neutral-950/60 border-b border-stone-200 dark:border-white/10 flex items-center justify-between">
 					<h2 class="font-black text-sm text-neutral-900 dark:text-white flex items-center gap-2">
 						<svg class="w-4 h-4 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 							<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/>

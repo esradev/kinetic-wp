@@ -280,6 +280,18 @@
   font-family: "Vazirmatn", sans-serif;
 }
 
+.single-post-content .rm-article-prose,
+.single-post-content .rm-article-prose * {
+  font-family: "Vazirmatn", sans-serif;
+}
+
+.single-post-content .rm-article-prose pre,
+.single-post-content .rm-article-prose pre code,
+.single-post-content .rm-article-prose code {
+  direction: ltr;
+  text-align: left;
+}
+
 .single-post-content .prose :where(h1, h2, h3, h4, h5, h6, strong, th) {
   color: var(--text-primary);
 }
@@ -347,6 +359,63 @@
 
 .light .single-post-content .comments-area .text-white,
 .light .single-post-content .comments-area .comment-form {
+  color: var(--text-primary) !important;
+}
+
+.light .single-post-content .rm-article-surface {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.light .single-post-content .rm-comments-area {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+  color: var(--text-primary) !important;
+}
+
+.light .single-post-content .rm-comments-area .comment-body {
+  background-color: rgba(15, 23, 42, 0.035) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.light .single-post-content .rm-comments-area .comment-author {
+  color: var(--text-primary) !important;
+}
+
+.light .single-post-content .rm-comments-area .comment-content {
+  color: var(--text-secondary) !important;
+}
+
+.light .single-post-content .rm-comments-area .comment-metadata,
+.light .single-post-content .rm-comments-area .comment-form-cookies-consent,
+.light .single-post-content .rm-comments-area .logged-in-as {
+  color: var(--text-muted) !important;
+}
+
+.light .single-post-content .rm-comments-area .comment-reply-link {
+  background-color: rgba(15, 23, 42, 0.035) !important;
+  border-color: var(--border-subtle) !important;
+  color: #b45309 !important;
+}
+
+.light .single-post-content .rm-author-engagement,
+.light .single-post-content .rm-architectural-cta {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-subtle) !important;
+}
+
+.light .single-post-content .rm-author-engagement .text-neutral-400,
+.light .single-post-content .rm-architectural-cta .text-neutral-300 {
+  color: var(--text-secondary) !important;
+}
+
+.light .single-post-content .rm-author-engagement .bg-white\/\[0\.03\],
+.light .single-post-content .rm-author-engagement .bg-white\/\[0\.02\] {
+  background-color: rgba(15, 23, 42, 0.035) !important;
+}
+
+.light .single-post-content .rm-architectural-cta h3 {
   color: var(--text-primary) !important;
 }
 
@@ -1165,6 +1234,16 @@
 .light .woocommerce-checkout-page .text-slate-100,
 .light .woocommerce-checkout-page .text-slate-300 {
   color: #334155 !important;
+}
+
+.light .woocommerce-cart-page .cart-box-heading {
+  background-color: rgba(248, 250, 252, 0.96) !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+  color: #334155 !important;
+}
+
+.light .woocommerce-cart-page .cart-box-heading h2 {
+  color: #0f172a !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

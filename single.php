@@ -15,6 +15,9 @@ while ( have_posts() ) :
 	$author_name   = get_the_author();
 	$author_role   = get_the_author_meta( 'description' ) ?: 'معمار ارشد سیستم‌های ابری و وردپرس';
 	$author_avatar = get_avatar_url( $author_id );
+	$blog_page_id  = (int) get_option( 'page_for_posts' );
+	$blog_url      = $blog_page_id > 0 ? get_permalink( $blog_page_id ) : '';
+	$blog_url      = $blog_url ?: home_url( '/blog/' );
 
 	// Reading time calculation
 	$word_count = str_word_count( wp_strip_all_tags( get_the_content() ) );
@@ -76,7 +79,7 @@ while ( have_posts() ) :
 			<!-- Top Navigation & Utility Bar -->
 			<nav aria-label="ناوبری مقاله" class="flex items-center justify-between gap-4 border-b border-white/10 pb-5">
 				<a
-					href="<?php echo esc_url( get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/blog' ) ); ?>"
+					href="<?php echo esc_url( $blog_url ); ?>"
 					class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-medium text-neutral-300 transition hover:border-amber-400/40 hover:text-white"
 				>
 					<svg class="h-4 w-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -92,12 +95,13 @@ while ( have_posts() ) :
 					class="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-medium text-neutral-300 transition hover:border-amber-400/40 hover:text-white"
 					title="اشتراک‌گذاری مقاله"
 				>
-					<template xyz-if="copied">
+					<span xyz-show="copied" class="inline-flex items-center gap-2">
 						<svg class="h-3.5 w-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
 							<polyline points="20 6 9 17 4 12" />
 						</svg>
-					</template>
-					<template xyz-if="!copied">
+						<span>کپی شد</span>
+					</span>
+					<span xyz-show="!copied" class="inline-flex items-center gap-2">
 						<svg class="h-3.5 w-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
 							<circle cx="18" cy="5" r="3" />
 							<circle cx="6" cy="12" r="3" />
@@ -105,8 +109,8 @@ while ( have_posts() ) :
 							<line x1="8.59" x2="15.42" y1="13.51" y2="17.49" />
 							<line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
 						</svg>
-					</template>
-					<span xyz-text="copied ? 'کپی شد' : 'اشتراک‌گذاری'"></span>
+						<span>اشتراک‌گذاری</span>
+					</span>
 				</button>
 			</nav>
 
@@ -134,7 +138,7 @@ while ( have_posts() ) :
 				</h1>
 
 				<!-- Author & Engagement Bar -->
-				<div class="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-neutral-900/70 p-4 sm:px-5">
+				<div class="rm-author-engagement flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-neutral-900/70 p-4 sm:px-5">
 					<div class="flex items-center gap-3.5">
 						<img
 							src="<?php echo esc_url( $author_avatar ); ?>"
@@ -189,7 +193,7 @@ while ( have_posts() ) :
 			<?php endif; ?>
 
 			<!-- Article Body Surface -->
-			<div class="space-y-8 rounded-3xl border border-white/10 bg-neutral-900/60 p-6 text-sm leading-8 text-neutral-200 sm:p-10 sm:text-base">
+			<div class="rm-article-surface space-y-8 rounded-3xl border border-white/10 bg-neutral-900/60 p-6 text-sm leading-8 text-neutral-200 sm:p-10 sm:text-base">
 
 				<?php if ( has_excerpt() ) : ?>
 					<div class="rounded-xl border-r-4 border-amber-400 bg-amber-500/[0.05] px-5 py-4 text-base font-medium leading-8 text-amber-100/95 sm:text-lg">
@@ -227,7 +231,7 @@ while ( have_posts() ) :
 			<?php comments_template(); ?>
 
 			<!-- Architectural CTA Box -->
-			<section class="relative overflow-hidden rounded-3xl border border-amber-400/30 bg-neutral-900/75 p-7 sm:p-9">
+			<section class="rm-architectural-cta relative overflow-hidden rounded-3xl border border-amber-400/30 bg-neutral-900/75 p-7 sm:p-9">
 				<div class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_50%,rgba(245,158,11,0.12),transparent_60%)]" aria-hidden="true"></div>
 				<div class="relative flex flex-col items-center justify-between gap-6 sm:flex-row">
 					<div class="space-y-2 text-center sm:text-right">
@@ -333,15 +337,34 @@ while ( have_posts() ) :
 					}
 				},
 
-				handleShare() {
-					if (navigator.clipboard) {
-						navigator.clipboard.writeText(window.location.href).then(() => {
-							this.copied = true;
-							window.dispatchEvent(new CustomEvent('show-toast', {
-								detail: 'لینک مقاله در حافظه کپی شد!'
-							}));
-							setTimeout(() => this.copied = false, 2000);
-						});
+				async handleShare() {
+					try {
+						if (navigator.clipboard?.writeText) {
+							await navigator.clipboard.writeText(window.location.href);
+						} else {
+							const textArea = document.createElement('textarea');
+							textArea.value = window.location.href;
+							textArea.setAttribute('readonly', '');
+							textArea.style.position = 'fixed';
+							textArea.style.opacity = '0';
+							document.body.appendChild(textArea);
+							textArea.select();
+							const copied = document.execCommand('copy');
+							textArea.remove();
+							if (!copied) {
+								throw new Error('Copy command failed');
+							}
+						}
+
+						this.copied = true;
+						window.dispatchEvent(new CustomEvent('show-toast', {
+							detail: 'لینک مقاله در حافظه کپی شد!'
+						}));
+						setTimeout(() => this.copied = false, 2000);
+					} catch {
+						window.dispatchEvent(new CustomEvent('show-toast', {
+							detail: 'کپی کردن لینک مقاله انجام نشد.'
+						}));
 					}
 				}
 			};
