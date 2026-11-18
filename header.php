@@ -116,6 +116,10 @@ $cart_json = wp_json_encode( $wc_cart_items );
 			color: var(--accent-gold, #fbbf24);
 			background-color: var(--rm-control-bg);
 		}
+		.rm-nav-link.is-active {
+			color: var(--accent-gold, #fbbf24);
+			background-color: var(--rm-control-bg);
+		}
 		.rm-header-control {
 			background-color: var(--rm-control-bg);
 			border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));

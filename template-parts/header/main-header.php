@@ -1,5 +1,6 @@
 <?php
 $navigation = romonet_global_navigation();
+$courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-courses' ) || is_tax( array( 'ld_course_category', 'ld_course_tag' ) );
 ?>
 <header class="rm-site-header sticky top-0 z-30 w-full">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -46,6 +47,7 @@ $navigation = romonet_global_navigation();
 				<a href="<?php echo esc_url( $navigation['products'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">محصولات</a>
 				<a href="<?php echo esc_url( $navigation['portfolio'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">نمونه‌کارها</a>
 				<a href="<?php echo esc_url( $navigation['articles'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">مقالات</a>
+				<a href="<?php echo esc_url( $navigation['courses'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm<?php echo $courses_active ? ' is-active' : ''; ?>"<?php echo $courses_active ? ' aria-current="page"' : ''; ?>>دوره‌های آموزشی</a>
 				<a href="<?php echo esc_url( $navigation['about'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">درباره ما</a>
 				<a href="<?php echo esc_url( $navigation['contact'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">تماس با ما</a>
 			</nav>

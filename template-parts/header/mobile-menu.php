@@ -1,4 +1,7 @@
-<?php $navigation = romonet_global_navigation(); ?>
+<?php
+$navigation = romonet_global_navigation();
+$courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-courses' ) || is_tax( array( 'ld_course_category', 'ld_course_tag' ) );
+?>
 <div id="mobile-navigation" xyz-show="isMobileMenuOpen" class="rm-mobile-drawer max-h-[80vh] overflow-y-auto px-4 py-4 xl:hidden" style="display: none;">
 	<nav class="grid gap-1" aria-label="ناوبری موبایل">
 		<a href="<?php echo esc_url( $navigation['home'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">صفحه اصلی</a>
@@ -30,6 +33,7 @@
 		<a href="<?php echo esc_url( $navigation['products'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">محصولات</a>
 		<a href="<?php echo esc_url( $navigation['portfolio'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">نمونه‌کارها</a>
 		<a href="<?php echo esc_url( $navigation['articles'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">مقالات</a>
+		<a href="<?php echo esc_url( $navigation['courses'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm<?php echo $courses_active ? ' is-active' : ''; ?>"<?php echo $courses_active ? ' aria-current="page"' : ''; ?> style="color: var(--text-primary, #e5e5e5);">دوره‌های آموزشی</a>
 		<a href="<?php echo esc_url( $navigation['about'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">درباره ما</a>
 		<a href="<?php echo esc_url( $navigation['contact'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">تماس با ما</a>
 	</nav>

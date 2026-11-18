@@ -6,6 +6,8 @@
 defined( 'ABSPATH' ) || exit;
 
 function romonet_global_navigation() {
+	$courses_url = function_exists( 'get_post_type_archive_link' ) ? get_post_type_archive_link( 'sfwd-courses' ) : '';
+
 	return array(
 		'home'         => home_url( '/' ),
 		'services'     => home_url( '/#services' ),
@@ -13,6 +15,7 @@ function romonet_global_navigation() {
 		'products'     => home_url( '/shop/' ),
 		'portfolio'    => home_url( '/#projects' ),
 		'articles'     => home_url( '/blog/' ),
+		'courses'      => $courses_url ?: home_url( '/courses/' ),
 		'about'        => home_url( '/about-us/' ),
 		'contact'      => home_url( '/contact-us/' ),
 		'consultation' => home_url( '/contact-us/' ),
