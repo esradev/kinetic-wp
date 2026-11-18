@@ -10,7 +10,7 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 				array(
 					'theme_location' => 'primary',
 					'container'      => false,
-					'menu_class'     => 'grid gap-1',
+					'menu_class'     => 'rm-mobile-menu grid gap-1',
 					'link_before'    => '<span class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">',
 					'link_after'     => '</span>',
 					'fallback_cb'    => false,
