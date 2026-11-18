@@ -14,6 +14,20 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 			</a>
 
 			<nav class="hidden items-center gap-1 xl:flex" aria-label="ناوبری اصلی">
+				<?php if ( has_nav_menu( 'primary' ) ) : ?>
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'primary',
+							'container'      => false,
+							'menu_class'     => 'flex items-center gap-1',
+							'link_before'    => '<span class="rm-nav-link rounded-xl px-3 py-2 text-sm">',
+							'link_after'     => '</span>',
+							'fallback_cb'    => false,
+						)
+					);
+					?>
+				<?php else : ?>
 				<a href="<?php echo esc_url( $navigation['home'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">صفحه اصلی</a>
 
 				<div class="relative" xyz-on:mouseenter="openDropdown('services')" xyz-on:mouseleave="closeDropdown('services')">
@@ -50,6 +64,7 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 				<a href="<?php echo esc_url( $navigation['courses'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm<?php echo $courses_active ? ' is-active' : ''; ?>"<?php echo $courses_active ? ' aria-current="page"' : ''; ?>>دوره‌های آموزشی</a>
 				<a href="<?php echo esc_url( $navigation['about'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">درباره ما</a>
 				<a href="<?php echo esc_url( $navigation['contact'] ); ?>" class="rm-nav-link rounded-xl px-3 py-2 text-sm">تماس با ما</a>
+				<?php endif; ?>
 			</nav>
 
 			<div class="flex items-center gap-2 sm:gap-3">

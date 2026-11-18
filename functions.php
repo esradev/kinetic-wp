@@ -38,6 +38,11 @@ add_filter('script_loader_tag', function($tag, $handle, $src) {
 function kinetic_wp_add_support() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+    register_nav_menus(
+        array(
+            'primary' => 'Primary Menu',
+        )
+    );
 
    // افزودن پشتیبانی از ووکامرس
     add_theme_support( 'woocommerce', array(

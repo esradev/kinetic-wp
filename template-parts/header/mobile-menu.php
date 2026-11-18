@@ -4,6 +4,20 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 ?>
 <div id="mobile-navigation" xyz-show="isMobileMenuOpen" class="rm-mobile-drawer max-h-[80vh] overflow-y-auto px-4 py-4 xl:hidden" style="display: none;">
 	<nav class="grid gap-1" aria-label="ناوبری موبایل">
+		<?php if ( has_nav_menu( 'primary' ) ) : ?>
+			<?php
+			wp_nav_menu(
+				array(
+					'theme_location' => 'primary',
+					'container'      => false,
+					'menu_class'     => 'grid gap-1',
+					'link_before'    => '<span class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">',
+					'link_after'     => '</span>',
+					'fallback_cb'    => false,
+				)
+			);
+			?>
+		<?php else : ?>
 		<a href="<?php echo esc_url( $navigation['home'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">صفحه اصلی</a>
 
 		<div class="border-t pt-1" style="border-color: var(--border-subtle, rgba(255, 255, 255, 0.1));">
@@ -36,6 +50,7 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 		<a href="<?php echo esc_url( $navigation['courses'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm<?php echo $courses_active ? ' is-active' : ''; ?>"<?php echo $courses_active ? ' aria-current="page"' : ''; ?> style="color: var(--text-primary, #e5e5e5);">دوره‌های آموزشی</a>
 		<a href="<?php echo esc_url( $navigation['about'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">درباره ما</a>
 		<a href="<?php echo esc_url( $navigation['contact'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">تماس با ما</a>
+		<?php endif; ?>
 	</nav>
 
 	<div class="mt-4 flex items-center gap-2 border-t pt-4" style="border-color: var(--border-subtle, rgba(255, 255, 255, 0.1));">
