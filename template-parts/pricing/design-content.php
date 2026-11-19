@@ -193,7 +193,7 @@
 			</a>
 		</div>
 
-		<div class="lg:col-span-7">
+		<div class="min-w-0 lg:col-span-7">
 			<div class="rm-card overflow-hidden rounded-2xl">
 				<div class="overflow-x-auto">
 					<table class="w-full min-w-[580px] text-right text-sm">

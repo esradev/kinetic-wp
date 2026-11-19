@@ -161,7 +161,7 @@ get_header();
 			scroll-behavior: auto !important;
 		}
 	}
-</style>
+</style> 
 
 <main class="rm-pricing-page min-h-screen pb-20 antialiased" dir="rtl" xyz-data="romonetDesignPricing()">
 
