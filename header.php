@@ -148,7 +148,7 @@ $cart_json = wp_json_encode( $wc_cart_items );
 		}
 		.rm-mobile-drawer {
 			background-color: var(--rm-mobile-bg);
-			border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+			border-left: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
 		}
 		.rm-site-footer {
 			background-color: var(--rm-footer-bg);
@@ -183,4 +183,5 @@ $cart_json = wp_json_encode( $wc_cart_items );
 	<?php wp_body_open(); ?>
 
 	<?php get_template_part( 'template-parts/header/main', 'header' ); ?>
+	<?php get_template_part( 'template-parts/header/mobile', 'menu' ); ?>
 	<?php get_template_part( 'template-parts/header/cart', 'drawer' ); ?>

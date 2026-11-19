@@ -83,5 +83,4 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 			</div>
 		</div>
 	</div>
-	<?php get_template_part( 'template-parts/header/mobile', 'menu' ); ?>
 </header>

@@ -2,8 +2,21 @@
 $navigation = romonet_global_navigation();
 $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-courses' ) || is_tax( array( 'ld_course_category', 'ld_course_tag' ) );
 ?>
-<div id="mobile-navigation" xyz-show="isMobileMenuOpen" class="rm-mobile-drawer max-h-[80vh] overflow-y-auto px-4 py-4 xl:hidden" style="display: none;">
-	<nav class="grid gap-1" aria-label="ناوبری موبایل">
+<div id="mobile-navigation" xyz-show="isMobileMenuOpen" class="fixed inset-0 z-40 xl:hidden" style="display: none;">
+	<div class="absolute inset-0 bg-black/75 backdrop-blur-sm" xyz-on:click="closeMobileMenu()" aria-hidden="true"></div>
+	<div class="rm-mobile-drawer fixed inset-y-0 right-0 flex w-[80vw] flex-col overflow-y-auto px-4 py-4 shadow-2xl"
+		xyz-transition:enter="transition ease-out duration-300"
+		xyz-transition:enter-start="translate-x-full"
+		xyz-transition:enter-end="translate-x-0"
+		xyz-transition:leave="transition ease-in duration-200"
+		xyz-transition:leave-start="translate-x-0"
+		xyz-transition:leave-end="translate-x-full">
+		<div class="mb-4 flex justify-start">
+			<button type="button" xyz-on:click="closeMobileMenu()" class="rm-header-control flex h-10 w-10 items-center justify-center rounded-xl" aria-label="بستن منو">
+				<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+			</button>
+		</div>
+		<nav class="grid gap-1" aria-label="ناوبری موبایل">
 		<?php if ( has_nav_menu( 'primary' ) ) : ?>
 			<?php
 			wp_nav_menu(
@@ -51,12 +64,13 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 		<a href="<?php echo esc_url( $navigation['about'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">درباره ما</a>
 		<a href="<?php echo esc_url( $navigation['contact'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-nav-link rounded-xl px-3 py-3 text-sm" style="color: var(--text-primary, #e5e5e5);">تماس با ما</a>
 		<?php endif; ?>
-	</nav>
+		</nav>
 
-	<div class="mt-4 flex items-center gap-2 border-t pt-4" style="border-color: var(--border-subtle, rgba(255, 255, 255, 0.1));">
-		<button type="button" xyz-on:click="toggleTheme()" class="rm-header-control flex h-12 w-12 shrink-0 items-center justify-center rounded-xl" aria-label="تغییر پوسته">
-			<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-		</button>
-		<a href="<?php echo esc_url( $navigation['consultation'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-header-cta flex min-h-12 flex-1 items-center justify-center rounded-xl text-sm font-bold">درخواست مشاوره</a>
+		<div class="mt-4 flex items-center gap-2 border-t pt-4" style="border-color: var(--border-subtle, rgba(255, 255, 255, 0.1));">
+			<button type="button" xyz-on:click="toggleTheme()" class="rm-header-control flex h-12 w-12 shrink-0 items-center justify-center rounded-xl" aria-label="تغییر پوسته">
+				<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+			</button>
+			<a href="<?php echo esc_url( $navigation['consultation'] ); ?>" xyz-on:click="closeMobileMenu()" class="rm-header-cta flex min-h-12 flex-1 items-center justify-center rounded-xl text-sm font-bold">درخواست مشاوره</a>
+		</div>
 	</div>
 </div>
