@@ -58,6 +58,10 @@ $navigation = romonet_global_navigation();
 					</a>
 				</li>
 			</ul>
+			<section class="mt-6" aria-labelledby="footer-trust-seal">
+				<h3 id="footer-trust-seal" class="mb-3 text-xs font-semibold" style="color: var(--text-muted, #6b7280);">نماد اعتماد الکترونیکی</h3>
+				<a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=8793486&Code=tM0a25kA3mUFaNDz1y9VgUDUvU6OB4qo'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=8793486&Code=tM0a25kA3mUFaNDz1y9VgUDUvU6OB4qo' alt='نماد اعتماد الکترونیکی' style='max-width: 100%; height: auto; cursor: pointer' code='tM0a25kA3mUFaNDz1y9VgUDUvU6OB4qo'></a>
+			</section>
 		</div>
 	</div>
 
