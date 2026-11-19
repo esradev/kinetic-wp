@@ -71,12 +71,15 @@ $courses_active = is_post_type_archive( 'sfwd-courses' ) || is_singular( 'sfwd-c
 				<button xyz-on:click="toggleTheme()" class="rm-header-control hidden rounded-xl p-2.5 sm:flex" aria-label="تغییر پوسته">
 					<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
 				</button>
-				<button xyz-on:click="isCartDrawerOpen = true" class="rm-header-control relative rounded-xl p-2.5" aria-label="سبد خرید">
+				<button xyz-on:click="isSearchOpen = true" class="rm-header-control flex h-10 w-10 items-center justify-center rounded-xl p-0" aria-label="جستجو" aria-controls="header-search-modal">
+					<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+				</button>
+				<button xyz-on:click="isCartDrawerOpen = true" class="rm-header-control relative flex h-10 w-10 items-center justify-center rounded-xl p-0" aria-label="سبد خرید">
 					<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
 					<template xyz-if="totalItemsCount() > 0"><span xyz-text="totalItemsCount()" class="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold" style="background-color: var(--accent-gold, #f59e0b); color: var(--rm-gold-ink);"></span></template>
 				</button>
 				<a href="<?php echo esc_url( $navigation['consultation'] ); ?>" class="rm-header-cta hidden min-h-10 items-center rounded-xl px-4 text-xs font-bold sm:inline-flex">درخواست مشاوره</a>
-				<button xyz-on:click="toggleMobileMenu()" xyz-bind:aria-expanded="isMobileMenuOpen" class="rm-header-control rounded-xl p-2.5 xl:hidden" aria-label="باز کردن منو" aria-controls="mobile-navigation">
+				<button xyz-on:click="toggleMobileMenu()" xyz-bind:aria-expanded="isMobileMenuOpen" class="rm-header-control flex h-10 w-10 items-center justify-center rounded-xl p-0 xl:hidden" aria-label="باز کردن منو" aria-controls="mobile-navigation">
 					<template xyz-if="!isMobileMenuOpen"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></template>
 					<template xyz-if="isMobileMenuOpen"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></template>
 				</button>

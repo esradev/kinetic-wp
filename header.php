@@ -51,6 +51,8 @@ $cart_json = wp_json_encode( $wc_cart_items );
 		window.romonetHeaderData = {
 			shopUrl: '<?php echo esc_url( home_url( '/shop' ) ); ?>',
 			siteDesignUrl: '<?php echo esc_url( home_url( '/site-design-pricing' ) ); ?>',
+			ajaxUrl: '<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>',
+			searchNonce: '<?php echo esc_attr( wp_create_nonce( 'romonet_header_search' ) ); ?>',
 			cart: <?php echo empty( $cart_json ) ? '[]' : $cart_json; ?>
 		};
 	</script>
@@ -184,4 +186,5 @@ $cart_json = wp_json_encode( $wc_cart_items );
 
 	<?php get_template_part( 'template-parts/header/main', 'header' ); ?>
 	<?php get_template_part( 'template-parts/header/mobile', 'menu' ); ?>
+	<?php get_template_part( 'template-parts/header/search', 'modal' ); ?>
 	<?php get_template_part( 'template-parts/header/cart', 'drawer' ); ?>

@@ -10,6 +10,10 @@ export function romonetHeader() {
       pricing: false,
     },
     isSearchOpen: false,
+    isSearchLoading: false,
+    searchResults: [],
+    searchError: "",
+    searchTimer: null,
     isCartDrawerOpen: false,
     isCartUpdating: false,
     isScrolled: false,
@@ -58,6 +62,7 @@ export function romonetHeader() {
             100,
           );
       });
+      this.$watch("searchQuery", () => this.queueSearch());
     },
 
     toggleDropdown(name) {
@@ -94,6 +99,59 @@ export function romonetHeader() {
       this.closeMobileMenu();
       this.openDropdowns.services = false;
       this.openDropdowns.pricing = false;
+    },
+
+    queueSearch() {
+      clearTimeout(this.searchTimer);
+      this.searchError = "";
+      const query = this.searchQuery.trim();
+
+      if (query.length < 2) {
+        this.searchResults = [];
+        this.isSearchLoading = false;
+        return;
+      }
+
+      this.isSearchLoading = true;
+      this.searchTimer = setTimeout(() => this.performSearch(query), 300);
+    },
+
+    async performSearch(query) {
+      const formData = new URLSearchParams({
+        action: "romonet_header_search",
+        nonce: window.romonetHeaderData
+          ? window.romonetHeaderData.searchNonce
+          : "",
+        query,
+      });
+
+      try {
+        const response = await fetch(window.romonetHeaderData.ajaxUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+          },
+          body: formData,
+        });
+        const payload = await response.json();
+
+        if (!response.ok || !payload.success) {
+          throw new Error("Search request failed");
+        }
+
+        if (query === this.searchQuery.trim()) {
+          this.searchResults = payload.data.results || [];
+        }
+      } catch (error) {
+        if (query === this.searchQuery.trim()) {
+          this.searchResults = [];
+          this.searchError = "جستجو با خطا مواجه شد. دوباره تلاش کنید.";
+        }
+      } finally {
+        if (query === this.searchQuery.trim()) {
+          this.isSearchLoading = false;
+        }
+      }
     },
 
     onScroll() {
