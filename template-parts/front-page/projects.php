@@ -5,7 +5,7 @@
  * @package Romonet_WPStorm
  */
 ?>
-<section id="projects" class="scroll-mt-24 border-y border-white/10 bg-[#0b0d13]">
+<section id="projects" class="rm-portfolio-front scroll-mt-24 border-y">
 	<div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
 		<div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
 			<div class="max-w-2xl">
@@ -21,7 +21,7 @@
 				</p>
 			</div>
 
-			<a href="#contact" class="group inline-flex shrink-0 items-center gap-2 self-start rounded-xl border border-white/15 bg-white/[0.02] px-5 py-3 text-sm font-semibold text-amber-400 transition hover:border-amber-400/50 hover:bg-amber-500/[0.06] hover:text-amber-300 sm:self-auto">
+			<a href="<?php echo esc_url( home_url( '/portfolio/' ) ); ?>" class="rm-portfolio-front-button group inline-flex shrink-0 items-center gap-2 self-start rounded-xl px-5 py-3 text-sm font-semibold sm:self-auto">
 				<span>مشاهده همه پروژه‌ها</span>
 				<svg class="h-4 w-4 transition-transform duration-200 group-hover:-translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 					<path d="M19 12H5" />
@@ -30,14 +30,40 @@
 			</a>
 		</div>
 
-		<?php $featured_portfolios = romonet_get_featured_portfolios( 3 ); ?>
-		<?php if ( $featured_portfolios->have_posts() ) : ?>
+		<?php
+		$featured_portfolios = romonet_get_featured_portfolios( 3 );
+		$display_ids         = array();
+		if ( $featured_portfolios->have_posts() ) {
+			foreach ( $featured_portfolios->posts as $featured_post ) {
+				$display_ids[] = (int) $featured_post->ID;
+			}
+		}
+		wp_reset_postdata();
+
+		if ( count( $display_ids ) < 3 ) {
+			$fallback_query = new WP_Query(
+				array(
+					'post_type'      => 'portfolio',
+					'post_status'    => 'publish',
+					'posts_per_page' => 3 - count( $display_ids ),
+					'post__not_in'   => $display_ids,
+					'orderby'        => 'date',
+					'order'          => 'DESC',
+					'no_found_rows'  => true,
+				)
+			);
+			if ( $fallback_query->have_posts() ) {
+				foreach ( $fallback_query->posts as $fallback_post ) {
+					$display_ids[] = (int) $fallback_post->ID;
+				}
+			}
+			wp_reset_postdata();
+		}
+		?>
+		<?php if ( $display_ids ) : ?>
 			<div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-				<?php while ( $featured_portfolios->have_posts() ) : $featured_portfolios->the_post(); ?>
-					<?php romonet_portfolio_card(); ?>
-				<?php endwhile; ?>
+				<?php foreach ( $display_ids as $portfolio_id ) : romonet_portfolio_card( $portfolio_id ); endforeach; ?>
 			</div>
-			<?php wp_reset_postdata(); ?>
 		<?php else : ?>
 			<div class="mt-12 overflow-hidden rounded-2xl border border-dashed border-white/15 bg-white/[0.02] p-8 sm:p-12">
 				<div class="mx-auto flex max-w-lg flex-col items-center text-center">
