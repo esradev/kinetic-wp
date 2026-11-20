@@ -47,7 +47,7 @@
 							<path d="M3 9h18" />
 							<path d="M9 21V9" />
 						</svg>
-					</span>
+					</span> 
 					<p class="mt-5 text-sm leading-8 text-neutral-300 sm:text-base">
 						نمونه‌کارهای رومونت در حال تکمیل هستند. برای مشاهده پروژه‌های منتشرشده به
 						<a class="font-semibold text-amber-400 underline decoration-amber-400/40 underline-offset-4 transition hover:text-amber-300" href="<?php echo esc_url( home_url( '/portfolio/' ) ); ?>">آرشیو نمونه‌کارها</a>

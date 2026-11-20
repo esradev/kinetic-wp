@@ -237,12 +237,13 @@ function romonet_portfolio_card( $post_id = 0 ) {
 	?>
 	<article class="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition hover:-translate-y-1 hover:border-amber-400/40">
 		<a href="<?php echo esc_url( get_permalink( $post_id ) ); ?>" class="block" aria-label="<?php echo esc_attr( get_the_title( $post_id ) ); ?>">
-			<?php if ( has_post_thumbnail( $post_id ) ) : ?><div class="portfolio-card-image"><?php echo get_the_post_thumbnail( $post_id, 'large', array( 'loading' => 'lazy', 'class' => 'h-full w-full object-cover transition duration-500 group-hover:scale-105' ) ); ?></div><?php else : ?><div class="portfolio-card-image bg-gradient-to-br from-amber-500/20 to-white/5"></div><?php endif; ?>
+			<?php if ( has_post_thumbnail( $post_id ) ) : ?><div class="portfolio-card-image aspect-[16/10] overflow-hidden"><?php echo get_the_post_thumbnail( $post_id, 'large', array( 'loading' => 'lazy', 'class' => 'h-full w-full object-cover transition duration-500 group-hover:scale-105' ) ); ?></div><?php else : ?><div class="portfolio-card-image aspect-[16/10] bg-gradient-to-br from-amber-500/20 to-white/5"></div><?php endif; ?>
 			<div class="p-5">
 				<div class="mb-3 flex flex-wrap gap-2"><?php if ( ! empty( $type_label[ $type ] ) ) : ?><span class="rounded-full bg-amber-500/15 px-2.5 py-1 text-[11px] text-amber-300"><?php echo esc_html( $type_label[ $type ] ); ?></span><?php endif; ?><?php if ( $terms && ! is_wp_error( $terms ) ) : ?><span class="rounded-full border border-white/10 px-2.5 py-1 text-[11px] text-neutral-400"><?php echo esc_html( $terms[0]->name ); ?></span><?php endif; ?></div>
 				<h2 class="text-lg font-bold text-white transition group-hover:text-amber-300"><?php echo esc_html( get_the_title( $post_id ) ); ?></h2>
 				<?php $excerpt = get_the_excerpt( $post_id ); if ( $excerpt ) : ?><p class="mt-2 line-clamp-2 text-sm leading-7 text-neutral-400"><?php echo esc_html( wp_trim_words( $excerpt, 22 ) ); ?></p><?php endif; ?>
 				<?php $technologies = get_post_meta( $post_id, '_romonet_portfolio_technologies', true ); if ( $technologies ) : ?><div class="mt-4 flex flex-wrap gap-1.5"><?php foreach ( (array) $technologies as $technology ) : ?><span class="text-[11px] text-neutral-500"><?php echo esc_html( $technology ); ?></span><?php endforeach; ?></div><?php endif; ?>
+				<span class="mt-5 inline-flex text-xs font-bold text-amber-400 transition group-hover:-translate-x-1">مشاهده پروژه ←</span>
 			</div>
 		</a>
 	</article>
